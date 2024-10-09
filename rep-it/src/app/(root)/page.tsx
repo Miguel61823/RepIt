@@ -1,6 +1,6 @@
 
 export default function Home() {
   return (
-    <p>Landing Page</p>
+    <p>Landing/Marketing Page</p>
   );
 }
