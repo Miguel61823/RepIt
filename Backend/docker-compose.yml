@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    container_name: RepIt-Backend
+    image: postgres
+    environment:
+      - POSTGRES_USER= ${POSTGRES_USER}
+      - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
+      - POSTGRES_DB= ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - ./sql/databases.sql:/docker-entrypoint-initdb.d/1.databses.sql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/2.schema.sql
+      - ./sql/data.sql:/docker-entrypoint-initdb.d/3.data.sql
