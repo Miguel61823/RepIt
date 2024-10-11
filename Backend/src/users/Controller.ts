@@ -1,24 +1,23 @@
 // // src/controllers/UserController.ts
 
-// import { Controller, Get, Path, Post, Body, Route } from "tsoa";
-// import { User, UserService } from "../services/UserService";
+import { Controller, Get, Path, Post, Body, Route } from "tsoa";
+import { UserService } from "./service";
+import { User } from ".";
 
-// @Route("users")
-// export class UserController extends Controller {
-//   private userService: UserService = new UserService();
-
+@Route('user')
+export class UserController extends Controller {
 //   @Get("{userId}")
 //   public async getUser(@Path() userId: number): Promise<User | null> {
 //     return this.userService.getUser(userId);
 //   }
 
-//   @Get()
-//   public async getAllUsers(): Promise<User[]> {
-//     return this.userService.getAllUsers();
-//   }
+  @Get('')
+  public async getAllUsers(): Promise<User[]> {
+    return new UserService().getAllUsers();
+  }
 
 //   @Post()
 //   public async createUser(@Body() requestBody: { name: string; email: string }): Promise<User> {
 //     return this.userService.createUser(requestBody.name, requestBody.email);
 //   }
-// }
+}
