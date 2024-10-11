@@ -1,18 +1,22 @@
+export interface History {
+  userId: string;
+  workouts: Workout[];
+}
+
 export interface Workout {
-  userId: string
-  date: string
-  exercises: Exercise[]
+  userId: string;
+  date: string | null;
+  exercises: Exercise[];
 }
 
 export interface Exercise {
-  name: string
-  sets: Set[]
+  name: string;
+  sets: Set[];
 }
 
 export interface Set {
-  order: number
-  exercise: string
-  weight: number
-  machine: string
-  reps: number
+  order: number;
+  weight: number;
+  reps: number;
+  machine: string;
 }
