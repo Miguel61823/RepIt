@@ -7,7 +7,7 @@ import Footer from './_components/Footer';
 
 export default function Home() {
   return (
-    <div className="bg-black min-h-screen text-white">
+    <div className="dark:bg-black  bg-blue-300 min-h-screen text-white">
 
       <Topbar/>
       <main className="container mx-auto mt-8 px-4">
