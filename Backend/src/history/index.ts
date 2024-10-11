@@ -5,7 +5,7 @@ export interface History {
 
 export interface Workout {
   userId: string;
-  date: string | null;
+  date: string;
   exercises: Exercise[];
 }
 
