@@ -14,7 +14,7 @@ export default function Home() {
         <section className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Transform Your Fitness Journey</h2>
           <p className="text-xl mb-6">Achieve your health goals with personalized workouts plans</p>
-          <button className="bg-green-500 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition duration-300">
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-green-600 transition duration-300">
             Get Started Free
           </button>
         </section>
