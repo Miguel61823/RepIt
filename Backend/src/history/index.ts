@@ -16,6 +16,7 @@ export interface Exercise {
 
 export interface Set {
   order: number;
+  exercise: string;
   weight: number;
   reps: number;
   machine: string;
