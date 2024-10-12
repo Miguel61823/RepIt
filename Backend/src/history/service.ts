@@ -1,51 +1,53 @@
 import { pool } from "../db";
-import { History, Workout } from ".";
+import { WorkoutInstance } from ".";
 
 export class HistoryService {
 
-  public async getHistoryByAll(userId: string): Promise<History> {
-    
-    const workoutList: Workout[] = [];
-    return {
-      userId: userId,
-      workouts: workoutList,
-    };
+  public async getHistoryByAll(userId: string): Promise<WorkoutInstance[] | null> {
+    /** notes:
+     * Get all workout instances from workout instance table
+     * possible db table: WORKOUTINSTANCE?
+     * (
+     * id: {id of workout},
+     * userId: {id of user},
+     * dateCompleted: {date in iso format},
+     * exercises: {list of exercises of WorkoutInstance}
+     * )
+     */
+
+    const workoutList: WorkoutInstance[] = [];
+
+    return workoutList;
   };
 
-  public async getHistoryByYear(userId: string, year: string): Promise<History> {
+  public async getHistoryByYear(userId: string, date: string): Promise<WorkoutInstance[] | null> {
 
-    const workoutList: Workout[] = [];
-    return {
-      userId: userId,
-      workouts: workoutList,
-    };
+
+
+    const workoutList: WorkoutInstance[] = [];
+
+    return workoutList;
   };
   
-  public async getHistoryByMonth(userId: string, month: string): Promise<History> {
+  public async getHistoryByMonth(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: Workout[] = [];
-    return {
-      userId: userId,
-      workouts: workoutList,
-    };
-  }
+    const workoutList: WorkoutInstance[] = [];
+    
+    return workoutList;
+  };
 
-  public async getHistoryByWeek(userId: string, week: string): Promise<History> {
+  public async getHistoryByWeek(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: Workout[] = [];
-    return {
-      userId: userId,
-      workouts: workoutList,
-    };
-  }
+    const workoutList: WorkoutInstance[] = [];
+    
+    return workoutList;
+  };
 
-  public async getHistoryByDay(userId: string, day: string): Promise<History> {
+  public async getHistoryByDay(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: Workout[] = [];
-    return {
-      userId: userId,
-      workouts: workoutList,
-    };
-  }
+    const workoutList: WorkoutInstance[] = [];
+    
+    return workoutList;
+  };
 
 }

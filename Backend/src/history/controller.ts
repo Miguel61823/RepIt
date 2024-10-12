@@ -1,53 +1,54 @@
 import { Controller, Get, Path, Route } from "tsoa";
 import { HistoryService } from "./service";
-import { History } from ".";
+import { WorkoutInstance } from ".";
 
-// Bug: path decorator 
 @Route('history')
 export class HistoryController extends Controller {
+  // If 'getHistory' is by specified date, it will be parsed in services
 
   // Get entire user history
   @Get("{userId}")
   public async getHistoryByAll(
     @Path() userId: string
-  ): Promise<History> {
+  ): Promise<WorkoutInstance[] | null> {
     return new HistoryService().getHistoryByAll(userId);
   };
 
+
   // Get user history by year
-  @Get("{userId}/{year}")
+  @Get("{userId}/{date}")
   public async getHistoryByYear(
     @Path() userId: string,
-    @Path() year: string
-  ): Promise<History> {
-    return new HistoryService().getHistoryByYear(userId, year);
+    @Path() date: string
+  ): Promise<WorkoutInstance[] | null> {
+    return new HistoryService().getHistoryByYear(userId, date);
   }
   
   // Get user history by month
-  @Get("{userId}/{month}")
+  @Get("{userId}/{date}")
   public async getHistoryByMonth(
     @Path() userId: string,
-    @Path() month: string
-  ): Promise<History> {
-    return new HistoryService().getHistoryByMonth(userId, month);
+    @Path() date: string
+  ): Promise<WorkoutInstance[] | null> {
+    return new HistoryService().getHistoryByMonth(userId, date);
   }
   
   // Get user history by week
-  @Get("{userId}/{week}")
+  @Get("{userId}/{date}")
   public async getHistoryByWeek(
     @Path() userId: string,
-    @Path() month: string
-  ): Promise<History> {
-    return new HistoryService().getHistoryByWeek(userId, month);
+    @Path() date: string
+  ): Promise<WorkoutInstance[] | null> {
+    return new HistoryService().getHistoryByWeek(userId, date);
   }
   
   // Get user history by day
-  @Get("{userId}/{day}")
+  @Get("{userId}/{date}")
   public async getHistoryByDay(
     @Path() userId: string,
-    @Path() day: string
-  ): Promise<History> {
-    return new HistoryService().getHistoryByDay(userId, day);
+    @Path() date: string
+  ): Promise<WorkoutInstance[] | null> {
+    return new HistoryService().getHistoryByDay(userId, date);
   }
 
 }
