@@ -11,7 +11,7 @@ CREATE TABLE user(
 
 CREATE TABLE workout_instance(
   id BIGSERIAL PRIMARY KEY,
-  user_id BIGINT,
+  user_id REFERENCES user,
   date_completed TIMESTAMPTZ, 
   workout_id REFERENCES workout(id),
 );
