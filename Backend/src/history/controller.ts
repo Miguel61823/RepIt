@@ -4,7 +4,7 @@ import { WorkoutInstance } from ".";
 
 @Route('history')
 export class HistoryController extends Controller {
-  // If 'getHistory' is by specified date, it will be parsed in services
+  // If 'getHistory..()' is by specified date, it will be parsed in services
 
   // Get entire user history
   @Get("{userId}")

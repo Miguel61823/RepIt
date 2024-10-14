@@ -4,18 +4,25 @@ import { WorkoutInstance } from ".";
 export class HistoryService {
 
   public async getHistoryByAll(userId: string): Promise<WorkoutInstance[] | null> {
-    /** notes:
-     * Get all workout instances from workout instance table
-     * possible db table: WORKOUTINSTANCE?
-     * (
-     * id: {id of workout},
-     * userId: {id of user},
-     * dateCompleted: {date in iso format},
-     * exercises: {list of exercises of WorkoutInstance}
-     * )
+    /**
+     * - From db, get all rows of workout_instance (workout history)
+     * - 
+     * - (not done)
      */
 
     const workoutList: WorkoutInstance[] = [];
+    
+    const selectWorkouts = `SELECT * FROM workout_instance WHERE user_id = ${userId}`;
+    const selectExercises = ``;
+    const selectSets = ``;
+
+    const queryWorkout = { text: selectWorkouts, values: [] };
+    const queryExercises = { text: selectExercises, values: [] };
+    const querySets = { text: selectSets, values: [] };
+
+    const workoutsRes = await pool.query(queryWorkout);
+    const exercisesRes = await pool.query(queryExercises);    
+    const setRes = await pool.query(querySets);
 
     return workoutList;
   };
