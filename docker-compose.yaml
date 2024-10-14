@@ -1,44 +1,26 @@
-version: "3"
 services:
   db:
-    image: postgres
+    container_name: database
+    image: postgres:alpine
     environment:
       - POSTGRES_USER= ${POSTGRES_USER}
       - POSTGRES_PASSWORD= ${POSTGRES_PASSWORD}
       - POSTGRES_DB= ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    restart: always
+      - POSTGRES_PORT= ${POSTGRES_PORT}
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - ./sql/databases.sql:/docker-entrypoint-initdb.d/1.databases.sql
+      - ./AccountService/sql/schema.sql:/docker-entrypoint-initdb.d/2.schema.sql
+      - ./AccountService/sql/data.sql:/docker-entrypoint-initdb.d/3.data.sql
+      - ./WorkoutService/sql/schema.sql:/docker-entrypoint-initdb.d/4.schema.sql
+      - ./WorkoutService/sql/data.sql:/docker-entrypoint-initdb.d/5.data.sql
 
-  frontend:
-    build: ./Frontend 
+  app:
+    container_name: app
     ports:
-      - "8000:8000"
-    volumes:
-      - ./web:/app
-    environment:
-      - NODE_ENV= ${NODE_ENV}
-      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
-    depends_on:
-      - backend-api
-
-  backend-api:
-    build: ./Backend
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./backend:/app
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - DB_HOST=db
-      - DB_USER=${POSTGRES_USER}
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
-      - DB_NAME=${POSTGRES_DB}
+      - "3000:3000"
+      - "3001:3001"
+      - "3002:3002"
+    build: .
+    env file: .env
     depends_on:
       - db
-
-
-volumes:
-  postgres-data:

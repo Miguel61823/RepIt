@@ -1,7 +1,7 @@
-version: "3"
+version: '3.7'
 services:
   db:
-    container_name: RepIt-Backend
+    container_name: Workout-Microservice
     image: postgres
     environment:
       - POSTGRES_USER= ${POSTGRES_USER}
@@ -9,7 +9,6 @@ services:
       - POSTGRES_DB= ${POSTGRES_DB}
     ports:
       - "5432:5432"
-    restart: always
     volumes:
       - ./sql/databases.sql:/docker-entrypoint-initdb.d/1.databses.sql
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/2.schema.sql
