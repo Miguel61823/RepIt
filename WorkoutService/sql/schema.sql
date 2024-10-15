@@ -1,17 +1,16 @@
-DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS member;
 
-DROP TABLE IF EXISTS workout_instance;
+DROP TABLE IF EXISTS workout;
 
-CREATE TABLE user(
+CREATE TABLE member(
   email TEXT,
-  first_name TEXT
+  first_name TEXT,
+  last_name TEXT
 );
 
-CREATE TABLE workout_instance(
+CREATE TABLE workout(
   id BIGSERIAL PRIMARY KEY,
   user_id REFERENCES user ON DELETE CASCADE,
-  date_completed TIMESTAMPTZ,
-  workout_id REFERENCES workout(id),
   exercises jsonb
 );
 
