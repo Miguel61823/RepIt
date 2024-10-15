@@ -6,7 +6,7 @@
     "outputDirectory": "build",
     "specVersion": 3,
     "schemes": [ "http" ],
-    "basePath": "/"
+    "basePath": "/api/v0"
   },
   "routes": {
     "routesDir": "build"
