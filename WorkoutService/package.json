@@ -6,7 +6,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "jest --runInBand --coverage --verbose --no-cache --forceExit",
+    "test": "jest",
     "build": "tsoa spec-and-routes && tsc"
   },
   "keywords": [],
