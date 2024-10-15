@@ -10,7 +10,7 @@ app.use(express.urlencoded({extended:true}));
 
 const router = Router();
 RegisterRoutes(router);
-app.use('/', router);
+app.use('/api/v0', router);
 
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
   console.error(err.stack);

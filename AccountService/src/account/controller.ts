@@ -13,7 +13,11 @@ import {
 
 import { Account } from '.';
 import { AccountService } from './service';
- 
+
+function isEmptyObj(obj: object) {
+  return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
+
 @Route('account')
 export class AccountController extends Controller{
   @Get('')

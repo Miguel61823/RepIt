@@ -1,60 +1,62 @@
 import { pool } from "../db";
-import { WorkoutInstance } from ".";
+import { Workout } from ".";
 
 export class HistoryService {
 
-  public async getHistoryByAll(userId: string): Promise<WorkoutInstance[] | null> {
+  public async getHistoryByID(userId: string): Promise<Workout[] | null> {
     /**
-     * - From db, get all rows of workout_instance (workout history)
+     * - From db, get all rows of workout (workout history)
      * - 
-     * - (not done)
+     * - Given a userID, find and return all workouts that correspond to that userID
      */
 
-    const workoutList: WorkoutInstance[] = [];
+    const workouts= [];
     
-    const selectWorkouts = `SELECT * FROM workout_instance WHERE user_id = ${userId}`;
-    const selectExercises = ``;
-    const selectSets = ``;
+    // each workout will have exercise list, and sets in jsonb
+    const select = `SELECT * FROM workout WHERE user_id = $1`;
 
-    const queryWorkout = { text: selectWorkouts, values: [] };
-    const queryExercises = { text: selectExercises, values: [] };
-    const querySets = { text: selectSets, values: [] };
+    const query = {
+      text: select,
+      values: [userId]
+    }
+    const {rows} = await pool.query(query)
 
-    const workoutsRes = await pool.query(queryWorkout);
-    const exercisesRes = await pool.query(queryExercises);    
-    const setRes = await pool.query(querySets);
-
-    return workoutList;
+    for (const row of rows) {
+      workouts.push(row)
+    }
+    return workouts 
   };
 
-  public async getHistoryByYear(userId: string, date: string): Promise<WorkoutInstance[] | null> {
+  /// maybe we stop here and use front end stuff to get only specific workouts?????
+
+  // public async getHistoryByYear(userId: string, date: string): Promise<WorkoutInstance[] | null> {
 
 
 
-    const workoutList: WorkoutInstance[] = [];
+  //   const workoutList: WorkoutInstance[] = [];
 
-    return workoutList;
-  };
+  //   return workoutList;
+  // };
   
-  public async getHistoryByMonth(userId: string, date: string): Promise<WorkoutInstance[] | null> {
+  // public async getHistoryByMonth(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: WorkoutInstance[] = [];
+  //   const workoutList: WorkoutInstance[] = [];
     
-    return workoutList;
-  };
+  //   return workoutList;
+  // };
 
-  public async getHistoryByWeek(userId: string, date: string): Promise<WorkoutInstance[] | null> {
+  // public async getHistoryByWeek(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: WorkoutInstance[] = [];
+  //   const workoutList: WorkoutInstance[] = [];
     
-    return workoutList;
-  };
+  //   return workoutList;
+  // };
 
-  public async getHistoryByDay(userId: string, date: string): Promise<WorkoutInstance[] | null> {
+  // public async getHistoryByDay(userId: string, date: string): Promise<WorkoutInstance[] | null> {
     
-    const workoutList: WorkoutInstance[] = [];
+  //   const workoutList: WorkoutInstance[] = [];
     
-    return workoutList;
-  };
+  //   return workoutList;
+  // };
 
 }
