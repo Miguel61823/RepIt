@@ -12,7 +12,7 @@ const router = Router();
 RegisterRoutes(router);
 app.use('/api', router);
 
-app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+app.use((err: any, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
