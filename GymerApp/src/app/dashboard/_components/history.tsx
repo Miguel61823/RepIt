@@ -1,117 +1,163 @@
-import { db } from "@/drizzle/db";
-import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
 export interface Workout {
-  id: number,
-  title: string,
-  description: string,
-  date_completed: string,
-  exercises: Exercise[]
-};
-export interface Exercise {
-  e_id: number,
-  name: string,
-  sets: number,
-  reps: number,
-  weight: number
+  id: number;
+  title: string;
+  description: string;
+  date_completed: string;
+  start_time: string;
+  end_time: string;
+  exercises: Exercise[];
 }
 
-const WorkoutCard: React.FC<Workout> = ({
-  id,
+export interface Exercise {
+  e_id: number;
+  name: string;
+  sets: Set[];
+}
+
+export interface Set {
+  reps: number;
+  weight: number;
+  notes: string;
+}
+
+const formatDate = (dateString: string): string => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'short', 
+    day: 'numeric'
+  };
+  return date.toLocaleDateString('en-US', options);
+};
+
+export const WorkoutCard = ({
   title,
   description,
   date_completed,
   exercises
-}) => {
+}: Workout) => {
   return (
-    <section id="workout-card"
-             className="hover:bg-blue-700 bg-blue-600 text-white p-6 rounded-lg shadow-md"
-    >
-      <h3 className="text-xl font-bold mb-2">
-        {title} - 
-        <span className="text-sm italic">
-          {description}
-        </span>
-      </h3>
-      <div className="text-sm">{date_completed}</div>
-      <div className="">
-        {exercises.reduce((prev, curr) => prev + ", " + curr.name, "").substring(2)}
+    <div className="bg-white dark:bg-gray-900 dark:shadow-gray-900/40 dark:hover:shadow-gray-900/60 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-200 transform">
+      <div className="bg-blue-600 text-white p-4 rounded-t-lg">
+        <h3 className="text-xl font-bold truncate">{title}</h3>
+        <p className="text-sm text-white mt-1">{formatDate(date_completed)}</p>
       </div>
-    </section>
+      <div className="p-4">
+        <p className="text-black dark:text-white text-sm mb-3 italic">{description}</p>
+        <div className="space-y-2">
+          <ul className="space-y-2">
+            {exercises.map((exercise) => (
+              <li key={exercise.e_id} className="text-sm text-black dark:text-white">
+                <span className="font-semibold">{exercise.name}</span>
+                <ul className="pl-4 mt-1 space-y-1">
+                  {exercise.sets.map((set, index) => (
+                    <li key={index} className="text-xs">
+                      Set {index + 1}: {set.reps} reps @ {set.weight}lbs
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default async function HistoryList() {
-  const { userId } = auth();
-
-  // ----- data from db, default order by most recent date
-  // const { workouts } = await db.query.WorkoutTable.findMany({
-  //   where: ({ id }, { eq } => eq(clerk_user_id, userId))
-  //   orderby: ()
-  // });
-
-  // testing cards
+export const HistoryList = () => {
+  // Updated mock data
   const workouts: Workout[] = [
-    {id: 1,
-      title: "Chest",
-      description: "bench press only",
-      date_completed: "08/09/2024",
+    {
+      id: 1,
+      title: "Chest Day",
+      description: "Focus on bench press progression",
+      date_completed: "2024-10-09",
+      start_time: "07:00:00",
+      end_time: "08:30:00",
       exercises: [{
         e_id: 1,
         name: "Bench Press",
-        sets: 5,
-        reps: 5,
-        weight: 225
+        sets: [
+          { reps: 5, weight: 225, notes: "Felt strong" },
+          { reps: 5, weight: 235, notes: "Good form" },
+          { reps: 4, weight: 245, notes: "Struggled on last rep" },
+          { reps: 3, weight: 245, notes: "Needed spotter" },
+          { reps: 5, weight: 225, notes: "Finished strong" }
+        ]
       }]
     },
-    {id: 2,
-      title: "Legs",
-      description: "squats only",
-      date_completed: "08/10/2024",
-      exercises: [{
-        e_id: 2,
-        name: "Front Squat",
-        sets: 3,
-        reps: 5,
-        weight: 320
-      },
-      {
-        e_id: 3,
-        name: "Squat",
-        sets: 3,
-        reps: 5,
-        weight: 495
-      }]
+    {
+      id: 2,
+      title: "Leg Day",
+      description: "Squats and front squats for quad development",
+      date_completed: "2024-10-10",
+      start_time: "18:00:00",
+      end_time: "19:45:00",
+      exercises: [
+        {
+          e_id: 2,
+          name: "Front Squat",
+          sets: [
+            { reps: 5, weight: 185, notes: "Warming up" },
+            { reps: 5, weight: 205, notes: "Good depth" },
+            { reps: 5, weight: 225, notes: "Maintaining form" }
+          ]
+        },
+        {
+          e_id: 3,
+          name: "Back Squat",
+          sets: [
+            { reps: 5, weight: 275, notes: "Felt heavy" },
+            { reps: 5, weight: 315, notes: "Personal best" },
+            { reps: 3, weight: 365, notes: "New max!" }
+          ]
+        }
+      ]
     },
-    {id: 3,
-      title: "title",
-      description: "description",
-      date_completed: "date here",
-      exercises: [{
-        e_id: 4,
-        name: "exercise (only names shown)",
-        sets: 3,
-        reps: 5,
-        weight: 320
-      }]
+    {
+      id: 3,
+      title: "Full Body Workout",
+      description: "Mixed exercises for overall strength",
+      date_completed: "2024-10-11",
+      start_time: "12:00:00",
+      end_time: "13:30:00",
+      exercises: [
+        {
+          e_id: 4,
+          name: "Deadlift",
+          sets: [
+            { reps: 5, weight: 315, notes: "Easy warm-up" },
+            { reps: 5, weight: 365, notes: "Good form" },
+            { reps: 3, weight: 405, notes: "Grip started to fail" }
+          ]
+        },
+        {
+          e_id: 5,
+          name: "Pull-ups",
+          sets: [
+            { reps: 10, weight: 0, notes: "Bodyweight" },
+            { reps: 8, weight: 25, notes: "Added weight" },
+            { reps: 6, weight: 45, notes: "Challenging" }
+          ]
+        }
+      ]
     }
   ];
 
   return (
-    <section id="history">
-      <h3 className="text-2xl font-bold mb-6">Workout History</h3>
-      <div className="grid gap-4 md:grid-cols-3">
+    <section id="history" className="p-6 bg-white dark:bg-black">
+      <h3 className="text-2xl font-bold mb-6 text-black dark:text-white">Workout History</h3>
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {workouts.map(workout => (
-          <WorkoutCard key={workout.id}
-          id={workout.id}
-          title={workout.title}
-          description={workout.description}
-          date_completed={workout.date_completed}
-          exercises={workout.exercises}
-          />
+          <WorkoutCard key={workout.id} {...workout} />
         ))}
       </div>
     </section>
   );
 };
+
+export default HistoryList;
