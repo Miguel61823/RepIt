@@ -36,8 +36,8 @@ export default function Home() {
         
         <Features/>
         <Plans/>
-      <Footer/>
       </main>
+      <Footer/>
       
     </div>
   );
