@@ -1,9 +1,9 @@
 import { index, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
-export const user = pgTable("user", {
+export const UserTable = pgTable("user", {
   email: text("email").notNull(),
   first_name: text("first_name").notNull(),
-  last_name: text("last_name")
+  last_name: text("last_name").notNull()
 })
 
 export const WorkoutTable = pgTable("workout", {
