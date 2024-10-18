@@ -5,11 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
 import {
-  ClerkProvider,
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton
+  ClerkProvider
 } from '@clerk/nextjs';
 
 
