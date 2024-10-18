@@ -19,8 +19,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         logo: "bg-transparent text-xl",
-        wide: "w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300",
-        landing: "bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600"
+        wide: "w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-600 transition duration-300",
+        landing: "bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-blue-600",
+        features: "bg-blue-600 text-black dark:text-white p-6 rounded-lg shadow-md"
       },
       size: {
         default: "h-10 px-4 py-2",

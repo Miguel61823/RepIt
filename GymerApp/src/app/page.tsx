@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="dark:bg-blue-900  bg-blue-200 min-h-screen  dark:text-blue-200 text-blue-950">
+    <div className="dark:bg-black  bg-white min-h-screen  dark:text-white text-black">
 
       <Topbar/>
       <main className="container mx-auto mt-8 px-4">
