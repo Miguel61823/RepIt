@@ -4,7 +4,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 const Topbar = () => {
   return ( 
-    <header className="bg-blue-600 text-white p-4 ">
+    <header className="bg-white dark:bg-black dark:text-white text-black p-4 ">
     <div className="container mx-auto flex items-center justify-between">
       <Button variant="logo">RepIt</Button>
       <div className="items-center justify-between">

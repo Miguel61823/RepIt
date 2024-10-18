@@ -5,7 +5,7 @@ const Plans = () => {
     <section id="pricing" className="mb-12">
     <h3 className="text-2xl font-bold mb-6">Pricing Plans</h3>
     <div className="grid md:grid-cols-3 gap-8">
-      <div className="bg-blue-200 p-6 rounded-lg shadow-md  text-blue-950">
+      <div className="dark:bg-black bg-white p-6 rounded-lg shadow-md text-black dark:text-white">
         <h4 className="text-xl font-semibold mb-2">Basic</h4>
         <p className="text-3xl font-bold mb-4">$9.99<span className="text-sm font-normal">/month</span></p>
         <ul className="mb-6">
@@ -17,7 +17,7 @@ const Plans = () => {
           Choose Plan
         </Button>
       </div>
-      <div className="bg-blue-200 p-6 rounded-lg shadow-md  text-blue-950">
+      <div className="dark:bg-black bg-white p-6 rounded-lg shadow-md text-black dark:text-white">
         <h4 className="text-xl font-semibold mb-2">Pro</h4>
         <p className="text-3xl font-bold mb-4">$19.99<span className="text-sm font-normal">/month</span></p>
         <ul className="mb-6">
@@ -30,7 +30,7 @@ const Plans = () => {
           Choose Plan
         </Button>
       </div>
-      <div className="bg-blue-200 p-6 rounded-lg shadow-md text-blue-950">
+      <div className="dark:bg-black bg-white p-6 rounded-lg shadow-md text-black dark:text-white">
         <h4 className="text-xl font-semibold mb-2">Elite</h4>
         <p className="text-3xl font-bold mb-4">$29.99<span className="text-sm font-normal">/month</span></p>
         <ul className="mb-6">
