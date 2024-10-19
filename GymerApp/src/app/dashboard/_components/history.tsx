@@ -1,4 +1,17 @@
+'use client'
+
 import React from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import { WorkoutForm } from "./WorkoutForm";
+
 
 export interface Workout {
   id: number;
@@ -33,29 +46,44 @@ const formatDate = (dateString: string): string => {
   return date.toLocaleDateString('en-US', options);
 };
 
-export const WorkoutCard = ({
+const InsertCard = () => {
+  return(
+    <Card className="overflow-hidden flex flex-col h-full">
+    <CardHeader className="bg-blue-600 text-white">
+      <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
+      <CardDescription className="mt-1 text-white ">hiii</CardDescription>
+    </CardHeader>
+    <CardContent className="p-4 flex-grow">
+      <WorkoutForm />
+    </CardContent>
+  </Card>
+  )
+}
+
+const WorkoutCard = ({
   title,
   description,
   date_completed,
   exercises
 }: Workout) => {
   return (
-    <div className="bg-white dark:bg-gray-900 dark:shadow-gray-900/40 dark:hover:shadow-gray-900/60 rounded-lg shadow-xl hover:shadow-2xl transition-shadow duration-200 transform">
-      <div className="bg-blue-600 text-white p-4 rounded-t-lg">
-        <h3 className="text-xl font-bold truncate">{title}</h3>
-        <p className="text-sm text-white mt-1">{formatDate(date_completed)}</p>
-      </div>
-      <div className="p-4">
-        <p className="text-black dark:text-white text-sm mb-3 italic">{description}</p>
+    <Card className="overflow-hidden flex flex-col h-full">
+      <CardHeader className="bg-blue-600 text-white">
+        <CardTitle className="text-xl font-bold truncate">{title}</CardTitle>
+        <CardDescription className="mt-1 text-white ">{formatDate(date_completed)}</CardDescription>
+      </CardHeader>
+      <CardContent className="p-4 flex-grow mb-6">
+        <p className="text-sm mb-3">{description}</p>
         <div className="space-y-2">
           <ul className="space-y-2">
             {exercises.map((exercise) => (
-              <li key={exercise.e_id} className="text-sm text-black dark:text-white">
+              <li key={exercise.e_id} className="text-sm">
                 <span className="font-semibold">{exercise.name}</span>
                 <ul className="pl-4 mt-1 space-y-1">
                   {exercise.sets.map((set, index) => (
                     <li key={index} className="text-xs">
                       Set {index + 1}: {set.reps} reps @ {set.weight}lbs
+                      {set.notes && <span className="ml-2 text-gray-500">({set.notes})</span>}
                     </li>
                   ))}
                 </ul>
@@ -63,13 +91,23 @@ export const WorkoutCard = ({
             ))}
           </ul>
         </div>
-      </div>
-    </div>
+      </CardContent>
+      <CardFooter>
+        <div className="w-full flex justify-between">
+          <Button>
+            Edit
+          </Button>
+          <Button variant="destructive">
+            Delete
+          </Button>
+        </div>
+      </CardFooter>
+    </Card>
   );
 };
 
-export const HistoryList = () => {
-  // Updated mock data
+const WorkoutHistoryPage = () => {
+  // Mock data for workouts
   const workouts: Workout[] = [
     {
       id: 1,
@@ -149,15 +187,28 @@ export const HistoryList = () => {
   ];
 
   return (
-    <section id="history" className="p-6 bg-white dark:bg-black">
-      <h3 className="text-2xl font-bold mb-6 text-black dark:text-white">Workout History</h3>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {workouts.map(workout => (
-          <WorkoutCard key={workout.id} {...workout} />
-        ))}
-      </div>
-    </section>
+    <div className="min-h-screen bg-white dark:bg-black">
+      <header className="bg-white dark:bg-black shadow">
+        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+          <h1 className="text-3xl font-bold text-black dark:text-white">
+            Workout History
+          </h1>
+        </div>
+      </header>
+      <main>
+        <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+          <div className="px-4 py-6 sm:px-0">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <InsertCard/>
+              {workouts.map(workout => (
+                <WorkoutCard key={workout.id} {...workout} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
   );
 };
 
-export default HistoryList;
+export default WorkoutHistoryPage;
