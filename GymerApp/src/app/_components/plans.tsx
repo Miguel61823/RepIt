@@ -7,7 +7,7 @@ const Plans = () => {
     <h3 className="text-2xl font-bold mb-6">Pricing Plans</h3>
     <div className="grid md:grid-cols-3 gap-8">
 
-    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white">
+    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white bg-black">
       <CardHeader>
         <CardTitle className="text-xl font-bold truncate">Basic</CardTitle>
         <CardDescription className="mt-2 text-black dark:text-white font-bold text-3xl">$9.99<span className="text-sm font-thin">/month</span></CardDescription>
@@ -26,7 +26,7 @@ const Plans = () => {
       </CardFooter>
     </Card>
 
-    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white">
+    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white  bg-black">
       <CardHeader>
         <CardTitle className="text-xl font-bold truncate">Pro</CardTitle>
         <CardDescription className="mt-2 text-black dark:text-white font-bold text-3xl">$19.99<span className="text-sm font-thin">/month</span></CardDescription>
@@ -46,7 +46,7 @@ const Plans = () => {
       </CardFooter>
     </Card>
 
-    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white">
+    <Card className="overflow-hidden flex flex-col h-full text-black dark:text-white bg-black">
       <CardHeader>
         <CardTitle className="text-xl font-bold truncate">Elite</CardTitle>
         <CardDescription className="mt-2 text-black dark:text-white font-bold text-3xl">$29.99<span className="text-sm font-thin">/month</span></CardDescription>
