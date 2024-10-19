@@ -1,5 +1,6 @@
 'use client'
 
+
 import React from "react";
 import {
   Card,
@@ -10,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
-import { WorkoutForm } from "./WorkoutForm";
+import { WorkoutForm } from "../../../components/forms/WorkoutForm";
 
 
 export interface Workout {
@@ -83,7 +84,7 @@ const WorkoutCard = ({
                   {exercise.sets.map((set, index) => (
                     <li key={index} className="text-xs">
                       Set {index + 1}: {set.reps} reps @ {set.weight}lbs
-                      {set.notes && <span className="ml-2 text-gray-500">({set.notes})</span>}
+                      {set.notes && <span className="ml-2 text-gray-500">{'>'}{set.notes}</span>}
                     </li>
                   ))}
                 </ul>
