@@ -50,14 +50,14 @@ const formatDate = (dateString: string): string => {
 const InsertCard = () => {
   return(
     <Card className="overflow-hidden flex flex-col h-full">
-    <CardHeader className="bg-blue-600 text-white">
-      <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
-      <CardDescription className="mt-1 text-white ">hiii</CardDescription>
-    </CardHeader>
-    <CardContent className="p-4 flex-grow">
-      <WorkoutForm />
-    </CardContent>
-  </Card>
+      <CardHeader className="bg-blue-600 text-white">
+        <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
+        <CardDescription className="mt-1 text-white ">hiii</CardDescription>
+      </CardHeader>
+      <CardContent className="p-4 flex-grow">
+        <WorkoutForm />
+      </CardContent>
+    </Card>
   )
 }
 
