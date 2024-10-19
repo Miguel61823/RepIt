@@ -8,22 +8,22 @@ const Features = () => {
 
       <Card className="overflow-hidden flex flex-col h-full bg-blue-600 text-white">
         <CardHeader>
-          <CardTitle className="text-xl font-bold truncate">Personalized Workouts</CardTitle>
-          <CardDescription className="mt-2 text-black dark:text-white text-md">Tailored exercise plans based on your fitness level and goals</CardDescription>
+          <CardTitle className="text-xl font-bold">Personalized Workouts</CardTitle>
+          <CardDescription className="mt-2 text-white text-md">Tailored exercise plans based on your fitness level and goals</CardDescription>
         </CardHeader>
       </Card>
 
       <Card className="overflow-hidden flex flex-col h-full bg-blue-600 text-white">
         <CardHeader>
-          <CardTitle className="text-xl font-bold truncate">Nutrition Tracking</CardTitle>
-          <CardDescription className="mt-2 text-black dark:text-white text-md">Log your meals and track your calorie intake effortlessly</CardDescription>
+          <CardTitle className="text-xl font-bold">Nutrition Tracking</CardTitle>
+          <CardDescription className="mt-2 text-white text-md">Log your meals and track your calorie intake effortlessly</CardDescription>
         </CardHeader>
       </Card>
 
       <Card className="overflow-hidden flex flex-col h-full bg-blue-600 text-white">
         <CardHeader>
-          <CardTitle className="text-xl font-bold truncate">Progress Analytics</CardTitle>
-          <CardDescription className="mt-2 text-black dark:text-white text-md">Visualize your fitness journey with detailed progress reports</CardDescription>
+          <CardTitle className="text-xl font-bold">Progress Analytics</CardTitle>
+          <CardDescription className="mt-2 text-white text-md">Visualize your fitness journey with detailed progress reports</CardDescription>
         </CardHeader>
       </Card>
 

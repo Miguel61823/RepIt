@@ -52,7 +52,7 @@ const InsertCard = () => {
     <Card className="overflow-hidden flex flex-col h-full">
       <CardHeader className="bg-blue-600 text-white">
         <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
-        <CardDescription className="mt-1 text-white ">hiii</CardDescription>
+        <CardDescription className="mt-1 text-white ">Complete this Form</CardDescription>
       </CardHeader>
       <CardContent className="p-4 flex-grow">
         <WorkoutForm />
@@ -84,7 +84,7 @@ const WorkoutCard = ({
                   {exercise.sets.map((set, index) => (
                     <li key={index} className="text-xs">
                       Set {index + 1}: {set.reps} reps @ {set.weight}lbs
-                      {set.notes && <span className="ml-2 text-gray-500">{'>'}{set.notes}</span>}
+                      {set.notes && <span className="ml-2 text-gray-500">{'~'} {set.notes}</span>}
                     </li>
                   ))}
                 </ul>

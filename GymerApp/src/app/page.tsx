@@ -33,9 +33,10 @@ export default function Home() {
             </Link>
           </SignedIn>
         </section>
-        
-        <Features/>
-        <Plans/>
+        <div className='p-10'>
+          <Features/>
+          <Plans/>
+        </div>
       </main>
       <Footer/>
       

@@ -1,10 +1,12 @@
 "use client";
 
 import { workoutFormSchema } from "@/schema/workout"
-import { useForm } from "react-hook-form"
+// import { exerciseFormSchema } from "@/schema/exercise"
+// import { setFormSchema } from "@/schema/set"
+import { useFieldArray, useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormDescription, FormMessage } from "@/components/ui/form"
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -17,8 +19,23 @@ export function WorkoutForm() {
       description: "",
       startTime: "",
       endTime: "",
+      exercises: [{name: "", sets: [{ reps: 0, weight: 0, notes: ""}] }],
     },
   })
+
+  const { fields, append, remove} = useFieldArray({
+    control:form.control,
+    name: "exercises",
+
+  })
+
+  const handleRemove = (index: number) => {
+    remove(index);
+  }
+
+  const handleAppend = () => {
+    append({ name: "", sets: [{ reps: 0, weight: 0, notes: "" }]});
+  }
 
   function onSubmit(values: z.infer<typeof workoutFormSchema>) {
     console.log(values)
@@ -36,7 +53,6 @@ export function WorkoutForm() {
               <FormControl>
                 <Input placeholder="Enter workout title" {...field} />
               </FormControl>
-              <FormDescription>Give your workout a name</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -48,14 +64,13 @@ export function WorkoutForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Describe your workout" {...field} />
+                <Textarea placeholder="Describe your workout (optional)" {...field} />
               </FormControl>
-              <FormDescription>Briefly describe your workout (optional)</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name="startTime"
           render={({ field }) => (
@@ -80,7 +95,34 @@ export function WorkoutForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
+        {fields.map(({id}, index) => (
+          <FormField
+          key={id}
+          control={form.control}
+          name={ `exercises.${index}.name`}
+          render={({ field }) => (
+            <div className="flex items-start justify-center gap-2">
+              <FormItem className="flex-grow">
+                <FormControl>
+                  <Input placeholder="Name" {...field} />
+                </FormControl>
+                <FormMessage className="text-xs" />
+              </FormItem>
+              <Button type="button" onClick={() => handleRemove(index)}>
+                (-)
+              </Button>
+
+            </div>
+        )}
+          />
+        ))}
+        <div className="w-full mt-auto flex justify-between">
+          <Button type="button" onClick={handleAppend} className="text-xs">
+            + Add Exercise
+          </Button>
+        </div>
+        
         <Button type="submit">Submit Workout</Button>
       </form>
     </Form>
