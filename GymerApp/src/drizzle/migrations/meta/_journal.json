@@ -8,6 +8,13 @@
       "when": 1729448560427,
       "tag": "0000_minor_zaladane",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1729450915299,
+      "tag": "0001_shocking_red_wolf",
+      "breakpoints": true
     }
   ]
 }
