@@ -42,7 +42,8 @@ export const SetsTable = pgTable("sets", {
     .references(() => ExercisesTable.exercise_id, { onDelete: "cascade" }),
   reps: integer("reps"),
   weight: integer("weight"),
-  order: integer("order").notNull()
+  order: integer("order").notNull(),
+  notes: text("notes")
   }, 
   table => ({
     exercise_index: index("exercise_index").on(table.exercise_id),

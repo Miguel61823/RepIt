@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Button } from "@/components/ui/button";
 import { WorkoutForm } from "../../../components/forms/WorkoutForm";
+import { db } from '@/drizzle/db';
 
 
 import {
