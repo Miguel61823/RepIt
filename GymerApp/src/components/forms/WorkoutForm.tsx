@@ -111,12 +111,13 @@ export function WorkoutForm() {
             remove={removeExercise}
           />
         ))}
-        
-        <Button type="button" onClick={() => appendExercise({ name: "", sets: [{ reps: 0, weight: 0, notes: "" }] })}>
-          Add Exercise
-        </Button>
-        
-        <Button type="submit">Submit Workout</Button>
+        <div className='flex justify-between'>
+          <Button type="button" onClick={() => appendExercise({ name: "", sets: [{ reps: 0, weight: 0, notes: "" }] })}>
+            Add Exercise
+          </Button>
+          
+          <Button type="submit">Submit Workout</Button>
+        </div>
       </form>
     </Form>
   );
