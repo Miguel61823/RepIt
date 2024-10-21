@@ -85,7 +85,7 @@ export function WorkoutForm() {
                         {field.value? (
                           format(field.value, "PPP")
                         ) : (
-                          <>Choose a date</>
+                          <>Choose completed date</>
                         )}
                       </Button>
                   
