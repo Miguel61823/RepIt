@@ -7,11 +7,11 @@ import { index, pgTable, text, timestamp, uuid, integer } from "drizzle-orm/pg-c
 //   last_name: text("last_name").notNull()
 // });
 
+//!! clerk user id isn't uuid, so user_id must be text
+
 export const WorkoutsTable = pgTable("workout", {
   workout_id: uuid("workout_id").primaryKey().defaultRandom(),
-  user_id: uuid("user_id")
-    .notNull(),
-    // .references(() => MemberTable.clerk_id, { onDelete: "cascade" }),
+  user_id: text("user_id").notNull(),
   title: text("title").notNull(),
   description: text("description").notNull(),
   date_completed: timestamp("date_completed").notNull(),
@@ -25,8 +25,7 @@ export const ExercisesTable = pgTable("exercise", {
   workout_id: uuid("workout_id")
     .notNull()
     .references(() => WorkoutsTable.workout_id, { onDelete: "cascade"}),
-  user_id: uuid("user_id")
-    .notNull(),
+  user_id: text("user_id").notNull(),
     // .references(() => MemberTable.clerk_id, { onDelete: "cascade"}),
   order: integer("order").notNull(),
   }, 

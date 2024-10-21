@@ -12,7 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 
-import { db } from '@/drizzle/db';
+import { createWorkout } from '@/server/api/workouts';
 
 export function WorkoutForm() {
   const form = useForm<z.infer<typeof workoutFormSchema>>({
@@ -30,7 +30,14 @@ export function WorkoutForm() {
   });
 
   async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
-    console.log(values);
+    console.log('...submitting workout form...');
+    const data = await createWorkout(values);
+    console.log('...createWorkout() ran...');
+    if (data?.error) {
+      form.setError("root", {message: "Create Workout Error. :("})
+    }
+    
+
   }
 
   // console.log(form.formState.errors);
