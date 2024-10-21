@@ -29,11 +29,7 @@ export function WorkoutForm() {
     name: "exercises",
   });
 
-<<<<<<< HEAD
-  function onSubmit(values: z.infer<typeof workoutFormSchema>) {
-=======
   async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
->>>>>>> 3a1c62d94ca997280176ef1670f7b20411ffcd9e
     console.log(values);
   }
 
@@ -64,6 +60,44 @@ export function WorkoutForm() {
               <FormControl>
                 <Textarea placeholder="Describe your workout (optional)" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dateCompleted"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel></FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                
+                    <Button
+                      variant="outline"
+                      
+                      className={cn(
+                        "p-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <>Choose completed date</>
+                      )}
+                    </Button>
+                
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar 
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
