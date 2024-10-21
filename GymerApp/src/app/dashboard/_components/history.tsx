@@ -14,6 +14,15 @@ import { Button } from "@/components/ui/button";
 import { WorkoutForm } from "../../../components/forms/WorkoutForm";
 
 
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet"
+
+
 export interface Workout {
   id: number;
   title: string;
@@ -47,19 +56,19 @@ const formatDate = (dateString: string): string => {
   return date.toLocaleDateString('en-US', options);
 };
 
-const InsertCard = () => {
-  return(
-    <Card className="overflow-hidden flex flex-col h-full">
-      <CardHeader className="bg-blue-600 text-white">
-        <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
-        <CardDescription className="mt-1 text-white ">Complete this Form</CardDescription>
-      </CardHeader>
-      <CardContent className="p-4 flex-grow">
-        <WorkoutForm />
-      </CardContent>
-    </Card>
-  )
-}
+// const InsertCard = () => {
+//   return(
+//     <Card className="overflow-hidden flex flex-col h-full">
+//       <CardHeader className="bg-blue-600 text-white">
+//         <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
+//         <CardDescription className="mt-1 text-white ">Complete this Form</CardDescription>
+//       </CardHeader>
+//       <CardContent className="p-4 flex-grow">
+//         <WorkoutForm />
+//       </CardContent>
+//     </Card>
+//   )
+// }
 
 const WorkoutCard = ({
   title,
@@ -191,16 +200,30 @@ const WorkoutHistoryPage = () => {
     <div className="min-h-screen bg-white dark:bg-black">
       <header className="bg-white dark:bg-black shadow">
         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-black dark:text-white">
+          <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
             Workout History
           </h1>
+          <Sheet>
+            <SheetTrigger>
+              <Button variant="ghost">
+                + Add Workout
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="overflow-y-auto no-scrollbar">
+              <SheetHeader>
+                <SheetTitle>New Workout</SheetTitle> 
+                <WorkoutForm/>          
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
+
         </div>
       </header>
       <main>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <InsertCard/>
+              {/* <InsertCard/> */}
               {workouts.map(workout => (
                 <WorkoutCard key={workout.id} {...workout} />
               ))}
