@@ -23,7 +23,7 @@ export function WorkoutForm() {
     name: "exercises",
   });
 
-  function onSubmit(values) {
+  function onSubmit(values: z.infer<typeof workoutFormSchema>) {
     console.log(values);
   }
 
