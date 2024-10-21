@@ -3,13 +3,19 @@ import { workoutFormSchema } from "@/schema/workout";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+
+import { db } from '@/drizzle/db';
 
 export function WorkoutForm() {
-  const form = useForm({
+  const form = useForm<z.infer<typeof workoutFormSchema>>({
     resolver: zodResolver(workoutFormSchema),
     defaultValues: {
       title: "",
@@ -23,9 +29,15 @@ export function WorkoutForm() {
     name: "exercises",
   });
 
+<<<<<<< HEAD
   function onSubmit(values: z.infer<typeof workoutFormSchema>) {
+=======
+  async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
+>>>>>>> 3a1c62d94ca997280176ef1670f7b20411ffcd9e
     console.log(values);
   }
+
+  // console.log(form.formState.errors);
 
   return (
     <Form {...form}>
