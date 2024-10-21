@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import { workoutFormSchema } from "@/schema/workout";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -13,6 +15,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 
 import { createWorkout } from '@/server/api/workouts';
+import { redirect } from 'next/navigation';
 
 export function WorkoutForm() {
   const form = useForm<z.infer<typeof workoutFormSchema>>({
@@ -30,13 +33,12 @@ export function WorkoutForm() {
   });
 
   async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
-    console.log('...submitting workout form...');
     const data = await createWorkout(values);
-    console.log('...createWorkout() ran...');
     if (data?.error) {
       form.setError("root", {message: "Create Workout Error. :("})
     }
     
+    // redirect("/dashboard");
 
   }
 

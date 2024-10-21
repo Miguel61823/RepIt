@@ -1,7 +1,6 @@
-'use client'
+// "use client";
 
-
-import React from "react";
+// import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,11 +8,11 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { WorkoutForm } from "../../../components/forms/WorkoutForm";
-import { db } from '@/drizzle/db';
-
+import { Workout, Exercise, Set, getWorkoutHistory } from "@/server/api/workouts";
+import { formatDate } from "@/lib/utils";
 
 import {
   Sheet,
@@ -21,41 +20,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/components/ui/sheet"
-
-
-export interface Workout {
-  id: number;
-  title: string;
-  description: string;
-  date_completed: string;
-  start_time: string;
-  end_time: string;
-  exercises: Exercise[];
-}
-
-export interface Exercise {
-  e_id: number;
-  name: string;
-  sets: Set[];
-}
-
-export interface Set {
-  reps: number;
-  weight: number;
-  notes: string;
-}
-
-const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = { 
-    weekday: 'long', 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric'
-  };
-  return date.toLocaleDateString('en-US', options);
-};
+} from "@/components/ui/sheet";
 
 // const InsertCard = () => {
 //   return(
@@ -117,85 +82,94 @@ const WorkoutCard = ({
   );
 };
 
-const WorkoutHistoryPage = () => {
+const WorkoutHistoryPage = async () => {
   // Mock data for workouts
-  const workouts: Workout[] = [
-    {
-      id: 1,
-      title: "Chest Day",
-      description: "Focus on bench press progression",
-      date_completed: "2024-10-09",
-      start_time: "07:00:00",
-      end_time: "08:30:00",
-      exercises: [{
-        e_id: 1,
-        name: "Bench Press",
-        sets: [
-          { reps: 5, weight: 225, notes: "Felt strong" },
-          { reps: 5, weight: 235, notes: "Good form" },
-          { reps: 4, weight: 245, notes: "Struggled on last rep" },
-          { reps: 3, weight: 245, notes: "Needed spotter" },
-          { reps: 5, weight: 225, notes: "Finished strong" }
-        ]
-      }]
-    },
-    {
-      id: 2,
-      title: "Leg Day",
-      description: "Squats and front squats for quad development",
-      date_completed: "2024-10-10",
-      start_time: "18:00:00",
-      end_time: "19:45:00",
-      exercises: [
-        {
-          e_id: 2,
-          name: "Front Squat",
-          sets: [
-            { reps: 5, weight: 185, notes: "Warming up" },
-            { reps: 5, weight: 205, notes: "Good depth" },
-            { reps: 5, weight: 225, notes: "Maintaining form" }
-          ]
-        },
-        {
-          e_id: 3,
-          name: "Back Squat",
-          sets: [
-            { reps: 5, weight: 275, notes: "Felt heavy" },
-            { reps: 5, weight: 315, notes: "Personal best" },
-            { reps: 3, weight: 365, notes: "New max!" }
-          ]
-        }
-      ]
-    },
-    {
-      id: 3,
-      title: "Full Body Workout",
-      description: "Mixed exercises for overall strength",
-      date_completed: "2024-10-11",
-      start_time: "12:00:00",
-      end_time: "13:30:00",
-      exercises: [
-        {
-          e_id: 4,
-          name: "Deadlift",
-          sets: [
-            { reps: 5, weight: 315, notes: "Easy warm-up" },
-            { reps: 5, weight: 365, notes: "Good form" },
-            { reps: 3, weight: 405, notes: "Grip started to fail" }
-          ]
-        },
-        {
-          e_id: 5,
-          name: "Pull-ups",
-          sets: [
-            { reps: 10, weight: 0, notes: "Bodyweight" },
-            { reps: 8, weight: 25, notes: "Added weight" },
-            { reps: 6, weight: 45, notes: "Challenging" }
-          ]
-        }
-      ]
-    }
-  ];
+  // const workouts: Workout[] = [
+  //   {
+  //     id: 1,
+  //     title: "Chest Day",
+  //     description: "Focus on bench press progression",
+  //     date_completed: "2024-10-09",
+  //     // start_time: "07:00:00",
+  //     // end_time: "08:30:00",
+  //     exercises: [{
+  //       e_id: 1,
+  //       name: "Bench Press",
+  //       sets: [
+  //         { reps: 5, weight: 225, notes: "Felt strong" },
+  //         { reps: 5, weight: 235, notes: "Good form" },
+  //         { reps: 4, weight: 245, notes: "Struggled on last rep" },
+  //         { reps: 3, weight: 245, notes: "Needed spotter" },
+  //         { reps: 5, weight: 225, notes: "Finished strong" }
+  //       ]
+  //     }]
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Leg Day",
+  //     description: "Squats and front squats for quad development",
+  //     date_completed: "2024-10-10",
+  //     // start_time: "18:00:00",
+  //     // end_time: "19:45:00",
+  //     exercises: [
+  //       {
+  //         e_id: 2,
+  //         name: "Front Squat",
+  //         sets: [
+  //           { reps: 5, weight: 185, notes: "Warming up" },
+  //           { reps: 5, weight: 205, notes: "Good depth" },
+  //           { reps: 5, weight: 225, notes: "Maintaining form" }
+  //         ]
+  //       },
+  //       {
+  //         e_id: 3,
+  //         name: "Back Squat",
+  //         sets: [
+  //           { reps: 5, weight: 275, notes: "Felt heavy" },
+  //           { reps: 5, weight: 315, notes: "Personal best" },
+  //           { reps: 3, weight: 365, notes: "New max!" }
+  //         ]
+  //       }
+  //     ]
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Full Body Workout",
+  //     description: "Mixed exercises for overall strength",
+  //     date_completed: "2024-10-11",
+  //     // start_time: "12:00:00",
+  //     // end_time: "13:30:00",
+  //     exercises: [
+  //       {
+  //         e_id: 4,
+  //         name: "Deadlift",
+  //         sets: [
+  //           { reps: 5, weight: 315, notes: "Easy warm-up" },
+  //           { reps: 5, weight: 365, notes: "Good form" },
+  //           { reps: 3, weight: 405, notes: "Grip started to fail" }
+  //         ]
+  //       },
+  //       {
+  //         e_id: 5,
+  //         name: "Pull-ups",
+  //         sets: [
+  //           { reps: 10, weight: 0, notes: "Bodyweight" },
+  //           { reps: 8, weight: 25, notes: "Added weight" },
+  //           { reps: 6, weight: 45, notes: "Challenging" }
+  //         ]
+  //       }
+  //     ]
+  //   }
+  // ];
+
+  // db workout data
+  // const [workouts, setWorkouts] = useState<Promise<Workout[]>>([]);
+  
+  // useEffect(() => {
+  //   setWorkouts(getWorkoutHistory());
+  // }, [workouts])
+
+  const workouts = getWorkoutHistory();
 
   return (
     <div className="min-h-screen bg-white dark:bg-black">
@@ -225,7 +199,7 @@ const WorkoutHistoryPage = () => {
           <div className="px-4 py-6 sm:px-0">
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {/* <InsertCard/> */}
-              {workouts.map(workout => (
+              {(await workouts).map(workout => (
                 <WorkoutCard key={workout.id} {...workout} />
               ))}
             </div>

@@ -33,7 +33,7 @@ export interface Set {
   notes: string;
 }
 
-export async function getWorkoutHistory() {
+export async function getWorkoutHistory(): Promise<Workout[]> {
   const { userId, redirectToSignIn } = auth();
   let workouts: Workout[] = [];
 
