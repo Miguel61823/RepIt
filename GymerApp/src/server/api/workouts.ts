@@ -1,6 +1,6 @@
 "use server";
 
-import "use-server";
+// import "use-server";
 import { z } from "zod";
 import { db } from "@/drizzle/db";
 import { WorkoutsTable, ExercisesTable, SetsTable } from "@/drizzle/schema";
@@ -16,10 +16,12 @@ export async function createWorkout(
 ):Promise<undefined | {error: boolean}> {
   const { userId } = auth();
   const { success, data } = workoutFormSchema.safeParse(dirty);
-
+  // console.log("bro plz run");
   if (!success || userId == null) {
+    // console.log("WELP YOU F'D UP");
     return { error: true };
   }
+  // console.log("WELP GOOD FOR YOU");
 
   const workoutId = uuidv4();
   const {title, description, dateCompleted, exercises} = data;

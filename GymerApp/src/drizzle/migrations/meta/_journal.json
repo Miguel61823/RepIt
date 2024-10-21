@@ -15,6 +15,20 @@
       "when": 1729450915299,
       "tag": "0001_shocking_red_wolf",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1729487691651,
+      "tag": "0002_gorgeous_shriek",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1729487750801,
+      "tag": "0003_good_pride",
+      "breakpoints": true
     }
   ]
 }
