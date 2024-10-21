@@ -1,5 +1,5 @@
 import { index, pgTable, text, timestamp, uuid, integer } from "drizzle-orm/pg-core";
-
+import { relations } from "drizzle-orm";
 // export const MemberTable = pgTable("member", {
 //   clerk_id: varchar("clerk_id", { length: 255 }).primaryKey().notNull(),
 //   email: text("email").notNull(),
@@ -17,7 +17,11 @@ export const WorkoutsTable = pgTable("workout", {
   date_completed: timestamp("date_completed").notNull(),
 }, table => ({
   user_index: index("user_index").on(table.user_id)
-}))
+}));
+
+export const workoutRelations = relations(WorkoutsTable, ({ many }) => ({
+  exercises: many(ExercisesTable),
+}));
 
 export const ExercisesTable = pgTable("exercise", {
   exercise_id: uuid("exercise_id").notNull().primaryKey().defaultRandom(),
@@ -32,7 +36,15 @@ export const ExercisesTable = pgTable("exercise", {
   table => ({
     workout_index: index("workout_index").on(table.workout_id),
   })
-)
+);
+
+export const exerciseRelations = relations(ExercisesTable, ({ one, many }) => ({
+  workout: one(WorkoutsTable, {
+    fields: [ExercisesTable.workout_id],
+    references: [WorkoutsTable.workout_id],
+  }),
+  sets: many(SetsTable)
+}));
 
 export const SetsTable = pgTable("sets", {
   id: uuid("set_id").notNull().primaryKey().defaultRandom(),
@@ -47,4 +59,11 @@ export const SetsTable = pgTable("sets", {
   table => ({
     exercise_index: index("exercise_index").on(table.exercise_id),
   })
-)
+);
+
+export const setRelations = relations(SetsTable, ({ one }) => ({
+  exerise: one(ExercisesTable, {
+    fields: [SetsTable.exercise_id],
+    references: [ExercisesTable.exercise_id],
+  })
+}));

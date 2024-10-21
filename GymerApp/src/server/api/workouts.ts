@@ -1,6 +1,5 @@
 "use server";
 
-// import "use-server";
 import { z } from "zod";
 import { db } from "@/drizzle/db";
 import { WorkoutsTable, ExercisesTable, SetsTable } from "@/drizzle/schema";
@@ -8,8 +7,90 @@ import { workoutFormSchema } from "@/schema/workout";
 import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import { redirect } from "next/navigation";
-// import { and, desc, eq } from "drizzle-orm";
-// import { boolean } from "drizzle-orm/mysql-core";
+
+export interface Workout {
+  id: string;
+  title: string;
+  description: string;
+  date_completed: Date;
+  // start_time: string;
+  // end_time: string;
+  exercises: Exercise[];
+}
+
+export interface Exercise {
+  e_id: string;
+  name: string;
+  order: number;
+  sets: Set[];
+}
+
+export interface Set {
+  set_id: string;
+  reps: number;
+  weight: number;
+  order: number;
+  notes: string;
+}
+
+export async function getWorkoutHistory() {
+  const { userId, redirectToSignIn } = auth();
+  let workouts: Workout[] = [];
+
+  if (userId == null) {
+    redirectToSignIn();
+    return workouts;
+  }
+  const workoutsData = await db.query.WorkoutsTable.findMany({
+    where: ({ user_id }, { eq }) => eq(user_id, userId),
+    orderBy: ({ date_completed }, { desc }) => desc(date_completed),
+    columns: {
+      user_id: false,
+    },
+    with: {
+      exercises: {
+        columns: {
+          workout_id: false,
+          user_id: false,
+        },
+        with: {
+          sets: {
+            columns: {
+              exercise_id: false,
+            },
+          },
+        },
+      },
+    },
+  });
+  
+  workouts = workoutsData.map(({
+    workout_id, title, description, date_completed, exercises
+  }) => (<Workout>{
+    id: workout_id,
+    title: title,
+    description: description,
+    date_completed: date_completed,
+    exercises: exercises.map(({
+      exercise_id, name, order, sets
+    }) => (<Exercise>{
+      e_id: exercise_id,
+      name: name,
+      order: order,
+      sets: sets.map(({
+        id, reps, weight, order, notes
+      }) => <Set>{
+        set_id: id,
+        reps: reps,
+        weight: weight,
+        order: order,
+        notes: notes,
+      })
+    })),
+  }));
+  return workouts;
+};
+
 
 export async function createWorkout(
   dirty: z.infer<typeof workoutFormSchema>

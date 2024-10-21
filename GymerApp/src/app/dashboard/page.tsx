@@ -19,7 +19,7 @@ export default function Dashboard() {
 
         
         {/* <Metrics/ > */}
-        <HistoryList/>
+        <HistoryList />
       </div>
       <Footer/>
     </div>
