@@ -3,13 +3,19 @@ import { workoutFormSchema } from "@/schema/workout";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
+import { cn } from "@/lib/utils";
+import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+
+import { db } from '@/drizzle/db';
 
 export function WorkoutForm() {
-  const form = useForm({
+  const form = useForm<z.infer<typeof workoutFormSchema>>({
     resolver: zodResolver(workoutFormSchema),
     defaultValues: {
       title: "",
@@ -23,9 +29,11 @@ export function WorkoutForm() {
     name: "exercises",
   });
 
-  function onSubmit(values) {
+  async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
     console.log(values);
   }
+
+  // console.log(form.formState.errors);
 
   return (
     <Form {...form}>
@@ -52,6 +60,46 @@ export function WorkoutForm() {
               <FormControl>
                 <Textarea placeholder="Describe your workout (optional)" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="dateCompleted"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel></FormLabel>
+              <Popover>
+                <div className=" gap-4 align-middle">
+                  <PopoverTrigger asChild>
+                  
+                      <Button
+                        variant="outline"
+                        
+                        className={cn(
+                          "p-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <>Choose a date</>
+                        )}
+                      </Button>
+                  
+                  </PopoverTrigger>
+                </div>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar 
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
