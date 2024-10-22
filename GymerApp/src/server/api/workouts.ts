@@ -118,23 +118,25 @@ export async function createWorkout(
 
   // Nested to be able to insert exercise sets into table easily
   // TODO: add safeParse for exercises and sets
-  exercises.forEach(async (exercise, e_index) => {
+  let e_index = 1;
+  exercises.forEach(async (exercise) => {
     const exerciseId = uuidv4();
     await db.insert(ExercisesTable).values({
-        exercise_id: exerciseId,
-        name: exercise.name,
-        workout_id: workoutId,
-        user_id: userId,
-        order: e_index
-      });
-    exercise.sets.forEach(async (set, set_index) => {
+      exercise_id: exerciseId,
+      name: exercise.name,
+      workout_id: workoutId,
+      user_id: userId,
+      order: e_index++
+    });
+    let set_index = 1;
+    exercise.sets.forEach(async (set) => {
       const setId = uuidv4();
       await db.insert(SetsTable).values({
         id: setId,
         exercise_id: exerciseId,
         reps: set.reps,
         weight: set.weight,
-        order: set_index,
+        order: set_index++,
         notes: set.notes
       });
     });
