@@ -9,6 +9,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { WorkoutForm } from "../../../components/forms/WorkoutForm";
 import { Workout, Exercise, Set, getWorkoutHistory } from "@/server/api/workouts";
@@ -73,9 +82,31 @@ const WorkoutCard = ({
           <Button>
             Edit
           </Button>
-          <Button variant="destructive">
-            Delete
-          </Button>
+          <Dialog>
+            <DialogTrigger>
+              <Button variant="destructive">
+                Delete
+              </Button>
+              </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                <DialogDescription>
+                  This action cannot be undone. This will permanently delete your workout data from our servers.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex w-full justify-between px-24">
+                <Button>
+                  Yes, I am sure
+                </Button>
+                <DialogClose asChild>
+                  <Button type="button">
+                    Cancel
+                  </Button>
+                </DialogClose>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardFooter>
     </Card>
