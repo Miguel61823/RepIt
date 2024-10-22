@@ -7,6 +7,7 @@ import { workoutFormSchema } from "@/schema/workout";
 import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import { redirect } from "next/navigation";
+import { eq } from "drizzle-orm";
 
 export interface Workout {
   id: string;
@@ -150,6 +151,13 @@ export async function updateWorkout() {
   
 }
 
-export async function deleteWorkout() {
-
+export async function deleteWorkout(deletedWorkoutId: string): Promise<undefined | { error: boolean }> {
+  try {
+    await db.delete(WorkoutsTable).where(eq(WorkoutsTable.workout_id, deletedWorkoutId));
+    redirect('/dashboard');
+    
+  } catch (error) {
+    console.error("Error deleting workout:", error);
+    return { error: true };
+  }
 }
