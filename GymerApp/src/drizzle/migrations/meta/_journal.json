@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1729810789208,
-      "tag": "0000_aspiring_excalibur",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1729810825891,
-      "tag": "0001_little_iron_man",
+      "when": 1729813612244,
+      "tag": "0000_modern_stephen_strange",
       "breakpoints": true
     }
   ]
