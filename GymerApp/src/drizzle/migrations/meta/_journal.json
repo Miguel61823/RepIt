@@ -5,29 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1729448560427,
-      "tag": "0000_minor_zaladane",
+      "when": 1729810789208,
+      "tag": "0000_aspiring_excalibur",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1729450915299,
-      "tag": "0001_shocking_red_wolf",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1729487691651,
-      "tag": "0002_gorgeous_shriek",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1729487750801,
-      "tag": "0003_good_pride",
+      "when": 1729810825891,
+      "tag": "0001_little_iron_man",
       "breakpoints": true
     }
   ]

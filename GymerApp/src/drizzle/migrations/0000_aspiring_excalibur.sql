@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS "exercise" (
 	"exercise_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"workout_id" uuid NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
@@ -11,12 +11,13 @@ CREATE TABLE IF NOT EXISTS "sets" (
 	"exercise_id" uuid NOT NULL,
 	"reps" integer,
 	"weight" integer,
-	"order" integer NOT NULL
+	"order" integer NOT NULL,
+	"notes" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "workout" (
 	"workout_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"title" text NOT NULL,
 	"description" text NOT NULL,
 	"date_completed" timestamp NOT NULL

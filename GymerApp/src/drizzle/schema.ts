@@ -1,14 +1,8 @@
 import { index, pgTable, text, timestamp, uuid, integer } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
-// export const MemberTable = pgTable("member", {
-//   clerk_id: varchar("clerk_id", { length: 255 }).primaryKey().notNull(),
-//   email: text("email").notNull(),
-//   first_name: text("first_name").notNull(),
-//   last_name: text("last_name").notNull()
-// });
+import { number } from "zod";
 
-//!! clerk user id isn't uuid, so user_id must be text
-
+// Drizzle schema for 'workout' db table
 export const WorkoutsTable = pgTable("workout", {
   workout_id: uuid("workout_id").primaryKey().defaultRandom(),
   user_id: text("user_id").notNull(),
@@ -19,10 +13,12 @@ export const WorkoutsTable = pgTable("workout", {
   user_index: index("user_index").on(table.user_id)
 }));
 
+// Drizzle schema for 'workout' relations ('exercise')
 export const workoutRelations = relations(WorkoutsTable, ({ many }) => ({
   exercises: many(ExercisesTable),
 }));
 
+// Drizzle schema for 'exercise' db table
 export const ExercisesTable = pgTable("exercise", {
   exercise_id: uuid("exercise_id").notNull().primaryKey().defaultRandom(),
   name: text("name").notNull(),
@@ -30,7 +26,6 @@ export const ExercisesTable = pgTable("exercise", {
     .notNull()
     .references(() => WorkoutsTable.workout_id, { onDelete: "cascade"}),
   user_id: text("user_id").notNull(),
-    // .references(() => MemberTable.clerk_id, { onDelete: "cascade"}),
   order: integer("order").notNull(),
   }, 
   table => ({
@@ -38,6 +33,7 @@ export const ExercisesTable = pgTable("exercise", {
   })
 );
 
+// Drizzle schema for 'exercise' relations ('workout', 'sets')
 export const exerciseRelations = relations(ExercisesTable, ({ one, many }) => ({
   workout: one(WorkoutsTable, {
     fields: [ExercisesTable.workout_id],
@@ -46,6 +42,7 @@ export const exerciseRelations = relations(ExercisesTable, ({ one, many }) => ({
   sets: many(SetsTable)
 }));
 
+// Drizzle schema for 'sets' db table
 export const SetsTable = pgTable("sets", {
   id: uuid("set_id").notNull().primaryKey().defaultRandom(),
   exercise_id: uuid("exercise_id")
@@ -61,9 +58,24 @@ export const SetsTable = pgTable("sets", {
   })
 );
 
+// Drizzle schema for 'sets' relations ('exercise')
 export const setRelations = relations(SetsTable, ({ one }) => ({
   exerise: one(ExercisesTable, {
     fields: [SetsTable.exercise_id],
     references: [ExercisesTable.exercise_id],
   })
 }));
+
+// Drizzle schema for 'gym' db table
+export const GymsTable = pgTable("gym", {
+  gym_id: uuid("gym_id").notNull().primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  address: text("address").notNull(),
+  open_time: integer("open_time").notNull(),
+  close_time: integer("close_time").notNull(),
+});
+
+// Drizzle schema for 'gym' relations ('machine') /////////// UNCOMMENT LATER
+// export const gymsRelation = relations(GymsTable, ({ many }) => ({
+//   machines: many(MachinesTable),
+// }))
