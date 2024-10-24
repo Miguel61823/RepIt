@@ -7,7 +7,6 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
@@ -20,41 +19,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose
-} from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
-import { WorkoutForm } from "../../../components/forms/WorkoutForm";
-import { Workout, getWorkoutHistory, deleteWorkout } from "@/server/api/workouts";
+import { Workout, deleteWorkout } from "@/server/api/workouts";
 import { formatDate } from "@/lib/utils";
 
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
-// const InsertCard = () => {
-//   return(
-//     <Card className="overflow-hidden flex flex-col h-full">
-//       <CardHeader className="bg-blue-600 text-white">
-//         <CardTitle className="text-xl font-bold truncate">Add New Workout</CardTitle>
-//         <CardDescription className="mt-1 text-white ">Complete this Form</CardDescription>
-//       </CardHeader>
-//       <CardContent className="p-4 flex-grow">
-//         <WorkoutForm />
-//       </CardContent>
-//     </Card>
-//   )
-// }
 
 export const WorkoutCard = ({
   id,

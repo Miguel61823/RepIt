@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { workoutFormSchema } from "@/schema/workout";
-import { useFieldArray, useForm } from "react-hook-form";
+import { useFieldArray, useForm, Control } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,14 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 
 import { createWorkout } from '@/server/api/workouts';
-import { redirect } from 'next/navigation';
+
+
+// Define the props for the ExerciseFieldArray component
+interface ExerciseFieldArrayProps {
+  nestIndex: number;
+  control: Control<z.infer<typeof workoutFormSchema>>;
+  remove: (index: number) => void;
+}
 
 export function WorkoutForm() {
   const form = useForm<z.infer<typeof workoutFormSchema>>({
@@ -78,7 +85,6 @@ export function WorkoutForm() {
           name="dateCompleted"
           render={({ field }) => (
             <FormItem>
-              <FormLabel></FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                 
@@ -132,7 +138,7 @@ export function WorkoutForm() {
   );
 }
 
-function ExerciseFieldArray({ nestIndex, control, remove }) {
+function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayProps) {
   const { fields, append, remove: removeSet } = useFieldArray({
     control,
     name: `exercises.${nestIndex}.sets`
