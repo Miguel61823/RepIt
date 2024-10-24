@@ -1,1 +1,0 @@
-ALTER TABLE "workout" ALTER COLUMN "user_id" SET DATA TYPE text;
