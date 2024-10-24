@@ -44,12 +44,8 @@ export function WorkoutForm() {
     if (data?.error) {
       form.setError("root", {message: "Create Workout Error. :("})
     }
-    
-    // redirect("/dashboard");
-
+    window.dispatchEvent(new Event('closeWorkoutSheet'));
   }
-
-  // console.log(form.formState.errors);
 
   return (
     <Form {...form}>

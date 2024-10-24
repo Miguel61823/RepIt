@@ -1,21 +1,10 @@
 // "use client";
 
-// import React, { useEffect, useState } from "react";
+// import React from "react";
 
-import { Button } from "@/components/ui/button";
-import { WorkoutForm } from "../../../components/forms/WorkoutForm";
 import { getWorkoutHistory } from "@/server/api/workouts";
 import { WorkoutCard } from "./workoutcard";
-
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { SheetWrapper } from "./newWorkoutSheet";
 
 const WorkoutHistoryPage = async () => {
 
@@ -28,32 +17,7 @@ const WorkoutHistoryPage = async () => {
           <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
             Workout History
           </h1>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost">
-                + Add Workout
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="overflow-y-auto no-scrollbar">
-              <SheetHeader>
-                <SheetTitle>New Workout</SheetTitle>           
-              </SheetHeader>
-              <WorkoutForm/>            
-              {/* <SheetClose asChild>
-                <Button>
-                  Submit
-                </Button>
-              </SheetClose> */}
-            </SheetContent>            
-{/* 
-            <SheetFooter>
-              <Button>
-                  hi
-              </Button>
-  
-            </SheetFooter> */}
-          </Sheet>
-
+          <SheetWrapper />
         </div>
       </header>
       <main>
