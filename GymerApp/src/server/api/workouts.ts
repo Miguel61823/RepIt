@@ -2,12 +2,15 @@
 
 import { z } from "zod";
 import { db } from "@/drizzle/db";
-import { WorkoutsTable, ExercisesTable, SetsTable } from "@/drizzle/schema";
-import { workoutFormSchema } from "@/schema/workout";
+import { workoutFormSchema } from "@/FormSchema/workout";
 import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+
+import { WorkoutsTable } from "@/drizzle/schema/tables/workout";
+import { ExercisesTable } from "@/drizzle/schema/tables/exercise";
+import { SetsTable } from "@/drizzle/schema/tables/set";
 
 export interface Workout {
   id: string;
