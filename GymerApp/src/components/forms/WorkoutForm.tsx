@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { workoutFormSchema } from "@/schema/workout";
+import { workoutFormSchema } from "@/FormSchema/workout";
 import { useFieldArray, useForm, Control } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
