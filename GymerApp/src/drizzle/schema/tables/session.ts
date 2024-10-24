@@ -10,5 +10,5 @@ export const SessionsTable = pgTable('session', {
   date: timestamp('date').notNull(),
   createdAt: timestamp('created_at').notNull().defaultNow(),
 }, (table) => ({
-  user_index: index('user_index').on(table.user_id),
+  user_session_index: index('user_session_index').on(table.user_id),
 }));
