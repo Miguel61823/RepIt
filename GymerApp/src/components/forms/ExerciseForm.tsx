@@ -1,6 +1,6 @@
 "use client";
 
-import { exerciseFormSchema } from "@/schema/exercise"
+import { exerciseFormSchema } from "@/FormSchema/exercise"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
