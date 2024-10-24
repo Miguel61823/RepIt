@@ -6,8 +6,8 @@ import { WorkoutsTable, ExercisesTable, SetsTable } from "@/drizzle/schema";
 import { workoutFormSchema } from "@/schema/workout";
 import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
-import { redirect } from "next/navigation";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export interface Workout {
   id: string;
@@ -98,17 +98,14 @@ export async function createWorkout(
 ):Promise<undefined | {error: boolean}> {
   const { userId } = auth();
   const { success, data } = workoutFormSchema.safeParse(dirty);
-  // console.log("bro plz run");
+
   if (!success || userId == null) {
-    // console.log("WELP YOU F'D UP");
     return { error: true };
   }
-  // console.log("WELP GOOD FOR YOU");
 
   const workoutId = uuidv4();
   const {title, description, dateCompleted, exercises} = data;
 
-  // double check db type for date_completed
   await db.insert(WorkoutsTable).values({
       workout_id: workoutId,
       user_id: userId,
@@ -143,8 +140,8 @@ export async function createWorkout(
     });
   });
 
-  redirect('/dashboard');
-
+  revalidatePath('/dashboard');
+  return undefined;
 }
 
 export async function updateWorkout() {
@@ -154,8 +151,9 @@ export async function updateWorkout() {
 export async function deleteWorkout(deletedWorkoutId: string): Promise<undefined | { error: boolean }> {
   try {
     await db.delete(WorkoutsTable).where(eq(WorkoutsTable.workout_id, deletedWorkoutId));
-    redirect('/dashboard');
-    
+    revalidatePath('/dashboard');
+    return undefined;
+
   } catch (error) {
     console.error("Error deleting workout:", error);
     return { error: true };
