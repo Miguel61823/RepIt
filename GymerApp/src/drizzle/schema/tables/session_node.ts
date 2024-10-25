@@ -4,7 +4,7 @@ import { nodeType } from "../types";
 
 export const NodesTable = pgTable('nodes', {
   id: uuid('id').primaryKey().defaultRandom(),
-  sessionId: uuid('session_id').notNull().references(() => SessionsTable.id),
+  sessionId: uuid('session_id').notNull().references(() => SessionsTable.session_id),
   name: text('name').notNull(),
   type: nodeType('type').notNull(),
   path: text('path').array().notNull(),
