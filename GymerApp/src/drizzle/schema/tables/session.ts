@@ -8,5 +8,5 @@ export const SessionsTable = pgTable('session', {
   type: text('type').notNull(),
   date: timestamp('date').notNull(),
 }, (table) => ({
-  user_index: index('user_index').on(table.user_id),
+  user_session_index: index('user_session_index').on(table.user_id),
 }));

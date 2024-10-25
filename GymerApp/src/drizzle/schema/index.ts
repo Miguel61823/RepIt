@@ -3,6 +3,7 @@ export * from './tables/exercise';
 export * from './tables/set';
 export * from './tables/session';
 export * from './tables/session_node';
+export * from './tables/gym';
 
 export * from './relations/workout';
 export * from './relations/exercise';
