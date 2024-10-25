@@ -4,7 +4,6 @@ import { z } from "zod";
 import { db } from "@/drizzle/db";
 import { workoutFormSchema } from "@/FormSchema/workout";
 import { auth } from "@clerk/nextjs/server";
-import { v4 as uuidv4 } from "uuid";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -107,42 +106,41 @@ export async function createWorkout(
     return { error: true };
   }
 
-  const workoutId = uuidv4();
   const {title, description, dateCompleted, exercises} = data;
 
-  await db.insert(WorkoutsTable).values({
-      workout_id: workoutId,
+  const workoutResult = await db.insert(WorkoutsTable).values({
       user_id: userId,
       title: title,
       description: description,
       date_completed: dateCompleted
-     });
+     })
+     .returning();
 
-  // Nested to be able to insert exercise sets into table easily
-  // TODO: add safeParse for exercises and sets
-  let e_index = 1;
-  exercises.forEach(async (exercise) => {
-    const exerciseId = uuidv4();
-    await db.insert(ExercisesTable).values({
-      exercise_id: exerciseId,
-      name: exercise.name,
-      workout_id: workoutId,
-      user_id: userId,
-      order: e_index++
-    });
-    let set_index = 1;
-    exercise.sets.forEach(async (set) => {
-      const setId = uuidv4();
-      await db.insert(SetsTable).values({
-        id: setId,
-        exercise_id: exerciseId,
-        reps: set.reps,
-        weight: set.weight,
-        order: set_index++,
-        notes: set.notes
-      });
-    });
-  });
+  const workoutId = workoutResult[0].workout_id;
+
+  const exerciseResults = await db.insert(ExercisesTable).values(
+    exercises.map((exercise, index) => ({
+        name: exercise.name,
+        workout_id: workoutId,
+        user_id: userId,
+        order: index + 1
+    }))
+)
+.returning();
+
+for (let i = 0; i < exerciseResults.length; i++) {
+    const exerciseId = exerciseResults[i].exercise_id;
+    
+    await db.insert(SetsTable).values(
+        exercises[i].sets.map((set, setIndex) => ({
+            exercise_id: exerciseId,
+            reps: set.reps,
+            weight: set.weight,
+            order: setIndex + 1,
+            notes: set.notes
+        }))
+    );
+}
 
   revalidatePath('/dashboard');
   return undefined;
