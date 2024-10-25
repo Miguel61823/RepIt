@@ -92,6 +92,7 @@ export async function getWorkoutHistory(): Promise<Workout[]> {
       })
     })),
   }));
+  
   return workouts;
 };
 

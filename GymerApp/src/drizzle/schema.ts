@@ -1,7 +1,8 @@
+// moved 
 // import { index, pgTable, text, timestamp, uuid, integer } from "drizzle-orm/pg-core";
 // import { relations } from "drizzle-orm";
 
-// // moved 
+// 
 // export const WorkoutsTable = pgTable("workout", {
 //   workout_id: uuid("workout_id").primaryKey().defaultRandom(),
 //   user_id: text("user_id").notNull(),
