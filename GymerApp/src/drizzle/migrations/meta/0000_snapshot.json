@@ -1,5 +1,5 @@
 {
-  "id": "bdeeafbc-1c8d-4da1-9ffe-c7472c9e2bed",
+  "id": "258600c1-3cc7-4a6b-ba8d-c625cabb7e6e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -240,13 +240,6 @@
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
         }
       },
       "indexes": {
@@ -408,7 +401,16 @@
       "checkConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.node_type": {
+      "name": "node_type",
+      "schema": "public",
+      "values": [
+        "group",
+        "metric"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "views": {},

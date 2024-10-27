@@ -1,3 +1,4 @@
+CREATE TYPE "public"."node_type" AS ENUM('group', 'metric');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "exercise" (
 	"exercise_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -27,8 +28,7 @@ CREATE TABLE IF NOT EXISTS "session" (
 	"user_id" text NOT NULL,
 	"name" text NOT NULL,
 	"type" text NOT NULL,
-	"date" timestamp NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"date" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sets" (

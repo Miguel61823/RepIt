@@ -10,3 +10,4 @@ export * from './relations/exercise';
 export * from './relations/set';
 export * from './relations/session';
 export * from './relations/session_node';
+export { nodeType } from './types';
