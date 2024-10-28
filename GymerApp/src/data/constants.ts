@@ -1,4 +1,5 @@
 export const MUSCLE_LIST = [
+  "", // not specified
   "abs",
   "arms",
   "back",

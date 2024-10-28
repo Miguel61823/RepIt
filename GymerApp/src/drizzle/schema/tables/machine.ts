@@ -10,7 +10,8 @@ export const MachinesTable = pgTable("machine", {
     .notNull()
     .references(() => GymsTable.gym_id, { onDelete: "cascade" }),
   name: text("name").notNull(),
-  target_muscle: targetMuscleEnum("target_muscle").notNull()
+  identifer: text("identifier").notNull(),
+  target_muscle: targetMuscleEnum("target_muscle").default("")
 }, (table) => ({
   gym_index: index("gym_index").on(table.gym_id)
 }));
