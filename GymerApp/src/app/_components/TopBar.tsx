@@ -29,7 +29,7 @@ const Topbar = () => {
   }
 
   return ( 
-    <header className="sticky top-0 bg-white dark:bg-black dark:text-white text-black py-4 mx-auto border-b w-full">
+    <header className="z-50 sticky top-0 bg-white dark:bg-black dark:text-white text-black py-4 mx-auto border-b w-full">
     <div className="relative flex items-center">
       <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
       <div className="flex items-center justify-between w-full">
