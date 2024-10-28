@@ -4,6 +4,6 @@ export const GymsTable = pgTable("gym", {
   gym_id: uuid("gym_id").notNull().primaryKey().defaultRandom(),
   name: text("name").notNull(),
   address: text("address").notNull(),
-  open_time: integer("open_time").notNull(),
-  close_time: integer("close_time").notNull(),
+  // open_time: integer("open_time").notNull(),
+  // close_time: integer("close_time").notNull(),
 });
