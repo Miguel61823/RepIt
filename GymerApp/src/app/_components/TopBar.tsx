@@ -29,26 +29,31 @@ const Topbar = () => {
   }
 
   return ( 
-    <header className="bg-white dark:bg-black dark:text-white text-black p-4 ">
-    <div className="container mx-auto flex items-center justify-between">
-      <div className="items-center justify-between">
-        <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
-        <Button variant="link" onClick={handleGymClick}>Gyms</Button>
-      </div>
-      <div className="items-center justify-between">
-        <SignedIn>
-            <UserButton/>
-        </SignedIn>
+    <header className="sticky top-0 bg-white dark:bg-black dark:text-white text-black py-4 mx-auto border-b w-full">
+    <div className="relative flex items-center">
+      <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
+      <div className="flex items-center justify-between w-full">
+          <div className="flex items-center">
+            <Button variant="link" onClick={handleGymClick}>Gyms</Button>
+          </div>
+          <div className="flex items-center">
+            <div className="px-3">
+              <SignedIn>
+                  <UserButton/>
+              </SignedIn>
 
-        <SignedOut>
-          <SignInButton mode="modal">
-            <button className="bg-blue-500 px-4 py-2 rounded-md">
-              Sign In
-            </button>
-          </SignInButton>
-        </SignedOut>
-
-        <ModeToggle/>
+              <SignedOut>
+                <SignInButton mode="modal">
+                  <button className="bg-blue-500 px-4 py-2 rounded-md">
+                    Sign In
+                  </button>
+                </SignInButton>
+              </SignedOut>
+            </div>
+            <div>
+              <ModeToggle/>
+            </div>
+          </div>
       </div>
     </div>
   </header>
