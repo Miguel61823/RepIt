@@ -1,4 +1,5 @@
-CREATE TYPE "public"."node_type" AS ENUM('group', 'metric');--> statement-breakpoint
+CREATE TYPE "public"."muscle_enum" AS ENUM('none', 'abs', 'arms', 'back', 'bicep', 'calves', 'chest', 'core', 'full body', 'hamstrings', 'inner thigh', 'glutes', 'legs', 'lats', 'oblique', 'outer thigh', 'quads', 'shoulders', 'traps', 'triceps');--> statement-breakpoint
+CREATE TYPE "public"."node_type_enum" AS ENUM('group', 'metric');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "exercise" (
 	"exercise_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -10,16 +11,22 @@ CREATE TABLE IF NOT EXISTS "exercise" (
 CREATE TABLE IF NOT EXISTS "gym" (
 	"gym_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
-	"address" text NOT NULL,
-	"open_time" integer NOT NULL,
-	"close_time" integer NOT NULL
+	"address" text NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "machine" (
+	"machine_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"gym_id" uuid NOT NULL,
+	"name" text NOT NULL,
+	"identifier" text NOT NULL,
+	"target_muscle" "muscle_enum" DEFAULT 'none'
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "nodes" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"session_id" uuid NOT NULL,
 	"name" text NOT NULL,
-	"type" "node_type" NOT NULL,
+	"type" "node_type_enum" NOT NULL,
 	"path" text[] NOT NULL
 );
 --> statement-breakpoint
@@ -55,6 +62,12 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "machine" ADD CONSTRAINT "machine_gym_id_gym_gym_id_fk" FOREIGN KEY ("gym_id") REFERENCES "public"."gym"("gym_id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "nodes" ADD CONSTRAINT "nodes_session_id_session_id_fk" FOREIGN KEY ("session_id") REFERENCES "public"."session"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
@@ -67,6 +80,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "workout_index" ON "exercise" USING btree ("workout_id");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "gym_index" ON "machine" USING btree ("gym_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "path_index" ON "nodes" USING btree ("path");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "session_index" ON "nodes" USING btree ("session_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "user_session_index" ON "session" USING btree ("user_id");--> statement-breakpoint
