@@ -1,5 +1,5 @@
 {
-  "id": "258600c1-3cc7-4a6b-ba8d-c625cabb7e6e",
+  "id": "899327c6-8d96-4255-b61f-64679f94abe9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -98,22 +98,84 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "open_time": {
-          "name": "open_time",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "close_time": {
-          "name": "close_time",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
         }
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {}
+    },
+    "public.machine": {
+      "name": "machine",
+      "schema": "",
+      "columns": {
+        "machine_id": {
+          "name": "machine_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "gym_id": {
+          "name": "gym_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "target_muscle": {
+          "name": "target_muscle",
+          "type": "muscle_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'none'"
+        }
+      },
+      "indexes": {
+        "gym_index": {
+          "name": "gym_index",
+          "columns": [
+            {
+              "expression": "gym_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "machine_gym_id_gym_gym_id_fk": {
+          "name": "machine_gym_id_gym_gym_id_fk",
+          "tableFrom": "machine",
+          "tableTo": "gym",
+          "columnsFrom": [
+            "gym_id"
+          ],
+          "columnsTo": [
+            "gym_id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
@@ -143,7 +205,7 @@
         },
         "type": {
           "name": "type",
-          "type": "node_type",
+          "type": "node_type_enum",
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true
@@ -402,8 +464,34 @@
     }
   },
   "enums": {
-    "public.node_type": {
-      "name": "node_type",
+    "public.muscle_enum": {
+      "name": "muscle_enum",
+      "schema": "public",
+      "values": [
+        "none",
+        "abs",
+        "arms",
+        "back",
+        "bicep",
+        "calves",
+        "chest",
+        "core",
+        "full body",
+        "hamstrings",
+        "inner thigh",
+        "glutes",
+        "legs",
+        "lats",
+        "oblique",
+        "outer thigh",
+        "quads",
+        "shoulders",
+        "traps",
+        "triceps"
+      ]
+    },
+    "public.node_type_enum": {
+      "name": "node_type_enum",
       "schema": "public",
       "values": [
         "group",
