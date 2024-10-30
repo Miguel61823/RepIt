@@ -1,3 +1,4 @@
+import { SessionForm } from "@/components/forms/SessionForm";
 import Topbar from "../_components/TopBar";
 
 const SessionsPage = () => {
@@ -5,7 +6,7 @@ const SessionsPage = () => {
     <div>
       <Topbar />
       <div>
-        {/* <SessionForm /> */}
+        <SessionForm />
         {/* <SessionsList /> */}
       </div>
     </div>

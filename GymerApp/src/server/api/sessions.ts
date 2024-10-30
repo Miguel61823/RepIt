@@ -17,10 +17,14 @@ export interface Session {
   nodes: Node[];
 }
 
+type NodeType = 'Group' | 'Metric';
+
 export interface Node {
   id: string;
   name: string;
-  type: string;
+  type: NodeType;
+  value?: number;
+  unit?: string;
   path: string[];
 }
 
