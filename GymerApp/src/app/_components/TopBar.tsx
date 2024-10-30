@@ -27,6 +27,14 @@ const Topbar = () => {
       router.push('/')
     }
   }
+  const handleSessionClick = () => {
+    if (isSignedIn) {
+      //redirect to gyms page
+      router.push('/sessions')
+    } else {
+      router.push('/')
+    }
+  }
 
   return ( 
     <header className="z-50 sticky top-0 bg-white dark:bg-black dark:text-white text-black py-4 mx-auto border-b w-full">
@@ -35,6 +43,7 @@ const Topbar = () => {
       <div className="flex items-center justify-between w-full">
           <div className="flex items-center">
             <Button variant="link" onClick={handleGymClick}>Gyms</Button>
+            <Button variant="link" onClick={handleSessionClick}>Sessions</Button>
           </div>
           <div className="flex items-center">
             <div className="px-3">

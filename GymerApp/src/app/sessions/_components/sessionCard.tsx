@@ -47,7 +47,7 @@ export const SessionCard = ({
         <CardDescription className="mt-1 text-white text-sm font-thin">{formatDate(date)}</CardDescription>
       </CardHeader>
       <CardContent className="p-4 flex-grow mb-6">
-        <p className="text-sm mb-3">{session_data}</p>
+        <p className="text-sm mb-3 whitespace-pre-wrap">{session_data}</p>
       </CardContent>
       <CardFooter>
         <div className="w-full flex justify-between">
