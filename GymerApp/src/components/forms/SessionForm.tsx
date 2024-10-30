@@ -11,10 +11,70 @@ import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
+
 import { createSession } from '@/server/api/sessions';
+
 import { cn } from '@/lib/utils';
 import { Textarea } from '../ui/textarea';
 
+// Types for the workout data structure
+type WorkoutValue = string | WorkoutObject;
+type WorkoutObject = {
+    [key: string]: WorkoutValue;
+};
+const parseWorkoutText = (text: string): WorkoutObject => {
+  const lines = text.split('\n');
+  const root: WorkoutObject = {};
+  const stack: [WorkoutObject, number][] = [[root, -1]];
+  let lastParent: WorkoutObject | null = null;
+  let lastKey: string | null = null;
+  let lastLevel: number = -1;
+
+  lines.forEach(line => {
+    if (!line.trim()) return;
+
+    const level = Math.floor(line.search(/\S|$/) / 4);
+    const content = line.trim();
+
+    // Handle non-colon lines (notes)
+    if (!content.includes(':') && lastParent && lastKey && level > lastLevel) {
+      const currentValue = lastParent[lastKey];
+      if (typeof currentValue === 'string') {
+        lastParent[lastKey] = [currentValue, content];
+      } else if (Array.isArray(currentValue)) {
+        currentValue.push(content);
+      }
+      return;
+    }
+
+    // Pop stack until we find the appropriate parent
+    while (stack.length > 1 && stack[stack.length - 1][1] >= level) {
+      stack.pop();
+    }
+
+    const parent = stack[stack.length - 1][0];
+
+    if (content.includes(':')) {
+      // This is a key-value pair
+      const [key, ...valueParts] = content.split(':');
+      const value = valueParts.join(':').trim();
+      parent[key.trim()] = value;
+      lastParent = parent;
+      lastKey = key.trim();
+      lastLevel = level;
+    } else {
+      // This is a new object
+      const newObj: WorkoutObject = {};
+      parent[content] = newObj;
+      stack.push([newObj, level]);
+      lastParent = null;
+      lastKey = null;
+      lastLevel = -1;
+    }
+  });
+
+  return root;
+};
 
 export function SessionForm() {
   const form = useForm<z.infer<typeof sessionFormSchema>>({
@@ -23,11 +83,40 @@ export function SessionForm() {
       name: "",
       type: "",
       date: new Date(),
+      data: ""
     },
   });
 
-  async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
+  const handleTab = (event: React.KeyboardEvent) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      const target = event.target as HTMLTextAreaElement;
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
 
+      const value = target.value;
+      const newValue = value.substring(0, start) + "    " + value.substring(end);
+      
+      form.setValue('data', newValue);
+      
+      // Set cursor position after the inserted spaces
+      setTimeout(() => {
+        target.selectionStart = target.selectionEnd = start + 4;
+      }, 0);
+    }
+  };
+
+  async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
+    console.log(JSON.stringify(values.data));    
+    // convert data from string to jsonb
+    const result = parseWorkoutText(values.data)
+    console.log(JSON.stringify(result, null, 2))
+    // make new Session object
+    // create session in db from new object
+    // const data = await createSession(values);
+    // if (data?.error) {
+    //   form.setError("root", {message: "Create Session Error. :("})
+    // }
   }
 
   return (
@@ -107,17 +196,14 @@ export function SessionForm() {
               <FormControl>
                 <Textarea
                   {...field}
-                  value={typeof field.value === 'string' ? field.value : JSON.stringify(field.value, null, 2)} // Convert JSON to string
-                  onChange={(e) => field.onChange(e.target.value)} // Save as a string
+                  onKeyDown={handleTab}
+                  rows={10}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-
-
         <Button type="submit">Save Session</Button>
       </form>
     </Form>

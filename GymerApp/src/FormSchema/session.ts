@@ -24,6 +24,5 @@ export const sessionFormSchema = z.object({
   date: z.date().refine((date) => date <= new Date(), {
     message: "Date cannot be in the future",
   }),
-
-  data: jsonSchema.optional() // Use the JSON schema for dynamic data
+  data: z.string() // store data as string in form schema, convert to jsonb on submit
 });
