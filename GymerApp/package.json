@@ -10,6 +10,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
+    "db:push": "drizzle-kit push:pg",
     "generate": "drizzle-kit generate:pg",
     "push": "drizzle-kit push:pg",
     "drop": "drizzle-kit drop"
