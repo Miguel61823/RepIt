@@ -1,14 +1,15 @@
-import { SessionForm } from "@/components/forms/SessionForm";
+import Footer from "../_components/Footer";
 import Topbar from "../_components/TopBar";
+import SessionList from "./_components/sessionHistory";
 
 const SessionsPage = () => {
   return ( 
     <div>
       <Topbar />
       <div>
-        <SessionForm />
-        {/* <SessionsList /> */}
+        <SessionList />
       </div>
+      <Footer/>
     </div>
   );
 }

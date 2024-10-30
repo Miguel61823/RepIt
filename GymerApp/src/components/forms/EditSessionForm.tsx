@@ -12,19 +12,25 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 
-import { createSession } from '@/server/api/sessions';
+import { Session, updateSession } from '@/server/api/sessions';
 
 import { cn } from '@/lib/utils';
 import { Textarea } from '../ui/textarea';
 
-export function SessionForm() {
+export function EditSessionForm({
+  session_id,
+  name,
+  type,
+  date,
+  session_data
+}: Session) {
   const form = useForm<z.infer<typeof sessionFormSchema>>({
     resolver: zodResolver(sessionFormSchema),
     defaultValues: {
-      name: "",
-      type: "",
-      date: new Date(),
-      session_data: ""
+      name: name,
+      type: type,
+      date: date,
+      session_data: session_data
     },
   });
 
@@ -48,11 +54,11 @@ export function SessionForm() {
   };
 
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
-    const data = await createSession(values);
-    if (data?.error) {
-      form.setError("root", {message: "Create Session Error. :("})
+    const result = await updateSession(session_id, values);
+    if (result?.error) {
+      form.setError("root", {message: "Edit Session Error. :("})
     }
-    window.dispatchEvent(new Event('closeSessionSheet'));
+    window.dispatchEvent(new Event('closeEditSessionSheet'));
   }
 
   return (
