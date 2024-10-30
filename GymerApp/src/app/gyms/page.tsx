@@ -6,8 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '../_components/TopBar';
 import Footer from '../_components/Footer';
-import { GymSearchBar } from './_components/gymsearchbar';
-import GymListings from './_components/gymlistings';
+import { GymSearchBar } from './_components/gymSearchBar';
+import GymListings from './_components/gymListings';
 import { getGyms } from '@/server/api/gyms';
 import { ConsoleLogWriter } from 'drizzle-orm';
 

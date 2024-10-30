@@ -3,7 +3,7 @@
 // import React from "react";
 
 import { getWorkoutHistory } from "@/server/api/workouts";
-import { WorkoutCard } from "./workoutcard";
+import { WorkoutCard } from "./workoutCard";
 import { SheetWrapper } from "./newWorkoutSheet";
 
 const WorkoutHistoryPage = async () => {
