@@ -1,4 +1,4 @@
-import { index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { index, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 
 export const SessionsTable = pgTable('session', {
@@ -6,7 +6,8 @@ export const SessionsTable = pgTable('session', {
   user_id: text("user_id").notNull(),
   name: text('name').notNull(),
   type: text('type').notNull(),
-  date: timestamp('date').notNull(),
+  date: timestamp('date').notNull().defaultNow(),
+  data: jsonb('data')
 }, (table) => ({
   user_session_index: index('user_session_index').on(table.user_id),
 }));
