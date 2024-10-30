@@ -4,7 +4,7 @@ import { Card, CardHeader, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import GymCard from './gymcard';
+import GymCard from './gymCard';
 
 const mockGyms = [
   {
