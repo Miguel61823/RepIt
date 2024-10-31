@@ -6,7 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GymCard from './gymCard';
 
-const mockGyms = [
+// Mock data - replace with API call
+export const mockGyms = [
   {
     id: 1,
     name: "PowerFit Gym",
@@ -15,7 +16,8 @@ const mockGyms = [
     distance: 0.8,
     phone: "+1 234-567-8900",
     features: ["24/7 Access", "Personal Training", "Group Classes"],
-    imageUrl: "/api/placeholder/400/200"
+    image_url: "/api/placeholder/400/200",
+    google_url: "https://www.google.com/search?q=Fitness+First"
   },
   {
     id: 2,
@@ -25,7 +27,8 @@ const mockGyms = [
     distance: 1.2,
     phone: "+1 234-567-8901",
     features: ["CrossFit Classes", "Open Gym", "Showers"],
-    imageUrl: "/api/placeholder/400/200"
+    image_url: "/api/placeholder/400/200",
+    google_url: "https://www.google.com/search?q=Fitness+First"
   },
   {
     id: 3,
@@ -35,7 +38,8 @@ const mockGyms = [
     distance: 1.5,
     phone: "+1 234-567-8902",
     features: ["Pool", "Sauna", "Cardio Equipment"],
-    imageUrl: "/api/placeholder/400/200"
+    image_url: "/api/placeholder/400/200",
+    google_url: "https://www.google.com/search?q=Fitness+First"
   }
 ];
 

@@ -1,6 +1,6 @@
 import { db } from "@/drizzle/db";
 import { GymsTable } from "@/drizzle/schema/tables/gym";
-import { mockGyms } from "@/app/gyms/page";
+import { mockGyms } from "@/app/gyms/_components/gymListings";
 
 interface Gym {
   gym_id: string;
@@ -19,4 +19,8 @@ export async function getGyms(query: string | undefined) {
   )
   gyms.forEach(gym=>{console.log(gym.name)});
   return gyms;
+};
+
+export async function addGym(gym) {
+
 };
