@@ -8,7 +8,7 @@ import { useDebounce } from "use-debounce";
 export const GymSearchBar = ({ search }: { search?: string }) => {
   const router = useRouter();
   const initRender = useRef(true);
-  const [searchTerm, setSearchTerm] = useState(search);
+  const [searchTerm, setSearchTerm] = useState("");
   const [query] = useDebounce(searchTerm, 500);
   // const [filteredGyms, setFilteredGyms] = useState(mockGyms);
 
