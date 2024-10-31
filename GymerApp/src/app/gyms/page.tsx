@@ -39,16 +39,15 @@ export default async function ListingsPage({
   //     progress: undefined,
   //   });
   // };
- 
-  const gyms = await getGyms(searchTerm);
 
   return (
     <div className="flex flex-col dark:bg-black  bg-white min-h-screen  dark:text-white text-black">
       <Topbar />
 
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
-        <ToastContainer /> {/* Add ToastContainer here */}
-        <GymSearchBar search={searchTerm} />
+        {/* <ToastContainer /> Add ToastContainer here */}
+        <Suspense fallback={<div>Loading...</div>}>
+          <GymSearchBar search={searchTerm} />
 
         {/* {myGym && (
           <Card className="mb-6 bg-green-50 dark:bg-green-950">
@@ -70,8 +69,7 @@ export default async function ListingsPage({
           </Card>
         )} */}
         
-        <Suspense fallback={<div>Loading...</div>}>
-          <GymListings gyms={gyms} />
+          <GymListings search={searchTerm} />
         </Suspense>
       </div>
       <Footer />
