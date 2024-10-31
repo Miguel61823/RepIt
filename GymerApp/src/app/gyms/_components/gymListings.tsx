@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GymCard from './gymCard';
+import { getGyms, Gym } from '@/server/api/gyms';
 
 // Mock data - replace with API call
 export const mockGyms = [
   {
-    id: 1,
+    gym_id: "e6dbfb05-fdf8-416b-9fff-53bba9b50ac7",
+    map_id: "fij8923",
     name: "PowerFit Gym",
     rating: 4.5,
     address: "123 Main St, City",
@@ -17,10 +19,11 @@ export const mockGyms = [
     phone: "+1 234-567-8900",
     features: ["24/7 Access", "Personal Training", "Group Classes"],
     image_url: "/api/placeholder/400/200",
-    google_url: "https://www.google.com/search?q=Fitness+First"
+    website: "https://www.google.com/search?q=PowerFit+Gym"
   },
   {
-    id: 2,
+    gym_id: "9941aa0e-5e54-43dc-a196-2980132350c5",
+    map_id: "234j89v",
     name: "CrossFit Zone",
     rating: 4.8,
     address: "456 Oak Ave, City",
@@ -28,10 +31,11 @@ export const mockGyms = [
     phone: "+1 234-567-8901",
     features: ["CrossFit Classes", "Open Gym", "Showers"],
     image_url: "/api/placeholder/400/200",
-    google_url: "https://www.google.com/search?q=Fitness+First"
+    website: "https://www.google.com/search?q=CrossFit+Zone"
   },
   {
-    id: 3,
+    gym_id: "25549787-33e1-4691-8084-82954dba01d1",
+    map_id: "qwner0cv",
     name: "Fitness First",
     rating: 4.2,
     address: "789 Pine Rd, City",
@@ -39,22 +43,19 @@ export const mockGyms = [
     phone: "+1 234-567-8902",
     features: ["Pool", "Sauna", "Cardio Equipment"],
     image_url: "/api/placeholder/400/200",
-    google_url: "https://www.google.com/search?q=Fitness+First"
+    website: "https://www.google.com/search?q=Fitness+First"
   }
 ];
 
-const GymListings = async ({ gyms }: { gyms: typeof mockGyms }) => {
-  // DB data
-  // const filteredGyms = getGyms(search);
-  
-  // MOCK data
-  const filteredGyms = gyms;
+const GymListings = async ({ search }: { search: string | undefined }) => {
+  // Current 'gyms': MOCK data; LATER: DB data
+  const gyms = await getGyms(search);
 
   return (
     <div>
       <div className="space-y-4">
-        {filteredGyms.map(gym => (
-          <GymCard gym={gym} />
+        {gyms.map(gym => (
+          <GymCard key={gym.gym_id} gym={gym} />
         ))}
       </div>
     </div>
