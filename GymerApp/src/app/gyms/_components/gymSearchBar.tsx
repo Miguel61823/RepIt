@@ -5,7 +5,9 @@ import { Search } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useDebounce } from "use-debounce";
 
-export const GymSearchBar = ({ search }: { search?: string }) => {
+export const GymSearchBar = (
+  { search, searchType }: { search?: string, searchType: string }
+) => {
   const router = useRouter();
   const initRender = useRef(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,17 +20,25 @@ export const GymSearchBar = ({ search }: { search?: string }) => {
       return;
     }
     
-    if (!query) {
-      router.push(`/gyms`)
-    } else {
-      router.push(`/gyms?search=${query}`)
+    if (searchType == "Nearby") {
+      if (!query) {
+        router.push(`/gyms`)
+      } else {
+        router.push(`/gyms?search=${query}`)
+      }
+    } else if (searchType == "Tracked") {
+      if (!query) {
+        router.push(`/gyms`)
+      } else {
+        router.push(`/gyms?search=${query}`)
+      }
     }
   }, [query]);
 
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">Nearby Gyms</h1>
+        <h1 className="text-3xl font-bold">{searchType} Gyms</h1>
         <Search className="relative left-2 top-9 text-gray-400" size={20} />
         <div className="w-full flex items-center">
           <input

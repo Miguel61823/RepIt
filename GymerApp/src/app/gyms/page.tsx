@@ -1,15 +1,14 @@
 import React, { Suspense, useState } from 'react';
-import { Search, MapPin, Star, Phone, Check } from 'lucide-react';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { Search, MapPin, Star, Phone, Check } from 'lucide-react';
+// import { Card, CardHeader, CardContent } from '@/components/ui/card';
+// import { Button } from '@/components/ui/button';
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '../_components/TopBar';
 import Footer from '../_components/Footer';
 import { GymSearchBar } from './_components/gymSearchBar';
 import GymListings from './_components/gymListings';
-import { getGyms } from '@/server/api/gyms';
-import { ConsoleLogWriter } from 'drizzle-orm';
+// import { getGyms } from '@/server/api/gyms';
 
 
 export default async function ListingsPage({
@@ -47,7 +46,7 @@ export default async function ListingsPage({
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
         {/* <ToastContainer /> Add ToastContainer here */}
         <Suspense fallback={<div>Loading...</div>}>
-          <GymSearchBar search={searchTerm} />
+          <GymSearchBar search={searchTerm} searchType={"Nearby"} />
 
         {/* {myGym && (
           <Card className="mb-6 bg-green-50 dark:bg-green-950">
@@ -69,7 +68,7 @@ export default async function ListingsPage({
           </Card>
         )} */}
         
-          <GymListings search={searchTerm} />
+          <GymListings search={searchTerm} searchType={"Nearby"} />
         </Suspense>
       </div>
       <Footer />
