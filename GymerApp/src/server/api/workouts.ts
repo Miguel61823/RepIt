@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import { db } from "@/drizzle/db";
-import { workoutFormSchema } from "@/FormSchema/workout";
+import { workoutFormSchema } from "@/schema/workout";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";

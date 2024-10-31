@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { sessionFormSchema } from "@/FormSchema/session";
+import { sessionFormSchema } from "@/schema/session";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
