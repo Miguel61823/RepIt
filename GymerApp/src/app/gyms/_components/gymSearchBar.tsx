@@ -36,7 +36,7 @@ export const GymSearchBar = ({ search }: { search?: string }) => {
             placeholder="Search gyms by name or features..."
             className="w-full p-3 pl-10 border rounded-lg"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
           />
         </div>
       </div>

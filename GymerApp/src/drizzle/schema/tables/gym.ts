@@ -1,9 +1,12 @@
-import { pgTable, uuid, text, integer } from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, integer, jsonb } from "drizzle-orm/pg-core";
 
 export const GymsTable = pgTable("gym", {
   gym_id: uuid("gym_id").notNull().primaryKey().defaultRandom(),
+  map_id: text("map_id").notNull(),
   name: text("name").notNull(),
   address: text("address").notNull(),
-  // open_time: integer("open_time").notNull(),
-  // close_time: integer("close_time").notNull(),
+  phone: text("phone"),
+  website: text("website").default(`google.com`),
+  image: text("image"),
+  features: jsonb("features").$type<string[]>()
 });
