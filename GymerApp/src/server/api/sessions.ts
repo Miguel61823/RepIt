@@ -6,7 +6,7 @@ import { auth } from "@clerk/nextjs/server";
 import { v4 as uuidv4 } from "uuid";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { sessionFormSchema } from "@/FormSchema/session";
+import { sessionFormSchema } from "@/schema/session";
 import { SessionsTable } from "@/drizzle/schema/index";
 
 export interface Session {
