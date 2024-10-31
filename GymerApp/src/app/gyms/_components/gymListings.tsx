@@ -18,7 +18,7 @@ export const mockGyms = [
     distance: 0.8,
     phone: "+1 234-567-8900",
     features: ["24/7 Access", "Personal Training", "Group Classes"],
-    image_url: "/api/placeholder/400/200",
+    image: "/api/placeholder/400/200",
     website: "https://www.google.com/search?q=PowerFit+Gym"
   },
   {
@@ -30,7 +30,7 @@ export const mockGyms = [
     distance: 1.2,
     phone: "+1 234-567-8901",
     features: ["CrossFit Classes", "Open Gym", "Showers"],
-    image_url: "/api/placeholder/400/200",
+    image: "/api/placeholder/400/200",
     website: "https://www.google.com/search?q=CrossFit+Zone"
   },
   {
@@ -42,12 +42,14 @@ export const mockGyms = [
     distance: 1.5,
     phone: "+1 234-567-8902",
     features: ["Pool", "Sauna", "Cardio Equipment"],
-    image_url: "/api/placeholder/400/200",
+    image: "/api/placeholder/400/200",
     website: "https://www.google.com/search?q=Fitness+First"
   }
 ];
 
-const GymListings = async ({ search }: { search: string | undefined }) => {
+const GymListings = async (
+  { search, searchType }: { search: string | undefined, searchType: string }
+) => {
   // Current 'gyms': MOCK data; LATER: DB data
   const gyms = await getGyms(search);
 
