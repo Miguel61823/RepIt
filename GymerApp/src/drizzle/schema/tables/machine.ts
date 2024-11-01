@@ -4,6 +4,7 @@ import { MUSCLE_LIST } from "@/data/constants";
 
 export const targetMuscleEnum = pgEnum('muscle_enum', MUSCLE_LIST);
 
+// TODO: ADD/REMOVE FIELDS FROM CHAT
 export const MachinesTable = pgTable("machine", {
   machine_id: uuid("machine_id").notNull().primaryKey().defaultRandom(),
   gym_id: uuid("gym_id")

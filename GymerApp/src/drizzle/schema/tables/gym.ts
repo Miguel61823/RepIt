@@ -1,5 +1,6 @@
 import { pgTable, uuid, text, integer, jsonb } from "drizzle-orm/pg-core";
 
+// TODO: ADD FIELDS LISTED IN CHAT
 export const GymsTable = pgTable("gym", {
   gym_id: uuid("gym_id").notNull().primaryKey().defaultRandom(),
   map_id: text("map_id").notNull(),

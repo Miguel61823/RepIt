@@ -6,15 +6,19 @@ import { mockGyms } from "@/app/gyms/_components/gymListings";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from 'next/cache';
 
+// TODO: CHANGE IN GYM DB SCHEMA TOOOOOOOOOOOOOOOOOOO
 export interface Gym {
   gym_id: string;
   map_id: string;
   name: string;
   address: string;
+  lat?: number;  // CHANGE TO NON-OPTIONAL ONCE WE GET IT GOING 
+  long?: number; // CHANGE TO NON-OPTIONAL ONCE WE GET IT GOING
   phone?: string;
   website?: string;
-  image?: string;
-  features?: string[];
+  opening_hours: string; // CHANGE TYPE
+  image?: string; // REMOVE? maybe
+  features?: string[]; // REMOVE? idk maybe
 }
 
 // TODO: FETCH FROM DB INSTEAD OF MOCK DATA
