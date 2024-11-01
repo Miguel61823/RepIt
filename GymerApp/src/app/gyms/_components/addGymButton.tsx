@@ -14,7 +14,7 @@ export const AddGymButton = ({ gym }: { gym: Gym }) => {
     <div>
       <Button
         type="button"
-        className="font-medium text-lg w-full"
+        className="font-medium text-lg bg-violet-600 dark:text-white w-full"
         onClick={async () => addGym(gym)}
       >
         Add Gym

@@ -34,11 +34,11 @@ export const WorkoutCard = ({
 }: Workout) => {
   return (
     <Card className="overflow-hidden flex flex-col h-full">
-      <CardHeader className="bg-blue-600 text-white">
+      <CardHeader className="bg-violet-600 text-white">
         <CardTitle className="text-xl font-bold truncate">{title} {id}</CardTitle>
         <CardDescription className="mt-1 text-white ">{formatDate(date_completed)}</CardDescription>
       </CardHeader>
-      <CardContent className="p-4 flex-grow mb-6">
+      <CardContent className="p-4 flex-grow dark:bg-gray-800 mb-6">
         <p className="text-sm mb-3">{description}</p>
         <div className="space-y-2">
           <ul className="space-y-2">

@@ -41,12 +41,12 @@ export const SessionCard = ({
   }
   return (
     <Card className="overflow-hidden flex flex-col h-full">
-      <CardHeader className="bg-blue-600 text-white">
+      <CardHeader className="bg-violet-600 text-white">
         <CardTitle className="text-xl font-bold">{name}</CardTitle>
         <CardDescription className="mt-1 text-white text-md font-semibold">{type}</CardDescription>
         <CardDescription className="mt-1 text-white text-sm font-thin">{formatDate(date)}</CardDescription>
       </CardHeader>
-      <CardContent className="p-4 flex-grow mb-6">
+      <CardContent className="p-4 flex-grow dark:bg-gray-800 bg-white mb-6">
         <p className="text-sm mb-3 whitespace-pre-wrap">{session_data}</p>
       </CardContent>
       <CardFooter>

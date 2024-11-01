@@ -13,7 +13,7 @@ const Topbar = () => {
   const handleLogoClick = () => {
     if (isSignedIn) {
       //redirect to dashboard
-      router.push('/dashboard')
+      router.push('/')
     } else {
       //redirect to '/'
       router.push('/')
@@ -27,6 +27,15 @@ const Topbar = () => {
       router.push('/')
     }
   }
+  const handleWorkoutClick = () => {
+    if (isSignedIn) {
+      //redirect to dashboard
+      router.push('/dashboard')
+    } else {
+      //redirect to '/'
+      router.push('/')
+    }
+  }
   const handleSessionClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
@@ -37,12 +46,13 @@ const Topbar = () => {
   }
 
   return ( 
-    <header className="z-50 sticky top-0 bg-white dark:bg-black dark:text-white text-black py-4 mx-auto border-b w-full">
-    <div className="relative flex items-center">
+    <header className="z-50 sticky top-0 bg-neutral-200 dark:bg-gray-800 dark:text-white text-black py-4 mx-auto border-b w-full">
+    <div className="relative flex items-center text-violet-600">
       <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
       <div className="flex items-center justify-between w-full">
-          <div className="flex items-center">
+          <div className="flex items-center font-sans">
             <Button variant="link" onClick={handleGymClick}>Gyms</Button>
+            <Button variant="link" onClick={handleWorkoutClick}>Workouts</Button>
             <Button variant="link" onClick={handleSessionClick}>Sessions</Button>
           </div>
           <div className="flex items-center">
@@ -53,7 +63,7 @@ const Topbar = () => {
 
               <SignedOut>
                 <SignInButton mode="modal">
-                  <button className="bg-blue-500 px-4 py-2 rounded-md">
+                  <button className="bg-blue-500 px-4 py-2 rounded-md text-white">
                     Sign In
                   </button>
                 </SignInButton>

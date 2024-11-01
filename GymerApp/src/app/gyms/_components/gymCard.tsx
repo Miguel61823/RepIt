@@ -14,7 +14,7 @@ import { db } from '@/drizzle/db';
 const GymCard = async ({ gym }: { gym: Gym }) => {
   return (
     <div>
-      <Card className="overflow-hidden">
+      <Card className="dark:bg-gray-800 bg-neutral-200 overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* IMAGE */}
           {/* <img
@@ -31,7 +31,7 @@ const GymCard = async ({ gym }: { gym: Gym }) => {
                   {gym.website
                     ?
                     <a
-                      className="ml-1 italic text-gray-600"
+                      className="ml-1 italic dark:text-gray-400 text-gray-600"
                       target="_blank"
                       href={gym.website}>- link</a>
                     : ""
@@ -48,12 +48,12 @@ const GymCard = async ({ gym }: { gym: Gym }) => {
             </CardHeader>
             <CardContent className="p-0 mt-4">
               {/* ADDRESS */}
-              <div className="flex items-start space-x-2 text-gray-600 mb-2">
+              <div className="flex items-start space-x-2 text-gray-600 dark:text-gray-400 mb-2">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
                 <span>{gym.address}</span>
               </div>
               {/* PHONE */}
-              <div className="flex items-center space-x-2 text-gray-600 mb-3">
+              <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mb-3">
                 <Phone size={16} className="flex-shrink-0" />
                 <span>{gym.phone ? gym.phone : ""}</span>
               </div>
