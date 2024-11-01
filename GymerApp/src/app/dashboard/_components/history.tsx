@@ -11,9 +11,9 @@ const WorkoutHistoryPage = async () => {
   const workouts = getWorkoutHistory();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       <header className="bg-white dark:bg-black shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl bg-neutral-200 dark:bg-gray-800 mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
             Workout History
           </h1>

@@ -40,7 +40,7 @@ export default async function ListingsPage({
   // };
 
   return (
-    <div className="flex flex-col dark:bg-black  bg-white min-h-screen  dark:text-white text-black">
+    <div className="flex flex-col dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
       <Topbar />
 
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">

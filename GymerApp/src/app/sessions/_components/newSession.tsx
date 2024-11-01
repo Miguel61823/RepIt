@@ -23,9 +23,11 @@ export function NewSession() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost">
-          + Add Session
-        </Button>
+        <div className=" dark:text-white text-black">
+          <Button variant="ghost">
+            + Add Session
+          </Button>
+        </div>
       </SheetTrigger>
       <SheetContent side="right" className="overflow-y-auto no-scrollbar">
         <SheetHeader>

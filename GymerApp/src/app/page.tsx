@@ -11,13 +11,14 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="dark:bg-black  bg-white min-h-screen  dark:text-white text-black">
+    <div className="dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
 
       <Topbar/>
       <main className="container mx-auto mt-8 px-4">
         <section className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Transform Your Fitness Journey</h2>
-          <p className="text-xl mb-6">Achieve your health goals with personalized workouts plans</p>
+          <h2 className="text-4xl font-bold">Transform Your Fitness Journey</h2>
+          <h3 className="text-violet-600 text-4xl font-bold mb-4">with RepIt</h3>
+          <p className="text-xl mb-6">Achieve your health goals with an easy-to-use workout tracker</p>
           <SignedOut>
             <SignInButton mode="modal">
               <Button variant="landing">
@@ -33,9 +34,9 @@ export default function Home() {
             </Link>
           </SignedIn>
         </section>
-        <div className='p-10'>
+        <div className=' dark:bg-gray-800 bg-neutral-200 bg p-10'>
           <Features/>
-          <Plans/>
+          {/*<Plans/>*/}
         </div>
       </main>
       <Footer/>
