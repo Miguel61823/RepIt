@@ -11,10 +11,10 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
+    <div className="flex flex-col dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
 
       <Topbar/>
-      <main className="container mx-auto mt-8 px-4">
+      <main className="container flex-grow mx-auto mt-8 px-4">
         <section className="text-center mb-12">
           <h2 className="text-4xl font-bold">Transform Your Fitness Journey</h2>
           <h3 className="text-violet-600 text-4xl font-bold mb-4">with RepIt</h3>
