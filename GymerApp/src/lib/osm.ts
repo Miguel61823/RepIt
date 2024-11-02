@@ -60,7 +60,11 @@ interface ProcessedFacility {
 // Main function to find sports facilities within a given radius
 // Takes latitude, longitude, and radius in meters as parameters
 // Returns a promise that resolves to an array of processed facilities
-async function findSportsFacilities(lat: number, lon: number, radiusMeters: number = 2000): Promise<ProcessedFacility[]> {
+async function findSportsFacilities(
+  lat: number,
+  lon: number,
+  radiusMeters: number = 2000
+): Promise<ProcessedFacility[]> {
   // Overpass QL query to find various types of sports facilities
   // Uses 'around' operator for precise radius-based search
   // Searches for different facility types: fitness centers, sports centers, pools, etc.
@@ -159,7 +163,10 @@ async function findSportsFacilities(lat: number, lon: number, radiusMeters: numb
       };
     })
     // Sort facilities by distance from search point
-    .sort((a: ProcessedFacility, b: ProcessedFacility) => a.distanceMeters - b.distanceMeters);
+    .sort((
+      a: ProcessedFacility,
+      b: ProcessedFacility
+    ) => a.distanceMeters - b.distanceMeters);
 
   } catch (error) {
     console.error('Error fetching facilities:', error);
@@ -170,7 +177,12 @@ async function findSportsFacilities(lat: number, lon: number, radiusMeters: numb
 // Helper function to calculate great-circle distance between two points using Haversine formula
 // Takes coordinates of two points and returns distance in meters
 // Handles cases where destination coordinates might be undefined
-function calculateDistance(lat1: number, lon1: number, lat2: number | undefined, lon2: number | undefined): number {
+function calculateDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number | undefined,
+  lon2: number | undefined
+): number {
   if (lat2 === undefined || lon2 === undefined) {
     return Infinity; // Return Infinity for undefined coordinates
   }
