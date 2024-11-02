@@ -25,7 +25,7 @@ export function EditSession(EditedSession: Session) {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="secondary">
+        <Button variant="ghost" className="hover:dark:bg-gray-900 hover:bg-gray-100">
           Edit
         </Button>
       </SheetTrigger>
