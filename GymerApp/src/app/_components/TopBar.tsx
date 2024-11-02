@@ -47,7 +47,7 @@ const Topbar = () => {
   }
 
   return ( 
-    <header className="hidden md:block z-50 sticky top-0 bg-neutral-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
+    <header className="hidden md:block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
     <div className="relative flex items-center text-violet-600 px-4">
       <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
       <div className="flex items-center justify-between w-full">
@@ -66,7 +66,7 @@ const Topbar = () => {
 
               <SignedOut>
                 <SignInButton mode="modal">
-                  <button className="bg-blue-500 px-4 py-2 rounded-md text-white">
+                  <button className="bg-violet-600 px-4 py-2 rounded-md text-white">
                     Sign In
                   </button>
                 </SignInButton>
