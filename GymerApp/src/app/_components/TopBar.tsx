@@ -3,8 +3,9 @@
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from "@clerk/nextjs";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { dark } from '@clerk/themes'
+
 
 const Topbar = () => {
 
@@ -46,8 +47,8 @@ const Topbar = () => {
   }
 
   return ( 
-    <header className="z-50 sticky top-0 bg-neutral-200 dark:bg-gray-800 dark:text-white text-black py-4 mx-auto border-b w-full">
-    <div className="relative flex items-center text-violet-600">
+    <header className="hidden md:block z-50 sticky top-0 bg-neutral-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
+    <div className="relative flex items-center text-violet-600 px-4">
       <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
       <div className="flex items-center justify-between w-full">
           <div className="flex items-center font-sans">
@@ -58,7 +59,9 @@ const Topbar = () => {
           <div className="flex items-center">
             <div className="px-3">
               <SignedIn>
-                  <UserButton/>
+                  <UserButton appearance={{
+        baseTheme: [dark],
+      }}/>
               </SignedIn>
 
               <SignedOut>
