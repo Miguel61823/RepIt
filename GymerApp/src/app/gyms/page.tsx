@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense } from 'react';
 // import { Search, MapPin, Star, Phone, Check } from 'lucide-react';
 // import { Card, CardHeader, CardContent } from '@/components/ui/card';
 // import { Button } from '@/components/ui/button';
@@ -42,7 +42,6 @@ export default async function ListingsPage({
   return (
     <div className="flex flex-col dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
       <Topbar />
-
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
         {/* <ToastContainer /> Add ToastContainer here */}
         <Suspense fallback={<div>Loading...</div>}>

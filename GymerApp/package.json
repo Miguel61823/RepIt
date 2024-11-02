@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.7.2",
+    "@clerk/themes": "^2.1.40",
     "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -36,6 +37,7 @@
     "lucide-react": "^0.451.0",
     "next": "^14.2.15",
     "next-themes": "^0.3.0",
+    "overpass-ts": "^4.3.8",
     "react": "^18.3.1",
     "react-day-picker": "^8.9.1",
     "react-dom": "^18.3.1",
