@@ -23,7 +23,7 @@ export function SheetWrapper() {
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="hover:bg-gray-200 hover:dark:bg-gray-800">
           + Add Workout
         </Button>
       </SheetTrigger>
