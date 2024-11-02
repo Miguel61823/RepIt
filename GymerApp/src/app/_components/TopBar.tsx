@@ -20,10 +20,10 @@ const Topbar = () => {
       router.push('/')
     }
   }
-  const handleGymClick = () => {
+  const handleFacilityClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
-      router.push('/gyms')
+      router.push('/facilities')
     } else {
       router.push('/')
     }
@@ -52,7 +52,7 @@ const Topbar = () => {
       <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
       <div className="flex items-center justify-between w-full">
           <div className="flex items-center font-sans">
-            <Button variant="link" onClick={handleGymClick}>Gyms</Button>
+            <Button variant="link" onClick={handleFacilityClick}>Facilities</Button>
             <Button variant="link" onClick={handleWorkoutClick}>Workouts</Button>
             <Button variant="link" onClick={handleSessionClick}>Sessions</Button>
           </div>

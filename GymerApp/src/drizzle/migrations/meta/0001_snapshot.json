@@ -1,6 +1,6 @@
 {
-  "id": "c98a5d24-cfc7-4fda-9aad-d39101b35cbf",
-  "prevId": "899327c6-8d96-4255-b61f-64679f94abe9",
+  "id": "37424cc7-7619-45f3-822c-8096b86a1d19",
+  "prevId": "0e72006a-dc26-4741-b436-d5cd376c1698",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -76,20 +76,44 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "public.gym": {
-      "name": "gym",
+    "public.facility": {
+      "name": "facility",
       "schema": "",
       "columns": {
-        "gym_id": {
-          "name": "gym_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "osm_id": {
+          "name": "osm_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leisure": {
+          "name": "leisure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lat": {
+          "name": "lat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lon": {
+          "name": "lon",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -98,6 +122,30 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "accessibility": {
+          "name": "accessibility",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "opening_hours": {
+          "name": "opening_hours",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -117,8 +165,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "gym_id": {
-          "name": "gym_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -134,22 +182,14 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "target_muscle": {
-          "name": "target_muscle",
-          "type": "muscle_enum",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'none'"
         }
       },
       "indexes": {
-        "gym_index": {
-          "name": "gym_index",
+        "facility_index": {
+          "name": "facility_index",
           "columns": [
             {
-              "expression": "gym_id",
+              "expression": "facility_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -162,15 +202,15 @@
         }
       },
       "foreignKeys": {
-        "machine_gym_id_gym_gym_id_fk": {
-          "name": "machine_gym_id_gym_gym_id_fk",
+        "machine_facility_id_facility_facility_id_fk": {
+          "name": "machine_facility_id_facility_facility_id_fk",
           "tableFrom": "machine",
-          "tableTo": "gym",
+          "tableTo": "facility",
           "columnsFrom": [
-            "gym_id"
+            "facility_id"
           ],
           "columnsTo": [
-            "gym_id"
+            "facility_id"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -383,32 +423,6 @@
     }
   },
   "enums": {
-    "public.muscle_enum": {
-      "name": "muscle_enum",
-      "schema": "public",
-      "values": [
-        "none",
-        "abs",
-        "arms",
-        "back",
-        "bicep",
-        "calves",
-        "chest",
-        "core",
-        "full body",
-        "hamstrings",
-        "inner thigh",
-        "glutes",
-        "legs",
-        "lats",
-        "oblique",
-        "outer thigh",
-        "quads",
-        "shoulders",
-        "traps",
-        "triceps"
-      ]
-    },
     "public.node_type_enum": {
       "name": "node_type_enum",
       "schema": "public",
