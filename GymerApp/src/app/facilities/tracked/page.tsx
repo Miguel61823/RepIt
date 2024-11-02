@@ -2,8 +2,8 @@ import React, { Suspense } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '@/app/_components/TopBar';
 import Footer from '@/app/_components/Footer';
-import { GymSearchBar } from '../_components/gymSearchBar';
-import GymListings from '../_components/gymListings';
+import { FacilitySearchBar } from '../_components/facilitySearchBar';
+import FacilityListings from '../_components/facilityListings';
 
 
 export default async function ListingsPage({
@@ -26,9 +26,9 @@ export default async function ListingsPage({
 
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
         <Suspense fallback={<div>Loading...</div>}>
-          <GymSearchBar search={searchTerm} searchType={"Tracked"} />
+          <FacilitySearchBar search={searchTerm} searchType={"Tracked"} />
         
-          <GymListings search={searchTerm} searchType={"Tracked"} />
+          <FacilityListings search={searchTerm} searchType={"Tracked"} />
         </Suspense>
       </div>
 

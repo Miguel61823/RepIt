@@ -1,11 +1,11 @@
 import { relations } from "drizzle-orm";
 import { MachinesTable } from "../tables/machine";
-import { GymsTable } from "../tables/gym";
+import { FacilitiesTable } from "../tables/facilities";
 
 
 export const machineRelation = relations(MachinesTable, ({ one }) => ({
-  gym: one(GymsTable, {
-    fields: [MachinesTable.gym_id],
-    references: [GymsTable.gym_id],
+  gym: one(FacilitiesTable, {
+    fields: [MachinesTable.facility_id],
+    references: [FacilitiesTable.facility_id],
   })
 }))

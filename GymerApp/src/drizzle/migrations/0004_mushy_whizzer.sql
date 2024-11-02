@@ -1,1 +1,0 @@
-ALTER TABLE "gym" ADD COLUMN "map_id" text NOT NULL;

@@ -6,8 +6,8 @@ import React, { Suspense } from 'react';
 // import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '../_components/TopBar';
 import Footer from '../_components/Footer';
-import { GymSearchBar } from './_components/gymSearchBar';
-import GymListings from './_components/gymListings';
+import { FacilitySearchBar } from './_components/facilitySearchBar';
+import FacilityListings from './_components/facilityListings';
 // import { getGyms } from '@/server/api/gyms';
 
 
@@ -45,7 +45,7 @@ export default async function ListingsPage({
       <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
         {/* <ToastContainer /> Add ToastContainer here */}
         <Suspense fallback={<div>Loading...</div>}>
-          <GymSearchBar search={searchTerm} searchType={"Nearby"} />
+          <FacilitySearchBar search={searchTerm} searchType={"Nearby"} />
 
         {/* {myGym && (
           <Card className="mb-6 bg-green-50 dark:bg-green-950">
@@ -67,7 +67,7 @@ export default async function ListingsPage({
           </Card>
         )} */}
         
-          <GymListings search={searchTerm} searchType={"Nearby"} />
+          <FacilityListings search={searchTerm} searchType={"Nearby"} />
         </Suspense>
       </div>
       <Footer />

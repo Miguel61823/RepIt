@@ -1,5 +1,5 @@
 {
-  "id": "899327c6-8d96-4255-b61f-64679f94abe9",
+  "id": "0e72006a-dc26-4741-b436-d5cd376c1698",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -76,20 +76,44 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "public.gym": {
-      "name": "gym",
+    "public.facility": {
+      "name": "facility",
       "schema": "",
       "columns": {
-        "gym_id": {
-          "name": "gym_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "osm_id": {
+          "name": "osm_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leisure": {
+          "name": "leisure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lat": {
+          "name": "lat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lon": {
+          "name": "lon",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -98,6 +122,30 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "accessibility": {
+          "name": "accessibility",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "opening_hours": {
+          "name": "opening_hours",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -117,8 +165,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "gym_id": {
-          "name": "gym_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -134,14 +182,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
-        },
-        "target_muscle": {
-          "name": "target_muscle",
-          "type": "muscle_enum",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'none'"
         }
       },
       "indexes": {
@@ -149,7 +189,7 @@
           "name": "gym_index",
           "columns": [
             {
-              "expression": "gym_id",
+              "expression": "facility_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -162,105 +202,17 @@
         }
       },
       "foreignKeys": {
-        "machine_gym_id_gym_gym_id_fk": {
-          "name": "machine_gym_id_gym_gym_id_fk",
+        "machine_facility_id_facility_facility_id_fk": {
+          "name": "machine_facility_id_facility_facility_id_fk",
           "tableFrom": "machine",
-          "tableTo": "gym",
+          "tableTo": "facility",
           "columnsFrom": [
-            "gym_id"
+            "facility_id"
           ],
           "columnsTo": [
-            "gym_id"
+            "facility_id"
           ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "public.nodes": {
-      "name": "nodes",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "session_id": {
-          "name": "session_id",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "type": {
-          "name": "type",
-          "type": "node_type_enum",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "text[]",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {
-        "path_index": {
-          "name": "path_index",
-          "columns": [
-            {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "session_index": {
-          "name": "session_index",
-          "columns": [
-            {
-              "expression": "session_id",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        }
-      },
-      "foreignKeys": {
-        "nodes_session_id_session_id_fk": {
-          "name": "nodes_session_id_session_id_fk",
-          "tableFrom": "nodes",
-          "tableTo": "session",
-          "columnsFrom": [
-            "session_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
           "onUpdate": "no action"
         }
       },
@@ -300,6 +252,13 @@
         "date": {
           "name": "date",
           "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "data": {
+          "name": "data",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }
@@ -464,32 +423,6 @@
     }
   },
   "enums": {
-    "public.muscle_enum": {
-      "name": "muscle_enum",
-      "schema": "public",
-      "values": [
-        "none",
-        "abs",
-        "arms",
-        "back",
-        "bicep",
-        "calves",
-        "chest",
-        "core",
-        "full body",
-        "hamstrings",
-        "inner thigh",
-        "glutes",
-        "legs",
-        "lats",
-        "oblique",
-        "outer thigh",
-        "quads",
-        "shoulders",
-        "traps",
-        "triceps"
-      ]
-    },
     "public.node_type_enum": {
       "name": "node_type_enum",
       "schema": "public",
