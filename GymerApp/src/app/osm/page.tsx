@@ -38,7 +38,6 @@ export default function OSMData() {
   };
   return ( 
     <div>
-      <Topbar/>
       <div className="py-4 max-w-96 justify-center">
         <Slider 
           defaultValue={[range]}

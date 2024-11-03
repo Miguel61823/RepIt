@@ -16,10 +16,6 @@ export default async function ListingsPage({
 }:{
   searchParams: { [key: string]: string | string[] | undefined } 
 }) {
-  // const [searchTerm, setSearchTerm] = useState('');
-  // const [filteredGyms, setFilteredGyms] = useState(mockGyms);
-  // const [myGym, setMyGym] = useState(null);
-
   // console.log(searchParams.search === "string")
   const searchTerm = typeof searchParams.search === "string"
     ? searchParams.search
@@ -40,37 +36,12 @@ export default async function ListingsPage({
   // };
 
   return (
-    <div className="flex flex-col dark:bg-gray-900  bg-white min-h-screen  dark:text-white text-black">
-      <Topbar />
-      <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
-        {/* <ToastContainer /> Add ToastContainer here */}
-        <Suspense fallback={<div>Loading...</div>}>
-          <FacilitySearchBar search={searchTerm} searchType={"Nearby"} />
-
-        {/* {myGym && (
-          <Card className="mb-6 bg-green-50 dark:bg-green-950">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <Check className="text-green-500 mr-2" size={20} />
-                  <span className="font-medium">Your Current Gym: {myGym.name}</span>
-                </div>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => setMyGym(null)}
-                >
-                  Change Gym
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )} */}
-        
-          <FacilityListings search={searchTerm} searchType={"Nearby"} />
-        </Suspense>
-      </div>
-      <Footer />
+    <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
+      {/* <ToastContainer /> Add ToastContainer here */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <FacilitySearchBar search={searchTerm} searchType={"Nearby"} />
+        <FacilityListings search={searchTerm} searchType={"Nearby"} />
+      </Suspense>
     </div>
   );
 }

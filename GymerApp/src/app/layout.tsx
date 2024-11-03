@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import {
   ClerkProvider
 } from '@clerk/nextjs';
+import Topbar from "./_components/TopBar";
+import Footer from "./_components/Footer";
 
 
 const geistSans = localFont({
@@ -33,7 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`flex flex-col dark:bg-gray-900  bg-gray-100 min-h-screen  dark:text-white text-black ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -42,7 +44,11 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkProvider>
-            {children}
+            <Topbar />
+            <div className="flex-grow">
+              {children}
+            </div>
+            <Footer />
           </ClerkProvider>
         </ThemeProvider>
         
