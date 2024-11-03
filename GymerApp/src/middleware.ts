@@ -2,11 +2,11 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
 
 const isPublicRoute = createRouteMatcher(['/'])
 
-export default clerkMiddleware((auth, req) => {
+export default clerkMiddleware(async (auth, req) => {
   if (!auth().userId && !isPublicRoute(req)) {
     // Add custom logic to run before redirecting
 
-    return auth().protect()
+    await auth().protect();
   }
 })
 
