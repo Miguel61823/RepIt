@@ -71,46 +71,14 @@ async function findSportsFacilities(
   const query = `
   [out:json][timeout:25];
   (
-    /* FITNESS FACILITIES */
-    node["leisure"="fitness_centre"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="fitness_centre"](around:${radiusMeters},${lat},${lon});
+    /* FITNESS CENTERS */
+    node["leisure"="fitness_centre"]["name"](around:${radiusMeters},${lat},${lon});
+    way["leisure"="fitness_centre"]["name"](around:${radiusMeters},${lat},${lon});
     
     /* SPORTS CENTERS */
-    node["leisure"="sports_centre"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="sports_centre"](around:${radiusMeters},${lat},${lon});
+    node["leisure"="sports_centre"]["name"](around:${radiusMeters},${lat},${lon});
+    way["leisure"="sports_centre"]["name"](around:${radiusMeters},${lat},${lon});
     
-    /* SPECIFIC SPORTS FACILITIES */
-    node["leisure"="swimming_pool"]["access"!="private"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="swimming_pool"]["access"!="private"](around:${radiusMeters},${lat},${lon});
-    
-    node["leisure"="pitch"]["sport"="tennis"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="pitch"]["sport"="tennis"](around:${radiusMeters},${lat},${lon});
-    
-    node["leisure"="pitch"]["sport"="basketball"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="pitch"]["sport"="basketball"](around:${radiusMeters},${lat},${lon});
-    
-    /* ATHLETIC FACILITIES */
-    node["leisure"="track"]["sport"="athletics"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="track"]["sport"="athletics"](around:${radiusMeters},${lat},${lon});
-    
-    node["leisure"="stadium"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="stadium"](around:${radiusMeters},${lat},${lon});
-    
-    /* RECREATION AREAS */
-    node["leisure"="recreation_ground"]["sport"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="recreation_ground"]["sport"](around:${radiusMeters},${lat},${lon});
-    
-    /* SPECIALIZED TRAINING */
-    node["leisure"="sports_centre"]["sport"~"martial_arts|karate|judo|taekwondo"](around:${radiusMeters},${lat},${lon});
-    node["sport"="climbing"](around:${radiusMeters},${lat},${lon});
-    way["sport"="climbing"](around:${radiusMeters},${lat},${lon});
-    
-    /* YOGA AND WELLNESS */
-    node["leisure"="fitness_centre"]["sport"="yoga"](around:${radiusMeters},${lat},${lon});
-    
-    /* EDUCATIONAL FACILITIES */
-    node["leisure"="sports_centre"]["access"~"public|community"](around:${radiusMeters},${lat},${lon});
-    way["leisure"="sports_centre"]["access"~"public|community"](around:${radiusMeters},${lat},${lon});
   );
   out body center qt;
 `;
@@ -121,6 +89,7 @@ async function findSportsFacilities(
       method: 'POST',
       body: query
     });
+    console.log(response)
 
     // Check if the request was successful
     if (!response.ok) {
