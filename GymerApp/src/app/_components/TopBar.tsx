@@ -1,67 +1,81 @@
-'use client'
+'use client';
 
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { SignedIn, SignedOut, SignInButton, useAuth, UserButton } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
-import { dark } from '@clerk/themes'
-
+import {ModeToggle} from '@/components/mode-toggle';
+import {Button} from '@/components/ui/button';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  useAuth,
+  UserButton,
+} from '@clerk/nextjs';
+import {useRouter} from 'next/navigation';
+import {dark} from '@clerk/themes';
 
 const Topbar = () => {
-
   const router = useRouter();
-  const { isSignedIn } = useAuth();
+  const {isSignedIn} = useAuth();
   const handleLogoClick = () => {
     if (isSignedIn) {
       //redirect to dashboard
-      router.push('/')
+      router.push('/');
     } else {
       //redirect to '/'
-      router.push('/')
+      router.push('/');
     }
-  }
+  };
   const handleFacilityClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
-      router.push('/facilities')
+      router.push('/facilities');
     } else {
-      router.push('/')
+      router.push('/');
     }
-  }
+  };
   const handleWorkoutClick = () => {
     if (isSignedIn) {
       //redirect to dashboard
-      router.push('/dashboard')
+      router.push('/dashboard');
     } else {
       //redirect to '/'
-      router.push('/')
+      router.push('/');
     }
-  }
+  };
   const handleSessionClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
-      router.push('/sessions')
+      router.push('/sessions');
     } else {
-      router.push('/')
+      router.push('/');
     }
-  }
+  };
 
-  return ( 
+  return (
     <header className="hidden md:block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
-    <div className="relative flex items-center text-violet-600 px-4">
-      <Button variant="logo" onClick={handleLogoClick}>RepIt</Button>
-      <div className="flex items-center justify-between w-full">
+      <div className="relative flex items-center text-violet-600 px-4">
+        <Button variant="logo" onClick={handleLogoClick}>
+          RepIt
+        </Button>
+        <div className="flex items-center justify-between w-full">
           <div className="flex items-center font-sans">
-            <Button variant="link" onClick={handleFacilityClick}>Facilities</Button>
-            <Button variant="link" onClick={handleWorkoutClick}>Workouts</Button>
-            <Button variant="link" onClick={handleSessionClick}>Sessions</Button>
+            <Button variant="link" onClick={handleFacilityClick}>
+              Facilities
+            </Button>
+            <Button variant="link" onClick={handleWorkoutClick}>
+              Workouts
+            </Button>
+            <Button variant="link" onClick={handleSessionClick}>
+              Sessions
+            </Button>
           </div>
           <div className="flex items-center">
             <div className="px-3">
               <SignedIn>
-                  <UserButton appearance={{
-        baseTheme: [dark],
-      }}/>
+                <UserButton
+                  appearance={{
+                    baseTheme: [dark],
+                  }}
+                />
               </SignedIn>
 
               <SignedOut>
@@ -73,13 +87,13 @@ const Topbar = () => {
               </SignedOut>
             </div>
             <div>
-              <ModeToggle/>
+              <ModeToggle />
             </div>
           </div>
+        </div>
       </div>
-    </div>
-  </header>
-   );
-}
- 
+    </header>
+  );
+};
+
 export default Topbar;

@@ -2,12 +2,11 @@
 
 // import React from "react";
 
-import { getWorkoutHistory } from "@/server/api/workouts";
-import { WorkoutCard } from "./workoutCard";
-import { SheetWrapper } from "./newWorkoutSheet";
+import {getWorkoutHistory} from '@/server/api/workouts';
+import {WorkoutCard} from './workoutCard';
+import {SheetWrapper} from './newWorkoutSheet';
 
 const WorkoutHistoryPage = async () => {
-
   const workouts = getWorkoutHistory();
 
   return (

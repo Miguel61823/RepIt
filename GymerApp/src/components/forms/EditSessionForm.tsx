@@ -1,28 +1,35 @@
-"use client"
+'use client';
 
 import React from 'react';
-import { sessionFormSchema } from "@/schema/session";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
+import {sessionFormSchema} from '@/schema/session';
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Calendar} from '@/components/ui/calendar';
+import {format} from 'date-fns';
 
-import { Session, updateSession } from '@/server/api/sessions';
+import {Session, updateSession} from '@/server/api/sessions';
 
-import { cn } from '@/lib/utils';
-import { Textarea } from '../ui/textarea';
+import {cn} from '@/lib/utils';
+import {Textarea} from '../ui/textarea';
 
 export function EditSessionForm({
   session_id,
   name,
   type,
   date,
-  session_data
+  session_data,
 }: Session) {
   const form = useForm<z.infer<typeof sessionFormSchema>>({
     resolver: zodResolver(sessionFormSchema),
@@ -30,7 +37,7 @@ export function EditSessionForm({
       name: name,
       type: type,
       date: date,
-      session_data: session_data
+      session_data: session_data,
     },
   });
 
@@ -42,10 +49,11 @@ export function EditSessionForm({
       const end = target.selectionEnd;
 
       const value = target.value;
-      const newValue = value.substring(0, start) + "    " + value.substring(end);
-      
+      const newValue =
+        value.substring(0, start) + '    ' + value.substring(end);
+
       form.setValue('session_data', newValue);
-      
+
       // Set cursor position after the inserted spaces
       setTimeout(() => {
         target.selectionStart = target.selectionEnd = start + 4;
@@ -56,7 +64,7 @@ export function EditSessionForm({
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
     const result = await updateSession(session_id, values);
     if (result?.error) {
-      form.setError("root", {message: "Edit Session Error. :("})
+      form.setError('root', {message: 'Edit Session Error. :('});
     }
     window.dispatchEvent(new Event('closeEditSessionSheet'));
   }
@@ -67,7 +75,7 @@ export function EditSessionForm({
         <FormField
           control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Session Name</FormLabel>
               <FormControl>
@@ -81,7 +89,7 @@ export function EditSessionForm({
         <FormField
           control={form.control}
           name="type"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Session Type</FormLabel>
               <FormControl>
@@ -95,7 +103,7 @@ export function EditSessionForm({
         <FormField
           control={form.control}
           name="date"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-col">
               <FormLabel>Date</FormLabel>
               <Popover>
@@ -104,12 +112,12 @@ export function EditSessionForm({
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
+                        'w-[240px] pl-3 text-left font-normal',
+                        !field.value && 'text-muted-foreground',
                       )}
                     >
                       {field.value ? (
-                        format(field.value, "PPP")
+                        format(field.value, 'PPP')
                       ) : (
                         <span>Pick a date</span>
                       )}
@@ -132,15 +140,11 @@ export function EditSessionForm({
         <FormField
           control={form.control}
           name="session_data"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Session Data</FormLabel>
               <FormControl>
-                <Textarea
-                  {...field}
-                  onKeyDown={handleTab}
-                  rows={10}
-                />
+                <Textarea {...field} onKeyDown={handleTab} rows={10} />
               </FormControl>
               <FormMessage />
             </FormItem>
