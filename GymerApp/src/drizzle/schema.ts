@@ -1,4 +1,4 @@
-// moved 
+// moved
 // import { index, pgTable, text, timestamp, uuid, integer } from "drizzle-orm/pg-core";
 // import { relations } from "drizzle-orm";
 // import { number } from "zod";
@@ -28,7 +28,7 @@
 //     .references(() => WorkoutsTable.workout_id, { onDelete: "cascade"}),
 //   user_id: text("user_id").notNull(),
 //   order: integer("order").notNull(),
-//   }, 
+//   },
 //   table => ({
 //     workout_index: index("workout_index").on(table.workout_id),
 //   })
@@ -53,7 +53,7 @@
 //   weight: integer("weight"),
 //   order: integer("order").notNull(),
 //   notes: text("notes")
-//   }, 
+//   },
 //   table => ({
 //     exercise_index: index("exercise_index").on(table.exercise_id),
 //   })

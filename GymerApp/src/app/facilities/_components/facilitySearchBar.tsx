@@ -1,16 +1,20 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Search } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { useDebounce } from "use-debounce";
+import React, {useEffect, useRef, useState} from 'react';
+import {Search} from 'lucide-react';
+import {useRouter} from 'next/navigation';
+import {useDebounce} from 'use-debounce';
 
-export const FacilitySearchBar = (
-  { search, searchType }: { search?: string, searchType: string }
-) => {
+export const FacilitySearchBar = ({
+  search,
+  searchType,
+}: {
+  search?: string;
+  searchType: string;
+}) => {
   const router = useRouter();
   const initRender = useRef(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(search);
   const [query] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
@@ -18,21 +22,21 @@ export const FacilitySearchBar = (
       initRender.current = false;
       return;
     }
-    
-    if (searchType == "Nearby") {
+
+    if (searchType === 'Nearby') {
       if (!query) {
-        router.push(`/facilities`)
+        router.push('/facilities');
       } else {
-        router.push(`/facilities?search=${query}`)
+        router.push(`/facilities?search=${query}`);
       }
-    } else if (searchType == "Tracked") {
+    } else if (searchType === 'Tracked') {
       if (!query) {
-        router.push(`/facilities`)
+        router.push('/facilities');
       } else {
-        router.push(`/facilities?search=${query}`)
+        router.push(`/facilities?search=${query}`);
       }
     }
-  }, [query]);
+  }, [query, router, searchType]);
 
   return (
     <div>
@@ -45,10 +49,10 @@ export const FacilitySearchBar = (
             placeholder="Search facilities"
             className="w-full p-3 pl-10 border rounded-lg"
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value.toLowerCase())}
+            onChange={e => setSearchTerm(e.target.value.toLowerCase())}
           />
         </div>
       </div>
     </div>
-  )
+  );
 };

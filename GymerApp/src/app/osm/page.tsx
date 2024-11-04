@@ -1,26 +1,25 @@
-"use client"
-import { Slider } from "@/components/ui/slider";
-import Topbar from "../_components/TopBar";
-import { useState } from "react";
-import findSportsFacilities, { ProcessedFacility } from "@/lib/osm";
-import { Button } from "@/components/ui/button";
+'use client';
+import {Slider} from '@/components/ui/slider';
+import {useState} from 'react';
+import findSportsFacilities, {ProcessedFacility} from '@/lib/osm';
+import {Button} from '@/components/ui/button';
 
 export default function OSMData() {
   const [range, setRange] = useState(2);
   const [facilities, setFacilities] = useState<ProcessedFacility[]>([]);
 
-
   const handleSearch = async () => {
-
     try {
       // Get user's location
-      const position = await new Promise<GeolocationPosition>((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject);
-      });
+      const position = await new Promise<GeolocationPosition>(
+        (resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        },
+      );
 
-      const { latitude, longitude } = position.coords;
+      const {latitude, longitude} = position.coords;
       console.log(latitude, longitude);
-      
+
       // Convert range from kilometers to meters
       const radiusMeters = range * 1000;
 
@@ -28,32 +27,28 @@ export default function OSMData() {
       const results = await findSportsFacilities(
         latitude,
         longitude,
-        radiusMeters
+        radiusMeters,
       );
 
       setFacilities(results);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
-  return ( 
+  return (
     <div>
       <div className="py-4 max-w-96 justify-center">
-        <Slider 
+        <Slider
           defaultValue={[range]}
           max={10}
-          step={.5}
-          onValueChange={(val) => setRange(val[0])}
-          className="mb-2"/>
-          <div className="text-center font-medium">
-            Current Range: {range}
-          </div>
+          step={0.5}
+          onValueChange={val => setRange(val[0])}
+          className="mb-2"
+        />
+        <div className="text-center font-medium">Current Range: {range}</div>
       </div>
       <div>
-        <Button
-          onClick={handleSearch}>
-          Search
-        </Button>
+        <Button onClick={handleSearch}>Search</Button>
         {facilities.length > 0 && (
           <div className="mt-4">
             <h2 className="text-lg font-semibold mb-2">Found Facilities:</h2>
@@ -69,5 +64,5 @@ export default function OSMData() {
         )}
       </div>
     </div>
-   );
+  );
 }

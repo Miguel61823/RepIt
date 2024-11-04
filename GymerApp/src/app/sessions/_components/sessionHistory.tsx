@@ -2,12 +2,11 @@
 
 // import React from "react";
 
-import { getSessionHistory } from "@/server/api/sessions";
-import { SessionCard } from "./sessionCard";
-import { NewSession } from "./newSession";
+import {getSessionHistory} from '@/server/api/sessions';
+import {SessionCard} from './sessionCard';
+import {NewSession} from './newSession';
 
 const SessionHistoryPage = async () => {
-
   const workouts = getSessionHistory();
 
   return (

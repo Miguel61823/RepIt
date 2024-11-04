@@ -1,10 +1,9 @@
-"use server";
+'use server';
 
-import { db } from "@/drizzle/db";
-import { FacilitiesTable } from "@/drizzle/schema/tables/facilities";
-import { mockFacilities } from "@/app/facilities/_components/facilityListings";
-import { eq } from "drizzle-orm";
-import { revalidatePath } from 'next/cache';
+import {db} from '@/drizzle/db';
+import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
+import {mockFacilities} from '@/app/facilities/_components/facilityListings';
+import {revalidatePath} from 'next/cache';
 
 export interface Facility {
   facility_id: string;
@@ -26,19 +25,20 @@ export async function getFacilities(query: string | undefined) {
   if (!query) {
     return mockFacilities;
   }
-  const facilities = mockFacilities.filter(facility => 
-    facility.name.toLowerCase().includes(query) ||
-    facility.leisure.toLowerCase().includes(query)
-  )
-  facilities.forEach(facility=>{console.log(facility.name)});
+  const facilities = mockFacilities.filter(
+    facility =>
+      facility.name.toLowerCase().includes(query) ||
+      facility.leisure.toLowerCase().includes(query),
+  );
+  // facilities.forEach(facility=>{console.log(facility.name)});
   return facilities;
-};
+}
 
 export async function checkFacilityInDB(
-  checked_osm_id: string
+  checked_osm_id: string,
 ): Promise<boolean> {
   const facility = await db.query.FacilitiesTable.findFirst({
-    where: ({ osm_id }, { eq }) => eq(osm_id, checked_osm_id)
+    where: ({osm_id}, {eq}) => eq(osm_id, checked_osm_id),
   });
   // console.log(facility);
   if (!facility || !Object.keys(facility).length) {
@@ -51,9 +51,8 @@ export async function checkFacilityInDB(
 }
 
 export async function addFacility(
-  facility: Facility
+  facility: Facility,
 ): Promise<undefined | {error: boolean}> {
-
   // console.log(facility);
   const {
     osm_id,
@@ -65,7 +64,7 @@ export async function addFacility(
     accessibility,
     opening_hours,
     phone,
-    website
+    website,
   } = facility;
   await db.insert(FacilitiesTable).values({
     osm_id: osm_id,
@@ -79,7 +78,7 @@ export async function addFacility(
     phone: phone,
     website: website,
   });
-  
-  revalidatePath('/facilities');
+
+  await revalidatePath('/facilities');
   return;
-};
+}
