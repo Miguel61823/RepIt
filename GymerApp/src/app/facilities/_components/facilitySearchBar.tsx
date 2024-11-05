@@ -14,7 +14,7 @@ export const FacilitySearchBar = ({
 }) => {
   const router = useRouter();
   const initRender = useRef(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [query] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
