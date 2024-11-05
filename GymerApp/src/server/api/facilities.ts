@@ -2,10 +2,9 @@
 
 import {db} from '@/drizzle/db';
 import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
-import {mockFacilities} from '@/app/facilities/_components/facilityListings';
 import {revalidatePath} from 'next/cache';
 import {auth} from '@clerk/nextjs/server';
-import {desc, eq, ilike, sql, and, between} from 'drizzle-orm';
+import {ilike, and, between} from 'drizzle-orm';
 
 export interface Facility {
   facility_id: string; // one id??

@@ -10,7 +10,6 @@ import {
   UserButton,
 } from '@clerk/nextjs';
 import {useRouter} from 'next/navigation';
-import {dark, experimental__simple} from '@clerk/themes';
 import {
   DropdownMenu,
   DropdownMenuContent,
