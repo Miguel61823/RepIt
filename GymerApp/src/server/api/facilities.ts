@@ -8,14 +8,14 @@ import {auth} from '@clerk/nextjs/server';
 import { desc, eq, ilike, sql } from 'drizzle-orm';
 
 export interface Facility {
-  facility_id: string;
+  facility_id: string; // one id??
   osm_id: string;
-  name: string;
-  leisure: string;
-  lat: number;
-  lon: number;
-  address: string;
-  accessibility: string;
+  name: string; // given
+  leisure: string; // delete?
+  lat: number; // given
+  lon: number; // given
+  address: string; // reverse geocode
+  accessibility: string; // delete?
   phone?: string;
   website?: string;
   opening_hours?: string;
