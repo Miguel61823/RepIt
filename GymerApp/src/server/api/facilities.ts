@@ -5,7 +5,7 @@ import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
 import {mockFacilities} from '@/app/facilities/_components/facilityListings';
 import {revalidatePath} from 'next/cache';
 import {auth} from '@clerk/nextjs/server';
-import { desc, eq, ilike, sql } from 'drizzle-orm';
+import {desc, eq, ilike, sql, and, between} from 'drizzle-orm';
 
 export interface Facility {
   facility_id: string; // one id??
@@ -23,7 +23,9 @@ export interface Facility {
 }
 
 // TODO: FETCH FROM DB INSTEAD OF MOCK DATA
-export async function getFacilities(query: string | undefined): Promise<Facility[]> {
+export async function getFacilities(
+  query: string | undefined,
+): Promise<Facility[]> {
   const {userId, redirectToSignIn} = auth();
   let facilities: Facility[] = [];
 
@@ -43,22 +45,23 @@ export async function getFacilities(query: string | undefined): Promise<Facility
   const facilitiesData = await db
     .select()
     .from(FacilitiesTable)
-    .where(query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined)
-    // .orderBy(pSqlDistance);
+    .where(query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined);
+  // .orderBy(pSqlDistance);
 
   facilities = facilitiesData.map(
-    ({ // ONLY GET WHAT WE WILL DISPLAY (I THINK)
+    ({
+      // ONLY GET WHAT WE WILL DISPLAY (I THINK)
       facility_id, // MAYBE FOR KEY
-      osm_id,      // MAYBE FOR KEY (one of these)
-      name,    // FOR SURE
+      osm_id, // MAYBE FOR KEY (one of these)
+      name, // FOR SURE
       leisure,
       lat,
       lon,
       address, // MAYBE NOT - USE LAT/LON TO GET ADDR
       accessibility, // MAYBE NOT
       opening_hours, // OPTIONAL
-      website,       // OPTIONAL
-      phone          // OPTIONAL
+      website, // OPTIONAL
+      phone, // OPTIONAL
     }) =>
       <Facility>{
         facility_id: facility_id,
@@ -71,12 +74,12 @@ export async function getFacilities(query: string | undefined): Promise<Facility
         accessibility: accessibility,
         opening_hours: opening_hours,
         website: website,
-        phone: phone
-      }
+        phone: phone,
+      },
   );
 
   return facilities;
-};
+}
 
 export async function checkFacilityInDB(
   checked_osm_id: string,
@@ -125,4 +128,84 @@ export async function addFacility(
 
   await revalidatePath('/facilities');
   return;
+}
+
+// Approximate conversion factors:
+// 1 degree of latitude = 111 km
+// 1 degree of longitude = 111 km * cos(latitude)
+function getCoordinateRanges(lat: number, lon: number, rangeKm: number) {
+  // Convert range to approximate degree offset
+  const latOffset = rangeKm / 111;
+  // Adjust longitude offset based on latitude (compensate for earth's curvature)
+  const lonOffset = rangeKm / (111 * Math.cos((lat * Math.PI) / 180));
+
+  return {
+    minLat: lat - latOffset,
+    maxLat: lat + latOffset,
+    minLon: lon - lonOffset,
+    maxLon: lon + lonOffset,
+  };
+}
+
+export async function getNearbyFacilities(
+  lat: number,
+  lon: number,
+  rangeKm: number,
+  query?: string,
+): Promise<Facility[]> {
+  const {userId, redirectToSignIn} = auth();
+  let facilities: Facility[] = [];
+
+  if (userId === null) {
+    redirectToSignIn();
+    return facilities;
+  }
+
+  const {minLat, maxLat, minLon, maxLon} = getCoordinateRanges(
+    lat,
+    lon,
+    rangeKm,
+  );
+
+  const facilitiesData = await db
+    .select()
+    .from(FacilitiesTable)
+    .where(
+      and(
+        between(FacilitiesTable.lat, minLat, maxLat),
+        between(FacilitiesTable.lon, minLon, maxLon),
+        query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined,
+      ),
+    );
+
+  facilities = facilitiesData.map(
+    ({
+      facility_id,
+      osm_id,
+      name,
+      leisure,
+      lat,
+      lon,
+      address,
+      accessibility,
+      opening_hours,
+      website,
+      phone,
+    }) => ({
+      facility_id,
+      osm_id,
+      name,
+      leisure,
+      lat,
+      lon,
+      address,
+      accessibility,
+      // Convert null to undefined for optional fields
+      opening_hours: opening_hours ?? undefined,
+      website: website ?? undefined,
+      phone: phone ?? undefined,
+    }),
+  );
+
+  return facilities;
 }

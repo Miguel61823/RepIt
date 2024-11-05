@@ -47,7 +47,7 @@ export default function OSMData() {
         />
         <div className="text-center font-medium">Current Range: {range}</div>
       </div>
-      <div>
+      <div className="p-6 text-wrap">
         <Button onClick={handleSearch}>Search</Button>
         {facilities.length > 0 && (
           <div className="mt-4">
