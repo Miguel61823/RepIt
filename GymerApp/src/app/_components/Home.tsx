@@ -17,7 +17,7 @@ const Home = () => {
         <h3 className="text-violet-600 text-4xl font-semibold tracking-tight mb-4">
           with RepIt
         </h3>
-        <p className="text-xl mb-6">
+        <p className="text-xl mb-6 ">
           Achieve your health goals with an easy-to-use workout tracker
         </p>
         <SignedOut>
