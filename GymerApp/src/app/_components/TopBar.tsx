@@ -11,8 +11,15 @@ import {
 } from '@clerk/nextjs';
 import {useRouter} from 'next/navigation';
 import {dark, experimental__simple} from '@clerk/themes';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Menu } from 'lucide-react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import {Menu} from 'lucide-react';
 
 const Topbar = () => {
   const router = useRouter();
@@ -74,7 +81,7 @@ const Topbar = () => {
             <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
               <div className="px-3">
                 <SignedIn>
-                  <UserButton/>
+                  <UserButton />
                 </SignedIn>
 
                 <SignedOut>
@@ -89,7 +96,10 @@ const Topbar = () => {
                 <DropdownMenuTrigger asChild className="cursor-pointer">
                   <Menu />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="font-sans bg-gray-200 dark:bg-gray-950 dark:text-white text-black">
+                <DropdownMenuContent
+                  align="end"
+                  className="font-sans bg-gray-200 dark:bg-gray-950 dark:text-white text-black"
+                >
                   <DropdownMenuGroup>
                     <DropdownMenuItem className="">
                       <Button variant="link" onClick={handleFacilityClick}>
@@ -109,7 +119,7 @@ const Topbar = () => {
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup className="flex flex-row justify-end px-1">
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <DropdownMenuItem onSelect={e => e.preventDefault()}>
                       <ModeToggle />
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -119,7 +129,7 @@ const Topbar = () => {
             <div className="hidden min-[600px]:flex items-center">
               <div className="px-3">
                 <SignedIn>
-                  <UserButton/>
+                  <UserButton />
                 </SignedIn>
 
                 <SignedOut>
@@ -135,9 +145,7 @@ const Topbar = () => {
               </div>
             </div>
           </div>
-          <div>
-
-          </div>
+          <div></div>
         </div>
       </header>
     </>

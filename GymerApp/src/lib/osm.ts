@@ -72,7 +72,7 @@ async function findSportsFacilities(
   // Uses 'around' operator for precise radius-based search
   // Searches for different facility types: fitness centers, sports centers, pools, etc.
   const query = `
-  [out:json][timeout:25];
+  [out:json][timeout:90];
   (
     /* FITNESS CENTERS */
     node["leisure"="fitness_centre"]["name"](around:${radiusMeters},${lat},${lon});
@@ -92,7 +92,7 @@ async function findSportsFacilities(
       method: 'POST',
       body: query,
     });
-    console.log(response);
+    console.log('done');
 
     // Check if the request was successful
     if (!response.ok) {
