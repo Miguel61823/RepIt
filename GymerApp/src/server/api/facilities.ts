@@ -4,6 +4,8 @@ import {db} from '@/drizzle/db';
 import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
 import {mockFacilities} from '@/app/facilities/_components/facilityListings';
 import {revalidatePath} from 'next/cache';
+import {auth} from '@clerk/nextjs/server';
+import { desc, eq, ilike, sql } from 'drizzle-orm';
 
 export interface Facility {
   facility_id: string;
@@ -21,18 +23,60 @@ export interface Facility {
 }
 
 // TODO: FETCH FROM DB INSTEAD OF MOCK DATA
-export async function getFacilities(query: string | undefined) {
-  if (!query) {
-    return mockFacilities;
+export async function getFacilities(query: string | undefined): Promise<Facility[]> {
+  const {userId, redirectToSignIn} = auth();
+  let facilities: Facility[] = [];
+
+  if (userId === null) {
+    redirectToSignIn();
+    return facilities;
   }
-  const facilities = mockFacilities.filter(
-    facility =>
-      facility.name.toLowerCase().includes(query) ||
-      facility.leisure.toLowerCase().includes(query),
+
+  // const position = await new Promise<GeolocationPosition>(
+  //   (resolve, reject) => {
+  //     navigator.geolocation.getCurrentPosition(resolve,reject);
+  //   }
+  // )
+  // const {latitude: userLat, longitude: userLon} = position.coords;
+  // const pSqlDistance = sql`point(lat, lon) <-> (${userLat}, ${userLon})`;
+
+  const facilitiesData = await db
+    .select()
+    .from(FacilitiesTable)
+    .where(query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined)
+    // .orderBy(pSqlDistance);
+
+  facilities = facilitiesData.map(
+    ({ // ONLY GET WHAT WE WILL DISPLAY (I THINK)
+      facility_id, // MAYBE FOR KEY
+      osm_id,      // MAYBE FOR KEY (one of these)
+      name,    // FOR SURE
+      leisure,
+      lat,
+      lon,
+      address, // MAYBE NOT - USE LAT/LON TO GET ADDR
+      accessibility, // MAYBE NOT
+      opening_hours, // OPTIONAL
+      website,       // OPTIONAL
+      phone          // OPTIONAL
+    }) =>
+      <Facility>{
+        facility_id: facility_id,
+        osm_id: osm_id,
+        name: name,
+        leisure: leisure,
+        lat: lat,
+        lon: lon,
+        address: address,
+        accessibility: accessibility,
+        opening_hours: opening_hours,
+        website: website,
+        phone: phone
+      }
   );
-  // facilities.forEach(facility=>{console.log(facility.name)});
+
   return facilities;
-}
+};
 
 export async function checkFacilityInDB(
   checked_osm_id: string,
