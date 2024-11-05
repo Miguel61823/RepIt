@@ -14,7 +14,7 @@ export const FacilitySearchBar = ({
 }) => {
   const router = useRouter();
   const initRender = useRef(true);
-  const [searchTerm, setSearchTerm] = useState(search);
+  const [searchTerm, setSearchTerm] = useState("");
   const [query] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ export const FacilitySearchBar = ({
             placeholder="Search facilities"
             className="w-full p-3 pl-10 border rounded-lg"
             value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value.toLowerCase())}
+            onChange={e => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
