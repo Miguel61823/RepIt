@@ -7,18 +7,16 @@ import {auth} from '@clerk/nextjs/server';
 import {ilike, and, between} from 'drizzle-orm';
 
 export interface Facility {
-  facility_id: string; // one id??
   osm_id: string;
   name: string; // given
   leisure: string; // delete?
-  lat: number; // given
-  lon: number; // given
+  lat: number | undefined; // given
+  lon: number | undefined; // given
   address: string; // reverse geocode
   accessibility: string; // delete?
   phone?: string;
   website?: string;
   opening_hours?: string;
-  // features?: string[]; // REMOVE? idk maybe
 }
 
 // TODO: FETCH FROM DB INSTEAD OF MOCK DATA
@@ -32,14 +30,6 @@ export async function getFacilities(
     redirectToSignIn();
     return facilities;
   }
-
-  // const position = await new Promise<GeolocationPosition>(
-  //   (resolve, reject) => {
-  //     navigator.geolocation.getCurrentPosition(resolve,reject);
-  //   }
-  // )
-  // const {latitude: userLat, longitude: userLon} = position.coords;
-  // const pSqlDistance = sql`point(lat, lon) <-> (${userLat}, ${userLon})`;
 
   const facilitiesData = await db
     .select()
@@ -80,26 +70,9 @@ export async function getFacilities(
   return facilities;
 }
 
-export async function checkFacilityInDB(
-  checked_osm_id: string,
-): Promise<boolean> {
-  const facility = await db.query.FacilitiesTable.findFirst({
-    where: ({osm_id}, {eq}) => eq(osm_id, checked_osm_id),
-  });
-  // console.log(facility);
-  if (!facility || !Object.keys(facility).length) {
-    // console.log(false);
-    return false;
-  } else {
-    // console.log(true);
-    return true;
-  }
-}
-
 export async function addFacility(
   facility: Facility,
 ): Promise<undefined | {error: boolean}> {
-  // console.log(facility);
   const {
     osm_id,
     name,
@@ -195,16 +168,48 @@ export async function getNearbyFacilities(
       osm_id,
       name,
       leisure,
-      lat,
-      lon,
+
       address,
       accessibility,
       // Convert null to undefined for optional fields
       opening_hours: opening_hours ?? undefined,
       website: website ?? undefined,
       phone: phone ?? undefined,
+      lat: lat ?? undefined,
+      lon: lon ?? undefined,
     }),
   );
 
   return facilities;
+}
+
+export async function insertFacilities(
+  facilities: Facility[],
+): Promise<undefined | {error: boolean}> {
+  // Insert all facilities at once, database will handle duplicate osm_ids
+
+  console.log(facilities);
+  console.log('hiiiiii');
+  await db
+    .insert(FacilitiesTable)
+    .values(
+      facilities.map(facility => ({
+        osm_id: facility.osm_id,
+        name: facility.name,
+        leisure: facility.leisure,
+        lat: facility.lat,
+        lon: facility.lon,
+        address: facility.address,
+        accessibility: facility.accessibility,
+        opening_hours: facility.opening_hours,
+        phone: facility.phone,
+        website: facility.website || null,
+      })),
+    )
+    .onConflictDoNothing({target: FacilitiesTable.osm_id});
+  // Revalidate relevant paths
+  await revalidatePath('/facilities');
+  await revalidatePath('/osm');
+
+  return;
 }
