@@ -1,3 +1,4 @@
+CREATE TYPE "public"."node_type_enum" AS ENUM('group', 'metric');--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "exercise" (
 	"exercise_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
@@ -6,20 +7,25 @@ CREATE TABLE IF NOT EXISTS "exercise" (
 	"order" integer NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "gym" (
-	"gym_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+CREATE TABLE IF NOT EXISTS "facility" (
+	"facility_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"osm_id" text NOT NULL,
 	"name" text NOT NULL,
+	"leisure" text NOT NULL,
+	"lat" integer NOT NULL,
+	"lon" integer NOT NULL,
 	"address" text NOT NULL,
-	"open_time" integer NOT NULL,
-	"close_time" integer NOT NULL
+	"accessibility" text NOT NULL,
+	"opening_hours" text,
+	"website" text,
+	"phone" text
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "nodes" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"session_id" uuid NOT NULL,
+CREATE TABLE IF NOT EXISTS "machine" (
+	"machine_id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"facility_id" uuid NOT NULL,
 	"name" text NOT NULL,
-	"type" "node_type" NOT NULL,
-	"path" text[] NOT NULL
+	"identifier" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "session" (
@@ -27,8 +33,8 @@ CREATE TABLE IF NOT EXISTS "session" (
 	"user_id" text NOT NULL,
 	"name" text NOT NULL,
 	"type" text NOT NULL,
-	"date" timestamp NOT NULL,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"date" timestamp DEFAULT now() NOT NULL,
+	"data" text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sets" (
@@ -55,7 +61,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "nodes" ADD CONSTRAINT "nodes_session_id_session_id_fk" FOREIGN KEY ("session_id") REFERENCES "public"."session"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "machine" ADD CONSTRAINT "machine_facility_id_facility_facility_id_fk" FOREIGN KEY ("facility_id") REFERENCES "public"."facility"("facility_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -67,8 +73,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "workout_index" ON "exercise" USING btree ("workout_id");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "path_index" ON "nodes" USING btree ("path");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "session_index" ON "nodes" USING btree ("session_id");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "gym_index" ON "machine" USING btree ("facility_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "user_session_index" ON "session" USING btree ("user_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "exercise_index" ON "sets" USING btree ("exercise_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "user_index" ON "workout" USING btree ("user_id");
