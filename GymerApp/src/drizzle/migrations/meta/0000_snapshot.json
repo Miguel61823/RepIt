@@ -1,5 +1,5 @@
 {
-  "id": "bdeeafbc-1c8d-4da1-9ffe-c7472c9e2bed",
+  "id": "0e72006a-dc26-4741-b436-d5cd376c1698",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -76,20 +76,44 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "public.gym": {
-      "name": "gym",
+    "public.facility": {
+      "name": "facility",
       "schema": "",
       "columns": {
-        "gym_id": {
-          "name": "gym_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
+        "osm_id": {
+          "name": "osm_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "name": {
           "name": "name",
           "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leisure": {
+          "name": "leisure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lat": {
+          "name": "lat",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "lon": {
+          "name": "lon",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -99,17 +123,29 @@
           "primaryKey": false,
           "notNull": true
         },
-        "open_time": {
-          "name": "open_time",
-          "type": "integer",
+        "accessibility": {
+          "name": "accessibility",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "close_time": {
-          "name": "close_time",
-          "type": "integer",
+        "opening_hours": {
+          "name": "opening_hours",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -118,19 +154,19 @@
       "uniqueConstraints": {},
       "checkConstraints": {}
     },
-    "public.nodes": {
-      "name": "nodes",
+    "public.machine": {
+      "name": "machine",
       "schema": "",
       "columns": {
-        "id": {
-          "name": "id",
+        "machine_id": {
+          "name": "machine_id",
           "type": "uuid",
           "primaryKey": true,
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "session_id": {
-          "name": "session_id",
+        "facility_id": {
+          "name": "facility_id",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -141,41 +177,19 @@
           "primaryKey": false,
           "notNull": true
         },
-        "type": {
-          "name": "type",
-          "type": "node_type",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "path": {
-          "name": "path",
-          "type": "text[]",
+        "identifier": {
+          "name": "identifier",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         }
       },
       "indexes": {
-        "path_index": {
-          "name": "path_index",
+        "gym_index": {
+          "name": "gym_index",
           "columns": [
             {
-              "expression": "path",
-              "isExpression": false,
-              "asc": true,
-              "nulls": "last"
-            }
-          ],
-          "isUnique": false,
-          "concurrently": false,
-          "method": "btree",
-          "with": {}
-        },
-        "session_index": {
-          "name": "session_index",
-          "columns": [
-            {
-              "expression": "session_id",
+              "expression": "facility_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -188,17 +202,17 @@
         }
       },
       "foreignKeys": {
-        "nodes_session_id_session_id_fk": {
-          "name": "nodes_session_id_session_id_fk",
-          "tableFrom": "nodes",
-          "tableTo": "session",
+        "machine_facility_id_facility_facility_id_fk": {
+          "name": "machine_facility_id_facility_facility_id_fk",
+          "tableFrom": "machine",
+          "tableTo": "facility",
           "columnsFrom": [
-            "session_id"
+            "facility_id"
           ],
           "columnsTo": [
-            "id"
+            "facility_id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -239,14 +253,14 @@
           "name": "date",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "data": {
+          "name": "data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
         }
       },
       "indexes": {
@@ -408,7 +422,16 @@
       "checkConstraints": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "public.node_type_enum": {
+      "name": "node_type_enum",
+      "schema": "public",
+      "values": [
+        "group",
+        "metric"
+      ]
+    }
+  },
   "schemas": {},
   "sequences": {},
   "views": {},

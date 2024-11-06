@@ -1,13 +1,20 @@
-"use client";
+'use client';
 
-import { setFormSchema } from "@/FormSchema/set"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Button } from "@/components/ui/button"
+import {setFormSchema} from '@/schema/set';
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {Button} from '@/components/ui/button';
 
 export function WorkoutForm() {
   const form = useForm<z.infer<typeof setFormSchema>>({
@@ -15,12 +22,12 @@ export function WorkoutForm() {
     defaultValues: {
       reps: 0,
       weight: -1,
-      notes: ""
+      notes: '',
     },
-  })
+  });
 
   function onSubmit(values: z.infer<typeof setFormSchema>) {
-    console.log(values)
+    console.log(values);
   }
 
   return (
@@ -29,11 +36,16 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="reps"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Reps</FormLabel>
               <FormControl>
-                <Input type="number" min="1" placeholder="Enter Rep Count" {...field} />
+                <Input
+                  type="number"
+                  min="1"
+                  placeholder="Enter Rep Count"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -43,11 +55,16 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="weight"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Weight</FormLabel>
               <FormControl>
-                <Input type="number" min="0" placeholder="Enter Resistance Weight" {...field} />
+                <Input
+                  type="number"
+                  min="0"
+                  placeholder="Enter Resistance Weight"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -57,11 +74,14 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="notes"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
-                <Textarea placeholder="Add notes to this set (optional)" {...field} />
+                <Textarea
+                  placeholder="Add notes to this set (optional)"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

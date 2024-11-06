@@ -2,18 +2,17 @@
 
 // import React from "react";
 
-import { getWorkoutHistory } from "@/server/api/workouts";
-import { WorkoutCard } from "./workoutcard";
-import { SheetWrapper } from "./newWorkoutSheet";
+import {getWorkoutHistory} from '@/server/api/workouts';
+import {WorkoutCard} from './workoutCard';
+import {SheetWrapper} from './newWorkoutSheet';
 
 const WorkoutHistoryPage = async () => {
-
   const workouts = getWorkoutHistory();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <header className="bg-white dark:bg-black shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-gray-50 dark:bg-gray-900">
+        <div className="max-w-7xl bg-gray-50 dark:bg-gray-900 mx-auto py-6 px-4 sm:px-6 lg:px-8">
           <h1 className="text-3xl font-bold text-black dark:text-white mb-2">
             Workout History
           </h1>

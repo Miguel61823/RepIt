@@ -1,21 +1,27 @@
-"use client"
+'use client';
 
 import React from 'react';
-import { workoutFormSchema } from "@/FormSchema/workout";
-import { useFieldArray, useForm, Control } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "@/lib/utils";
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
+import {workoutFormSchema} from '@/schema/workout';
+import {useFieldArray, useForm, Control} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {cn} from '@/lib/utils';
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form';
+import {Input} from '@/components/ui/input';
+import {Textarea} from '@/components/ui/textarea';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Calendar} from '@/components/ui/calendar';
+import {format} from 'date-fns';
 
-import { createWorkout } from '@/server/api/workouts';
-
+import {createWorkout} from '@/server/api/workouts';
 
 // Define the props for the ExerciseFieldArray component
 interface ExerciseFieldArrayProps {
@@ -28,21 +34,25 @@ export function WorkoutForm() {
   const form = useForm<z.infer<typeof workoutFormSchema>>({
     resolver: zodResolver(workoutFormSchema),
     defaultValues: {
-      title: "",
-      description: "",
-      exercises: [{name: "", sets: [{ reps: 0, weight: 0, notes: ""}] }],
+      title: '',
+      description: '',
+      exercises: [{name: '', sets: [{reps: 0, weight: 0, notes: ''}]}],
     },
   });
 
-  const { fields: exerciseFields, append: appendExercise, remove: removeExercise } = useFieldArray({
+  const {
+    fields: exerciseFields,
+    append: appendExercise,
+    remove: removeExercise,
+  } = useFieldArray({
     control: form.control,
-    name: "exercises",
+    name: 'exercises',
   });
 
   async function onSubmit(values: z.infer<typeof workoutFormSchema>) {
     const data = await createWorkout(values);
     if (data?.error) {
-      form.setError("root", {message: "Create Workout Error. :("})
+      form.setError('root', {message: 'Create Workout Error. :('});
     }
     window.dispatchEvent(new Event('closeWorkoutSheet'));
   }
@@ -53,7 +63,7 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="title"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Workout Title</FormLabel>
               <FormControl>
@@ -66,11 +76,14 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="description"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Textarea placeholder="Describe your workout (optional)" {...field} />
+                <Textarea
+                  placeholder="Describe your workout (optional)"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -79,29 +92,26 @@ export function WorkoutForm() {
         <FormField
           control={form.control}
           name="dateCompleted"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <Popover>
                 <PopoverTrigger asChild>
-                
-                    <Button
-                      variant="outline"
-                      
-                      className={cn(
-                        "p-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <>Choose completed date</>
-                      )}
-                    </Button>
-                
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      'p-3 text-left font-normal',
+                      !field.value && 'text-muted-foreground',
+                    )}
+                  >
+                    {field.value ? (
+                      format(field.value, 'PPP')
+                    ) : (
+                      <>Choose completed date</>
+                    )}
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar 
+                  <Calendar
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
@@ -113,20 +123,28 @@ export function WorkoutForm() {
             </FormItem>
           )}
         />
-        
+
         {exerciseFields.map((exercise, exerciseIndex) => (
-          <ExerciseFieldArray 
-            key={exercise.id} 
-            nestIndex={exerciseIndex} 
+          <ExerciseFieldArray
+            key={exercise.id}
+            nestIndex={exerciseIndex}
             control={form.control}
             remove={removeExercise}
           />
         ))}
-        <div className='flex justify-between'>
-          <Button type="button" onClick={() => appendExercise({ name: "", sets: [{ reps: 0, weight: 0, notes: "" }] })}>
+        <div className="flex justify-between">
+          <Button
+            type="button"
+            onClick={() =>
+              appendExercise({
+                name: '',
+                sets: [{reps: 0, weight: 0, notes: ''}],
+              })
+            }
+          >
             Add Exercise
           </Button>
-          
+
           <Button type="submit">Submit Workout</Button>
         </div>
       </form>
@@ -134,10 +152,18 @@ export function WorkoutForm() {
   );
 }
 
-function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayProps) {
-  const { fields, append, remove: removeSet } = useFieldArray({
+function ExerciseFieldArray({
+  nestIndex,
+  control,
+  remove,
+}: ExerciseFieldArrayProps) {
+  const {
+    fields,
+    append,
+    remove: removeSet,
+  } = useFieldArray({
     control,
-    name: `exercises.${nestIndex}.sets`
+    name: `exercises.${nestIndex}.sets`,
   });
 
   return (
@@ -145,7 +171,7 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
       <FormField
         control={control}
         name={`exercises.${nestIndex}.name`}
-        render={({ field }) => (
+        render={({field}) => (
           <FormItem>
             <FormLabel>Exercise Name</FormLabel>
             <FormControl>
@@ -155,7 +181,7 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
           </FormItem>
         )}
       />
-      
+
       <div className="mt-4">
         <h4>Sets</h4>
         {fields.map((field, setIndex) => (
@@ -163,10 +189,17 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
             <FormField
               control={control}
               name={`exercises.${nestIndex}.sets.${setIndex}.reps`}
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="number" placeholder="Reps" {...field} onChange={(e) => field.onChange(parseInt(e.target.value, 10))} />
+                    <Input
+                      type="number"
+                      placeholder="Reps"
+                      {...field}
+                      onChange={e =>
+                        field.onChange(parseInt(e.target.value, 10))
+                      }
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -174,10 +207,15 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
             <FormField
               control={control}
               name={`exercises.${nestIndex}.sets.${setIndex}.weight`}
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormControl>
-                    <Input type="number" placeholder="Weight" {...field} onChange={(e) => field.onChange(parseFloat(e.target.value))} />
+                    <Input
+                      type="number"
+                      placeholder="Weight"
+                      {...field}
+                      onChange={e => field.onChange(parseFloat(e.target.value))}
+                    />
                   </FormControl>
                 </FormItem>
               )}
@@ -185,7 +223,7 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
             <FormField
               control={control}
               name={`exercises.${nestIndex}.sets.${setIndex}.notes`}
-              render={({ field }) => (
+              render={({field}) => (
                 <FormItem>
                   <FormControl>
                     <Input placeholder="Notes" {...field} />
@@ -198,11 +236,15 @@ function ExerciseFieldArray({ nestIndex, control, remove }: ExerciseFieldArrayPr
             </Button>
           </div>
         ))}
-        <Button type="button" onClick={() => append({ reps: 0, weight: 0, notes: "" })} className="mt-2">
+        <Button
+          type="button"
+          onClick={() => append({reps: 0, weight: 0, notes: ''})}
+          className="mt-2"
+        >
           Add Set
         </Button>
       </div>
-      
+
       <Button type="button" onClick={() => remove(nestIndex)} className="mt-4">
         Remove Exercise
       </Button>
