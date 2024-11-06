@@ -7,9 +7,10 @@ import React, {Suspense, useState} from 'react';
 // import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FacilityCard from './facilityCard';
-import {Facility, getNearbyFacilities} from '@/server/api/facilities';
+import {Facility, getNearbyFacilities, insertFacilities} from '@/server/api/facilities';
 import {Button} from '@/components/ui/button';
 import {Slider} from '@/components/ui/slider';
+import findSportsFacilities from '@/lib/osm';
 
 // // Mock data - replace with API call
 // export const mockFacilities = [
@@ -61,12 +62,57 @@ const FacilityListings = ({
   search: string | undefined;
   // searchType: string;
 }) => {
+  const [searchTerm, setSearchTerm] = useState(search);
   const [range, setRange] = useState(2);
   // const [location, setLocation] = useState<{latitude: number, longitude: number} | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [results, setResults] = useState<Facility[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSearch = async () => {
+  const handleOSMSearch = async () => {
+    try {
+      // Get user's location
+      const position = await new Promise<GeolocationPosition>(
+        (resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject);
+        },
+      );
+
+      const {latitude, longitude} = position.coords;
+      console.log(latitude, longitude);
+
+      search = "";
+      setSearchTerm("");
+
+      // Convert range from kilometers to meters
+      const radiusMeters = range * 1000;
+
+      setIsLoading(true);
+      // Call the findSportsFacilities function
+      const response: Facility[] = await findSportsFacilities(
+        latitude,
+        longitude,
+        radiusMeters,
+      );
+
+      setResults(response);
+      console.log('after response is set to result');
+      console.log(response);
+      console.log(results);
+      // insert the result facilities into the db
+      await insertFacilities(response);
+
+      // after inserting facilities, reload/re-search the facilities
+      handleDBSearch();
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleDBSearch = async () => {
     try {
       // console.log("IS IT WORKING?");
       const position = await new Promise<GeolocationPosition>(
@@ -80,6 +126,8 @@ const FacilityListings = ({
       //   longitude: position.coords.longitude
       // });
 
+      
+      setIsLoading(true);
       // console.log(`got the position: ${location}`);
       //   console.log("now getting nearby facilities...");
       const results = await getNearbyFacilities(
@@ -96,6 +144,8 @@ const FacilityListings = ({
       //   console.error("TF; LOCATION");
       // }
       // console.log('IT SHOULD BE WORKING>>>>>');
+      
+      setIsLoading(false);
     } catch {
       // console.error('you done fd up');
       setError('Please enable location services.');
@@ -108,7 +158,7 @@ const FacilityListings = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex justify-between mb-2">
+      <div className="flex flex-col justify-between mb-2">
         <div className="">
           <Slider
             defaultValue={[range]}
@@ -119,14 +169,27 @@ const FacilityListings = ({
           />
           <div className="font-medium mt-4">Radius: {range}km</div>
         </div>
-        <Button onClick={handleSearch} className="max-w-24 right-0">
-          Search
-        </Button>
+        {!isLoading
+          ? <div className="mt-2">
+              <Button onClick={handleDBSearch} className="max-w-24 left-0">
+                Search
+              </Button>
+              {facilities.length
+                ? <Button onClick={handleOSMSearch} className="ml-2">
+                    I don't see my facility
+                  </Button>
+                : ""
+              }
+            </div>
+          : ""
+        }
       </div>
       <div className="space-y-4">
         <Suspense fallback={<div>Loading...</div>}>
-          {facilities.map(facility => (
-            <FacilityCard key={facility.facility_id} facility={facility} />
+          {isLoading
+          ? <div>Getting nearby facilities...</div>
+          : facilities.map(facility => (
+            <FacilityCard key={facility.osm_id} facility={facility} />
           ))}
         </Suspense>
       </div>
