@@ -37,6 +37,8 @@ export default function OSMData() {
       console.log(results);
       // insert the result facilities into the db
       await insertFacilities(response);
+
+      // after inserting facilities, reload/re-search the facilities
     } catch (error) {
       console.log(error);
     }
