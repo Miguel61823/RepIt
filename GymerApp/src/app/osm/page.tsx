@@ -1,12 +1,13 @@
 'use client';
 import {Slider} from '@/components/ui/slider';
 import {useState} from 'react';
-import findSportsFacilities, {ProcessedFacility} from '@/lib/osm';
+import findSportsFacilities from '@/lib/osm';
 import {Button} from '@/components/ui/button';
+import {Facility, insertFacilities} from '@/server/api/facilities';
 
 export default function OSMData() {
   const [range, setRange] = useState(2);
-  const [facilities, setFacilities] = useState<ProcessedFacility[]>([]);
+  const [results, setResults] = useState<Facility[]>([]);
 
   const handleSearch = async () => {
     try {
@@ -24,13 +25,18 @@ export default function OSMData() {
       const radiusMeters = range * 1000;
 
       // Call the findSportsFacilities function
-      const results = await findSportsFacilities(
+      const response: Facility[] = await findSportsFacilities(
         latitude,
         longitude,
         radiusMeters,
       );
 
-      setFacilities(results);
+      setResults(response);
+      console.log('after response is set to result');
+      console.log(response);
+      console.log(results);
+      // insert the result facilities into the db
+      await insertFacilities(response);
     } catch (error) {
       console.log(error);
     }
@@ -49,11 +55,11 @@ export default function OSMData() {
       </div>
       <div className="p-6 text-wrap">
         <Button onClick={handleSearch}>Search</Button>
-        {facilities.length > 0 && (
+        {results.length > 0 && (
           <div className="mt-4">
             <h2 className="text-lg font-semibold mb-2">Found Facilities:</h2>
             <ul className="space-y-2">
-              {facilities.map((facility, index) => (
+              {results.map((facility, index) => (
                 <li key={index}>
                   {/* Display facility information based on your ProcessedFacility type */}
                   {JSON.stringify(facility)}
