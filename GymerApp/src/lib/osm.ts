@@ -82,7 +82,6 @@ async function findSportsFacilities(
       method: 'POST',
       body: query,
     });
-    console.log('done');
 
     // Check if the request was successful
     if (!response.ok) {

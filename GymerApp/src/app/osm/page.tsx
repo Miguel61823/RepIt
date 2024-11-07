@@ -32,11 +32,16 @@ export default function OSMData() {
       );
 
       setResults(response);
-      console.log('after response is set to result');
+      console.log('response');
       console.log(response);
+      console.log('results');
       console.log(results);
       // insert the result facilities into the db
-      await insertFacilities(response);
+      if (results[0]) {
+        await insertFacilities(response);
+      } else {
+        console.log('Nothing to insert');
+      }
 
       // after inserting facilities, reload/re-search the facilities
     } catch (error) {

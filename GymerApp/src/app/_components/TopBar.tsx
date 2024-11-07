@@ -60,7 +60,7 @@ const Topbar = () => {
 
   return (
     <>
-      <header className="block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
+      <header className="block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black p-6 border-b">
         <div className="relative flex justify-between items-center text-violet-600 px-2">
           <Button variant="logo" onClick={handleLogoClick}>
             RepIt

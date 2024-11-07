@@ -7,7 +7,11 @@ import React, {Suspense, useState} from 'react';
 // import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FacilityCard from './facilityCard';
-import {Facility, getNearbyFacilities, insertFacilities} from '@/server/api/facilities';
+import {
+  Facility,
+  getNearbyFacilities,
+  insertFacilities,
+} from '@/server/api/facilities';
 import {Button} from '@/components/ui/button';
 import {Slider} from '@/components/ui/slider';
 import findSportsFacilities from '@/lib/osm';
@@ -82,8 +86,8 @@ const FacilityListings = ({
       const {latitude, longitude} = position.coords;
       console.log(latitude, longitude);
 
-      search = "";
-      setSearchTerm("");
+      search = '';
+      setSearchTerm('');
 
       // Convert range from kilometers to meters
       const radiusMeters = range * 1000;
@@ -104,7 +108,7 @@ const FacilityListings = ({
       await insertFacilities(response);
 
       // after inserting facilities, reload/re-search the facilities
-      handleDBSearch();
+      await handleDBSearch();
 
       setIsLoading(false);
     } catch (error) {
@@ -126,7 +130,6 @@ const FacilityListings = ({
       //   longitude: position.coords.longitude
       // });
 
-      
       setIsLoading(true);
       // console.log(`got the position: ${location}`);
       //   console.log("now getting nearby facilities...");
@@ -144,7 +147,7 @@ const FacilityListings = ({
       //   console.error("TF; LOCATION");
       // }
       // console.log('IT SHOULD BE WORKING>>>>>');
-      
+
       setIsLoading(false);
     } catch {
       // console.error('you done fd up');
@@ -169,28 +172,32 @@ const FacilityListings = ({
           />
           <div className="font-medium mt-4">Radius: {range}km</div>
         </div>
-        {!isLoading
-          ? <div className="mt-2">
-              <Button onClick={handleDBSearch} className="max-w-24 left-0">
-                Search
+        {!isLoading ? (
+          <div className="mt-2">
+            <Button onClick={handleDBSearch} className="max-w-24 left-0">
+              Search
+            </Button>
+            {facilities.length ? (
+              <Button onClick={handleOSMSearch} className="ml-2">
+                I don&apost see my facility
               </Button>
-              {facilities.length
-                ? <Button onClick={handleOSMSearch} className="ml-2">
-                    I don't see my facility
-                  </Button>
-                : ""
-              }
-            </div>
-          : ""
-        }
+            ) : (
+              ''
+            )}
+          </div>
+        ) : (
+          ''
+        )}
       </div>
       <div className="space-y-4">
         <Suspense fallback={<div>Loading...</div>}>
-          {isLoading
-          ? <div>Getting nearby facilities...</div>
-          : facilities.map(facility => (
-            <FacilityCard key={facility.osm_id} facility={facility} />
-          ))}
+          {isLoading ? (
+            <div>Getting nearby facilities...</div>
+          ) : (
+            facilities.map(facility => (
+              <FacilityCard key={facility.osm_id} facility={facility} />
+            ))
+          )}
         </Suspense>
       </div>
     </div>

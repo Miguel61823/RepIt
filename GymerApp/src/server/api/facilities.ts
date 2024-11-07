@@ -188,8 +188,8 @@ export async function insertFacilities(
 ): Promise<undefined | {error: boolean}> {
   // Insert all facilities at once, database will handle duplicate osm_ids
 
+  console.log('facilities');
   console.log(facilities);
-  console.log('hiiiiii');
   await db
     .insert(FacilitiesTable)
     .values(
