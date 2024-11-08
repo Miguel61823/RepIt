@@ -10,7 +10,7 @@ const Features = () => {
     <section id="features" className="mb-2">
       <h3 className="text-violet-600 text-2xl font-bold mb-6">Key Features</h3>
       <div className="grid md:grid-cols-3 gap-8">
-        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 dark:text-white">
+        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 bg-neutral-100 dark:text-white">
           <CardHeader>
             <CardTitle className="text-violet-600 text-xl font-bold">
               Personalized Workouts
@@ -21,7 +21,7 @@ const Features = () => {
           </CardHeader>
         </Card>
 
-        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 dark:text-white">
+        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 bg-neutral-100 dark:text-white">
           <CardHeader>
             <CardTitle className="text-violet-600 text-xl font-bold">
               Supplement Tracking
@@ -32,7 +32,7 @@ const Features = () => {
           </CardHeader>
         </Card>
 
-        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 dark:text-white ">
+        <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 bg-neutral-100 dark:text-white ">
           <CardHeader>
             <CardTitle className="text-violet-600 text-xl font-bold">
               Progress Analytics

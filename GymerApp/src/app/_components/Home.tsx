@@ -31,7 +31,7 @@ const Home = () => {
           </Link>
         </SignedIn>
       </section>
-      <div className=" dark:bg-gray-800 bg-neutral-200 m-4 p-8">
+      <div className=" dark:bg-gray-800 bg-neutral-100 m-4 p-8">
         <Features />
         {/*<Plans/>*/}
       </div>

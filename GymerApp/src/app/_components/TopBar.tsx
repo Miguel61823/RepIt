@@ -60,7 +60,7 @@ const Topbar = () => {
 
   return (
     <>
-      <header className="block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black p-6 border-b">
+      <header className="block z-50 sticky top-0 bg-neutral-100 dark:bg-gray-800 dark:text-white text-black p-6 border-b">
         <div className="relative flex justify-between items-center text-violet-600 px-2">
           <Button variant="logo" onClick={handleLogoClick}>
             RepIt
@@ -97,7 +97,7 @@ const Topbar = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="font-sans bg-gray-200 dark:bg-gray-950 dark:text-white text-black"
+                  className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
                     <DropdownMenuItem className="">
