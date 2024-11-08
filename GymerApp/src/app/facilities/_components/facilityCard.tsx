@@ -18,7 +18,7 @@ const FacilityCard = ({facility}: {facility: Facility}) => {
 
   return (
     <div>
-      <Card className="dark:bg-gray-800 bg-neutral-200 overflow-hidden">
+      <Card className="dark:bg-gray-800 bg-neutral-100 overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <div className="p-4 flex-1">
             <CardHeader className="p-0">

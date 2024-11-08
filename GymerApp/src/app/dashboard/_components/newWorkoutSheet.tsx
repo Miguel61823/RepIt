@@ -25,7 +25,7 @@ export function SheetWrapper() {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="hover:bg-gray-200 hover:dark:bg-gray-800"
+          className="hover:bg-neutral-200 hover:dark:bg-gray-800"
         >
           + Add Workout
         </Button>

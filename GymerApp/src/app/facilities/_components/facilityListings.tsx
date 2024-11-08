@@ -168,7 +168,7 @@ const FacilityListings = ({
             max={10}
             step={0.5}
             onValueChange={val => setRange(val[0])}
-            className="min-w-48 sm:min-w-96 max-w-96"
+            className="min-w-48 sm:min-w-96 w-full"
           />
           <div className="font-medium mt-4">Radius: {range}km</div>
         </div>
