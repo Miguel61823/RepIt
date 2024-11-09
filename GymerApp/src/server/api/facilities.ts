@@ -34,7 +34,6 @@ export async function getFacilities(
     .select()
     .from(FacilitiesTable)
     .where(query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined);
-  // .orderBy(pSqlDistance);
 
   facilities = facilitiesData.map(
     ({
