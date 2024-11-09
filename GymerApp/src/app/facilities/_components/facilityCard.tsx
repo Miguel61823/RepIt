@@ -9,12 +9,12 @@ import {AddEquipmentButton} from './addEquipmentButton';
 import {ViewEquipmentsButton} from './viewEquipmentsButton';
 
 const FacilityCard = ({facility}: {facility: Facility}) => {
-  const capitalizeAndReplaceUnderscores = (str: string) => {
-    return str
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
-  };
+  // const capitalizeAndReplaceUnderscores = (str: string) => {
+  //   return str
+  //     .split('_')
+  //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  //     .join(' ');
+  // };
 
   return (
     <div>
@@ -72,14 +72,16 @@ const FacilityCard = ({facility}: {facility: Facility}) => {
               {/* LEISURE */}
               {facility.leisure.endsWith('centre')}
               <div className="flex flex-wrap gap-2 mt-2">
-                <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
-                  {facility.leisure.endsWith('centre')
-                    ? capitalizeAndReplaceUnderscores(
-                        facility.leisure.split('_')[0],
-                      ) + ' Center'
-                    : capitalizeAndReplaceUnderscores(facility.leisure)}
-                </span>
+                {facility.leisure.split(',').map((leisure, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                  >
+                    {leisure}
+                  </span>
+                ))}
               </div>
+
               <div className="mt-4">
                 <div className="grid grid-cols-2 gap-2">
                   <AddEquipmentButton />
