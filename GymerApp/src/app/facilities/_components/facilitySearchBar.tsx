@@ -41,13 +41,13 @@ export const FacilitySearchBar = ({
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold">{searchType} Facilities</h1>
-        <Search className="relative left-2 top-9 text-gray-400" size={20} />
+        <h1 className="text-3xl font-bold">Nearby Athletic Facilities</h1>
+        <Search className="relative left-2 top-9 text-gray-500" size={20} />
         <div className="w-full flex items-center">
           <input
             type="text"
             placeholder="Search facilities"
-            className="w-full p-3 pl-10 border rounded-lg"
+            className="w-full p-3 pl-10 border rounded-lg bg-neutral-100 dark:bg-gray-800"
             value={searchTerm}
             onChange={e => setSearchTerm(e.target.value)}
           />
