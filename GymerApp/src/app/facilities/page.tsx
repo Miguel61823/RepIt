@@ -6,9 +6,8 @@ import React, {Suspense} from 'react';
 // import 'react-toastify/dist/ReactToastify.css';
 import {FacilitySearchBar} from './_components/facilitySearchBar';
 import FacilityListings from './_components/facilityListings';
-// import { getGyms } from '@/server/api/gyms';
 
-export default async function ListingsPage({
+export default async function FacilitiesPage({
   searchParams,
 }: {
   searchParams: {[key: string]: string | string[] | undefined};
