@@ -155,9 +155,7 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
           )}
         </Suspense>
       </div>
-      <Button onClick={handleOSMSearch} className="ml-2">
-        I don&apos;t see my facility
-      </Button>
+      <Button onClick={handleOSMSearch}>I don&apos;t see my facility</Button>
     </div>
   );
 };

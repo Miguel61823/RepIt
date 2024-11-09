@@ -8,6 +8,7 @@ import {eq} from 'drizzle-orm';
 import {revalidatePath} from 'next/cache';
 import {sessionFormSchema} from '@/schema/session';
 import {SessionsTable} from '@/drizzle/schema/index';
+import Anthropic from '@anthropic-ai/sdk';
 
 export interface Session {
   session_id: string;
@@ -16,6 +17,12 @@ export interface Session {
   date: Date;
   session_data: string;
 }
+
+// Anthropic client setup
+
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export async function getSessionHistory(): Promise<Session[]> {
   const {userId, redirectToSignIn} = auth();
@@ -50,6 +57,23 @@ export async function createSession(
   const sessionId = uuidv4();
   const {type, name, date, session_data} = data;
 
+  // Parse session_data using Claude Haiku
+  const message = await anthropic.messages.create({
+    model: 'claude-3-haiku-20240307',
+    max_tokens: 1024,
+    messages: [
+      {
+        role: 'user',
+        content: `Parse this data string into valid JSON, such that you can then efficiently extract key data from it. Only respond with the JSON, no other text: ${data.session_data}`,
+      },
+    ],
+  });
+
+  // Extract JSON from Haiku's response
+  // The content will be in the first content block's value
+  const parsed_data =
+    message.content[0].type === 'text' ? message.content[0].text : '';
+
   const insert = await db
     .insert(SessionsTable)
     .values({
@@ -59,9 +83,9 @@ export async function createSession(
       name: name,
       date: date,
       session_data,
+      parsed_data,
     })
     .returning();
-
   console.log(insert);
 
   revalidatePath('/sessions');
@@ -101,6 +125,23 @@ export async function updateSession(
     return {error: true};
   }
 
+  // Parse session_data using Claude Haiku
+  const message = await anthropic.messages.create({
+    model: 'claude-3-haiku-20240307',
+    max_tokens: 1024,
+    messages: [
+      {
+        role: 'user',
+        content: `Parse this data string into valid JSON, such that you can then efficiently extract key data from it. Only respond with the JSON, no other text: ${data.session_data}`,
+      },
+    ],
+  });
+
+  // Extract JSON from Haiku's response
+  // The content will be in the first content block's value
+  const parsed_data =
+    message.content[0].type === 'text' ? message.content[0].text : '';
+
   try {
     await db
       .update(SessionsTable)
@@ -109,6 +150,7 @@ export async function updateSession(
         type: data.type,
         date: data.date,
         session_data: data.session_data,
+        parsed_data: parsed_data,
       })
       .where(eq(SessionsTable.session_id, sessionId));
 

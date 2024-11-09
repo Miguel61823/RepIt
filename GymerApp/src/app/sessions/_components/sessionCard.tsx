@@ -39,7 +39,7 @@ export const SessionCard = ({
     session_data,
   };
   return (
-    <Card className="overflow-hidden flex flex-col h-full rounded-2xl bg-gray-200 dark:bg-gray-800 shadow">
+    <Card className="overflow-hidden flex flex-col h-full rounded-2xl bg-gray-200 dark:bg-gray-800">
       <CardHeader className="bg-violet-600 text-white">
         <CardTitle className="text-xl font-bold">{name}</CardTitle>
         <CardDescription className="mt-1 text-white text-md font-semibold">
