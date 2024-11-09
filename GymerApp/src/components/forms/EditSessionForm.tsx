@@ -62,11 +62,11 @@ export function EditSessionForm({
   };
 
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
+    window.dispatchEvent(new Event('closeEditSessionSheet'));
     const result = await updateSession(session_id, values);
     if (result?.error) {
       form.setError('root', {message: 'Edit Session Error. :('});
     }
-    window.dispatchEvent(new Event('closeEditSessionSheet'));
   }
 
   return (
