@@ -35,21 +35,6 @@ interface OSMElement {
   tags?: OSMTags; // Metadata tags for the element
 }
 
-// // Interface for processed facility data
-// // This is our cleaned and formatted version of the OSM data
-// interface ResultFacility {
-//   osm_id: string; // Original OSM ID
-//   name: string; // Facility name (with fallback to 'Unnamed Facility')
-//   leisure: string; // Primary facility type
-//   lat: number | undefined; // Latitude
-//   lon: number | undefined; // Longitude
-//   address: string;
-//   accessibility: string; // Access level information
-//   openingHours?: string; // Operating hours if available
-//   website?: string; // Website URL
-//   phone?: string; // Contact phone number
-// }
-
 // Main function to find sports facilities within a given radius
 // Takes latitude, longitude, and radius in meters as parameters
 // Returns a promise that resolves to an array of processed facilities
@@ -93,21 +78,53 @@ async function findSportsFacilities(
 
     // Process each facility and convert to our standardized format
     return data.elements.map((facility: OSMElement): Facility => {
+      // Format house number to only keep first number before semicolon
+      const houseNumber = facility.tags?.['addr:housenumber']
+        ?.split(';')[0]
+        ?.trim();
       // Format address as string
       const addressParts = [
-        [facility.tags?.['addr:housenumber'], facility.tags?.['addr:street']]
-          .filter(Boolean)
-          .join(' '),
+        [houseNumber, facility.tags?.['addr:street']].filter(Boolean).join(' '),
         facility.tags?.['addr:city'],
         facility.tags?.['addr:postcode'],
       ].filter(Boolean);
 
       const formattedAddress = addressParts.join(', ');
-      // Transform OSM data into our ResultFacility format
+
+      // Initialize leisures array
+      const leisures: string[] = [];
+
+      // Add sports if they exist, splitting on semicolon and capitalizing
+      if (facility.tags?.sport) {
+        const sports = facility.tags.sport
+          .split(';')
+          .map(
+            sport =>
+              sport.trim().charAt(0).toUpperCase() +
+              sport.trim().slice(1).toLowerCase(),
+          );
+        leisures.push(...sports);
+      }
+
+      // Add leisure tag if it exists
+      if (facility.tags?.leisure) {
+        const leisure = facility.tags.leisure
+          .split('_')
+          .map(
+            word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+          )
+          .join(' ');
+        leisures.push(leisure);
+      }
+
+      const leisureString = leisures.join(', ').replace(/centre/gi, 'Center');
+      console.log(leisureString);
+
+      // Transform OSM data into our Facility format
       return {
         osm_id: facility.id,
         name: facility.tags?.name || 'Unnamed Facility',
-        leisure: facility.tags?.sport || facility.tags?.leisure || 'Unknown',
+        leisure: leisureString,
         lat: facility.lat || facility.center?.lat,
         lon: facility.lon || facility.center?.lon,
         address: formattedAddress,
