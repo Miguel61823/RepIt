@@ -43,7 +43,7 @@ const Topbar = () => {
   const handleWorkoutClick = () => {
     if (isSignedIn) {
       //redirect to dashboard
-      router.push('/dashboard');
+      router.push('/workouts');
     } else {
       //redirect to '/'
       router.push('/');
