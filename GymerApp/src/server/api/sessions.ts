@@ -197,6 +197,9 @@ export async function getAISessionsByDate(date_range: {
 }
 
 export async function answerQuestion(query: string): Promise<string> {
+  // Get current date
+  const currentDate = new Date().toDateString();
+  
   // get time range using Claude Haiku
   const response = await anthropic.messages.create({
     model: 'claude-3-haiku-20240307',
@@ -204,9 +207,10 @@ export async function answerQuestion(query: string): Promise<string> {
     messages: [
       {
         role: 'user',
-        content: `Analyze the following question and return a date range that 
+        content: `Keep in mind that today's date is ${currentDate}.
+                  Analyze the following question and return a date range that 
                   defines the scope of the question. Express the answer as 
-                  postgres date objects in the form '{ startDate: string, endDate: string }'. Return only this range and nothing else: ${query}`,
+                  postgres date objects in the form '{ "startDate": "string", "endDate": "string" }'. Return only this range and nothing else: ${query}`,
       },
     ],
   });
@@ -222,15 +226,17 @@ export async function answerQuestion(query: string): Promise<string> {
     return 'redirected to Sign In';
   }
 
+  console.log(`Returned date range: ${dateRange}`);
   // not completely parsed
   sessions = await getAISessionsByDate(JSON.parse(dateRange));
+  console.log(sessions);
 
   //analyze data and answer question
   // get time range using Claude Haiku
   const answer = await anthropic.messages.create({
     model: 'claude-3-haiku-20240307',
     max_tokens: 1024,
-    system: `You are an expert in this data ${sessions}. 
+    system: `You are an expert in this data ${JSON.stringify(sessions)}. 
              You must answer questions to the best of your 
              abilities using only this data. If the question 
              may be answered using visuals, explain which 
