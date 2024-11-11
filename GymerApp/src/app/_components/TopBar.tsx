@@ -32,6 +32,14 @@ const Topbar = () => {
       router.push('/');
     }
   };
+  const handleDashboardClick = () => {
+    if (isSignedIn) {
+      // redirect to dashboard
+      router.push('/dashboard');
+    } else {
+      router.push('/');
+    }
+  };
   const handleFacilityClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
@@ -42,7 +50,7 @@ const Topbar = () => {
   };
   const handleWorkoutClick = () => {
     if (isSignedIn) {
-      //redirect to dashboard
+      //redirect to workouts
       router.push('/workouts');
     } else {
       //redirect to '/'
@@ -51,7 +59,7 @@ const Topbar = () => {
   };
   const handleSessionClick = () => {
     if (isSignedIn) {
-      //redirect to gyms page
+      //redirect to sessions
       router.push('/sessions');
     } else {
       router.push('/');
@@ -66,6 +74,9 @@ const Topbar = () => {
             RepIt
           </Button>
           <div className="hidden min-[600px]:flex items-center font-sans">
+            <Button variant="link" onClick={handleDashboardClick}>
+              Dashboard
+            </Button>
             <Button variant="link" onClick={handleFacilityClick}>
               Facilities
             </Button>
@@ -78,7 +89,7 @@ const Topbar = () => {
           </div>
           <div className="flex items-center justify-end w-full">
             <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
-              <div className="px-3">
+              <div className="px-3 mt-1">
                 <SignedIn>
                   <UserButton />
                 </SignedIn>
@@ -100,6 +111,11 @@ const Topbar = () => {
                   className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
+                    <DropdownMenuItem className="">
+                      <Button variant="link" onClick={handleDashboardClick}>
+                        Dashboard
+                      </Button>
+                    </DropdownMenuItem>
                     <DropdownMenuItem className="">
                       <Button variant="link" onClick={handleFacilityClick}>
                         Facilities
@@ -126,7 +142,7 @@ const Topbar = () => {
               </DropdownMenu>
             </div>
             <div className="hidden min-[600px]:flex items-center">
-              <div className="px-3">
+              <div className="px-3 mt-1">
                 <SignedIn>
                   <UserButton />
                 </SignedIn>
