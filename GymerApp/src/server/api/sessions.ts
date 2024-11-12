@@ -210,7 +210,10 @@ export async function answerQuestion(query: string): Promise<string> {
         content: `Keep in mind that today's date is ${currentDate}.
                   Analyze the following question and return a date range that 
                   defines the scope of the question. Express the answer as 
-                  postgres date objects in the form '{ "startDate": "string", "endDate": "string" }'. Return only this range and nothing else: ${query}`,
+                  postgres date objects in the form '{ "startDate": "string", "endDate": "string" }'.
+                  If no date is specified or you cannot get a date, use the range of year 1900 to today's date.
+                  Return only this range in this JSON form and nothing else: ${query}.
+                  `,
       },
     ],
   });
@@ -238,7 +241,8 @@ export async function answerQuestion(query: string): Promise<string> {
     max_tokens: 1024,
     system: `You are an expert in this data ${JSON.stringify(sessions)}. 
              You must answer questions to the best of your 
-             abilities using only this data. If the question 
+             abilities using only this data. If the question seems to unrelated to the provided data, don't analyze it.
+             If the question 
              may be answered using visuals, explain which 
              visuals would best do the job and provide 
              the structured data necessary to create such visuals.`,
