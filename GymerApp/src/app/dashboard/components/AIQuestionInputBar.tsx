@@ -5,6 +5,7 @@ import {Search} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useDebounce} from 'use-debounce';
 import {Textarea} from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
 
 interface AIQuestionInputBarProps {
   value: string;
@@ -17,8 +18,13 @@ export const AIQuestionInputBar = ({
   onChange,
   onSubmit,
 }: AIQuestionInputBarProps) => {
+  // Disable form submit on Enter
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  };
+
+  // Only submit form when button is clicked
+  const handleButtonClick = () => {
     if (!value.trim()) {
       return;
     }
@@ -27,27 +33,24 @@ export const AIQuestionInputBar = ({
 
   return (
     <div>
-      <div className="mt-3">
-        <form onSubmit={handleSubmit} className="w-full flex flex-col">
-          {/* <Search className="relative left-2 top-9 text-gray-500" size={20} /> */}
+      <div className="mt-3 w-full">
+        <form onSubmit={handleSubmit} className="w-full">
           <Textarea
             placeholder="Ask me anything about your sessions!"
-            className="ring-0 border-0 focus-visible:ring-offset-0 focus-visible:ring-0 bg-neutral-100 dark:bg-gray-800"
+            className="ring-0 border-0 focus-visible:ring-offset-0 focus-visible:ring-0 bg-neutral-200 dark:bg-gray-800"
             value={value}
             onChange={e => {
               onChange(e.target.value);
             }}
-            onKeyDown={e => {
-              if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                handleSubmit(e);
-              }
-            }}
           />
+          <Button
+            type="button"
+            onClick={handleButtonClick}
+            className="w-32 bg-violet-600 text-white mt-3 mb-2 py-1"  
+          >
+            Ask!
+          </Button>
         </form>
-        <p className="italic font-extralight text-sm text-gray-600 dark:text-gray-400 text-right">
-          Press Shift + Enter to add a new line.
-        </p>
       </div>
     </div>
   );
