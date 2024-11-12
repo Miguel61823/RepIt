@@ -199,7 +199,7 @@ export async function getAISessionsByDate(date_range: {
 export async function answerQuestion(query: string): Promise<string> {
   // Get current date
   const currentDate = new Date().toDateString();
-  
+
   // get time range using Claude Haiku
   const response = await anthropic.messages.create({
     model: 'claude-3-haiku-20240307',
