@@ -65,6 +65,14 @@ const Topbar = () => {
       router.push('/');
     }
   };
+  const handleGoalClick = () => {
+    if (isSignedIn) {
+      //redirect to goals
+      router.push('/goals');
+    } else {
+      router.push('/');
+    }
+  };
 
   return (
     <>
@@ -85,6 +93,9 @@ const Topbar = () => {
             </Button>
             <Button variant="link" onClick={handleSessionClick}>
               Sessions
+            </Button>
+            <Button variant="link" onClick={handleGoalClick}>
+              Goals
             </Button>
           </div>
           <div className="flex items-center justify-end w-full">
@@ -129,6 +140,11 @@ const Topbar = () => {
                     <DropdownMenuItem>
                       <Button variant="link" onClick={handleSessionClick}>
                         Sessions
+                      </Button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Button variant="link" onClick={handleGoalClick}>
+                        Goals
                       </Button>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
