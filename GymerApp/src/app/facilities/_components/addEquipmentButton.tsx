@@ -33,14 +33,14 @@ export const AddEquipmentButton = () => {
     quantity: '',
   });
 
-  const handleSubmit = e => {
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission here
     console.log(formData);
     setOpen(false);
   };
 
-  const handleChange = e => {
+  const handleChange = (e: any) => {
     const {name, value} = e.target;
     setFormData(prev => ({
       ...prev,
