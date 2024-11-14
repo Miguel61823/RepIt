@@ -12,7 +12,7 @@ import { GoalsTable } from '@/drizzle/schema/index';
 export interface Goal {
   goal_id: string;
   title: string;
-  description: string;
+  description: string | null;
   dueDate: Date;
   completed: boolean;
 }
