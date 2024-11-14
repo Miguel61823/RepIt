@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import {useEffect, useState} from 'react';
+import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { GoalForm } from '../../../components/forms/GoalForm';
+import {GoalForm} from '../../../components/forms/GoalForm';
 
 export function NewGoal() {
   const [isOpen, setIsOpen] = useState(false);

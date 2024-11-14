@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { goalFormSchema } from '@/schema/goal';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import {goalFormSchema} from '@/schema/goal';
+import {useForm} from 'react-hook-form';
+import {z} from 'zod';
+import {zodResolver} from '@hookform/resolvers/zod';
 import {
   Form,
   FormField,
@@ -13,17 +13,17 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
+import {Input} from '@/components/ui/input';
+import {Button} from '@/components/ui/button';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Calendar} from '@/components/ui/calendar';
+import {format} from 'date-fns';
 
-import { Goal, updateGoal } from '@/server/api/goals';
+import {Goal, updateGoal} from '@/server/api/goals';
 
-import { cn } from '@/lib/utils';
-import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
+import {cn} from '@/lib/utils';
+import {Textarea} from '@/components/ui/textarea';
+import {Checkbox} from '@/components/ui/checkbox';
 
 export function EditGoalForm({
   goal_id,
@@ -46,7 +46,7 @@ export function EditGoalForm({
     window.dispatchEvent(new Event('closeEditGoalSheet'));
     const result = await updateGoal(goal_id, values);
     if (result?.error) {
-      form.setError('root', { message: 'Edit Goal Error. :(' });
+      form.setError('root', {message: 'Edit Goal Error. :('});
     }
   }
 
@@ -56,7 +56,7 @@ export function EditGoalForm({
         <FormField
           control={form.control}
           name="title"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Goal Title</FormLabel>
               <FormControl>
@@ -70,7 +70,7 @@ export function EditGoalForm({
         <FormField
           control={form.control}
           name="description"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Goal Description</FormLabel>
               <FormControl>
@@ -84,7 +84,7 @@ export function EditGoalForm({
         <FormField
           control={form.control}
           name="dueDate"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-col">
               <FormLabel>Due Date</FormLabel>
               <Popover>
@@ -122,18 +122,13 @@ export function EditGoalForm({
         <FormField
           control={form.control}
           name="completed"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onChange={field.onChange}
-                />
+                <Checkbox checked={field.value} onChange={field.onChange} />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
-                  Completed
-                </FormLabel>
+                <FormLabel>Completed</FormLabel>
               </div>
             </FormItem>
           )}
