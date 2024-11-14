@@ -5,7 +5,7 @@ import {Search} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useDebounce} from 'use-debounce';
 import {Textarea} from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
+import {Button} from '@/components/ui/button';
 
 interface AIQuestionInputBarProps {
   value: string;
@@ -46,7 +46,7 @@ export const AIQuestionInputBar = ({
           <Button
             type="button"
             onClick={handleButtonClick}
-            className="w-32 bg-violet-600 text-white mt-3 mb-2 py-1"  
+            className="w-32 bg-violet-600 text-white mt-3 mb-2 py-1"
           >
             Ask!
           </Button>
