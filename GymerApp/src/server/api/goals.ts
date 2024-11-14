@@ -12,7 +12,7 @@ import { GoalsTable } from '@/drizzle/schema/index';
 export interface Goal {
   goal_id: string;
   title: string;
-  description: string | null;
+  description: string | undefined;
   dueDate: Date;
   completed: boolean;
 }
@@ -31,7 +31,10 @@ export async function getGoalHistory(): Promise<Goal[]> {
     columns: {
       user_id: false, // Exclude user_id from results
     },
-  });
+  }).then(goals => goals.map(goal => ({
+    ...goal,
+    description: goal.description ?? undefined // Convert null to undefined
+  })));
 
   return goals;
 }

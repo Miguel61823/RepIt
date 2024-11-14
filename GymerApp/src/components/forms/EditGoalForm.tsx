@@ -22,8 +22,8 @@ import { format } from 'date-fns';
 import { Goal, updateGoal } from '@/server/api/goals';
 
 import { cn } from '@/lib/utils';
-import { Textarea } from '../ui/textarea';
-import { Checkbox } from '../ui/checkbox';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 
 export function EditGoalForm({
   goal_id,
@@ -127,7 +127,7 @@ export function EditGoalForm({
               <FormControl>
                 <Checkbox
                   checked={field.value}
-                  onCheckedChange={field.onChange}
+                  onChange={field.onChange}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
