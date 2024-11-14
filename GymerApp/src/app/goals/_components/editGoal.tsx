@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import {useEffect, useState} from 'react';
+import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -7,8 +7,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import { EditGoalForm } from '../../../components/forms/EditGoalForm';
-import { Goal } from '@/server/api/goals';
+import {EditGoalForm} from '../../../components/forms/EditGoalForm';
+import {Goal} from '@/server/api/goals';
 
 export function EditGoal(EditedGoal: Goal) {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,8 +16,7 @@ export function EditGoal(EditedGoal: Goal) {
   useEffect(() => {
     const handleClose = () => setIsOpen(false);
     window.addEventListener('closeEditGoalSheet', handleClose);
-    return () =>
-      window.removeEventListener('closeEditGoalSheet', handleClose);
+    return () => window.removeEventListener('closeEditGoalSheet', handleClose);
   }, []);
 
   return (

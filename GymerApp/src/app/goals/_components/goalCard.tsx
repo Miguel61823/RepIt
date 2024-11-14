@@ -19,10 +19,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { Button } from '@/components/ui/button';
-import { Goal, deleteGoal, toggleGoalCompletion } from '@/server/api/goals';
-import { formatDate } from '@/lib/utils';
-import { EditGoal } from './editGoal';
+import {Button} from '@/components/ui/button';
+import {Goal, deleteGoal, toggleGoalCompletion} from '@/server/api/goals';
+import {formatDate} from '@/lib/utils';
+import {EditGoal} from './editGoal';
 
 export const GoalCard = ({
   goal_id,
@@ -41,7 +41,7 @@ export const GoalCard = ({
 
   return (
     <Card className="overflow-hidden flex flex-col h-full rounded-2xl bg-gray-200 dark:bg-gray-800">
-      <CardHeader className="bg-blue-600 text-white">
+      <CardHeader className="bg-violet-600 text-white">
         <CardTitle className="text-xl font-bold">{title}</CardTitle>
         <CardDescription className="mt-1 text-white text-sm font-thin">
           Due: {formatDate(dueDate)}
@@ -55,9 +55,9 @@ export const GoalCard = ({
           <Button
             variant="outline"
             onClick={() => toggleGoalCompletion(goal_id)}
-            className={completed ? "bg-green-500 text-white" : ""}
+            className={completed ? 'bg-green-500 text-white' : ''}
           >
-            {completed ? "Completed" : "Mark as Complete"}
+            {completed ? 'Completed' : 'Mark as Complete'}
           </Button>
           <EditGoal {...thisGoal} />
           <AlertDialog>
