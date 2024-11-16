@@ -342,11 +342,22 @@ export async function getAIParameters(
                     `,
       },
     ],
+    tools: [],
   });
-
+  console.log(typeof response);
   console.log(response);
+
   if (response.content[0].type === 'text') {
-    console.log(JSON.parse(response.content[0].text).parameters.keywords);
+    const parsedText = JSON.parse(response.content[0].text); //object
+    const responseText = JSON.stringify(parsedText);
+
+    console.log(typeof responseText);
+    console.log(`parsed: ${responseText}`);
+
+    const reparsedText = JSON.parse(responseText);
+
+    console.log(reparsedText.parameters.keywords ? 'defined' : 'null');
+    console.log(reparsedText.parameters.dateRange ? 'defined' : 'null');
   }
 
   //extract function parameters from response
@@ -502,7 +513,7 @@ export async function answerQuestionSplit(query: string): Promise<string> {
               You must answer questions to the best of your 
               abilities using only this data. You are to give concise answers 
               whenever posible. If the question seems too 
-              unrelated to the provided data, don't analyze it.
+              unrelated to the provided data, don't analyze it and return an empty.
               If the question may be answered using visuals, explain which 
               visuals would best do the job and provide 
               the structured data necessary to create such visuals. 
@@ -536,7 +547,8 @@ export async function answerQuestionSplit(query: string): Promise<string> {
 
   console.log(answer);
 
-  return answer.content[0].type === 'text'
+  return answer.content[0].type === 'text' &&
+    JSON.parse(answer.content[0].text).analysis
     ? JSON.parse(answer.content[0].text).analysis
     : 'An answer could not be given';
 }

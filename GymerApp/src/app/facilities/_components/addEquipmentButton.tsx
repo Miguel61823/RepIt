@@ -33,7 +33,7 @@ export const AddEquipmentButton = () => {
     quantity: '',
   });
 
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle form submission here
     console.log(formData);
