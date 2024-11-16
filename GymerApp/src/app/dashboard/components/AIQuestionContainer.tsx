@@ -6,10 +6,10 @@ import React, {Suspense, useState} from 'react';
 // import {Button} from '@/components/ui/button';
 // import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import {Button} from '@/components/ui/button';
-import {Slider} from '@/components/ui/slider';
+// import {Button} from '@/components/ui/button';
+// import {Slider} from '@/components/ui/slider';
 import {AIQuestionInputBar} from './AIQuestionInputBar';
-import {answerQuestion} from '@/server/api/sessions';
+import {answerQuestionSplit, answerQuestion} from '@/server/api/sessions';
 
 export const AIQuestionContainer = () => {
   const [question, setQuestion] = useState<string>('');
@@ -19,7 +19,7 @@ export const AIQuestionContainer = () => {
 
   const handleQuestionSubmit = async (question: string) => {
     console.log('Handling question: ', question);
-    const output = await answerQuestion(question);
+    const output = await answerQuestionSplit(question);
 
     setAnswer(output);
     setQuestion('');

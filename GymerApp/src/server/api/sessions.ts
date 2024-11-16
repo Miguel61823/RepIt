@@ -298,6 +298,7 @@ export async function getAIParameters(
 ): Promise<AISessionParameters> {
   // Get current date
   const currentDate = new Date().toDateString();
+  console.log(currentDate);
 
   // get time range using Claude Haiku
   const response = await anthropic.messages.create({
@@ -326,7 +327,7 @@ export async function getAIParameters(
   
                   Process:
                   0. If the query is off topic, meaning it is not a 
-                     question about session history, make both 'keywords'
+                     question about session history, make each 'keywords'
                      and 'dateRange' null.
                   1. Plan what data you need to answer the question.
                      Try to use the least data possible to answer
@@ -334,7 +335,7 @@ export async function getAIParameters(
                   2. Request specific data using the available function
                   3. Analyze the data and provide a clear response
   
-                  Format your function call as JSON object with a 'parameters' key.                
+                  Format your response as JSON object with a 'parameters' key.                
                   Respond with just the function call in a JSON array.
 
                   This is the question: ${query}
@@ -342,6 +343,11 @@ export async function getAIParameters(
       },
     ],
   });
+
+  console.log(response);
+  if (response.content[0].type === 'text') {
+    console.log(JSON.parse(response.content[0].text).parameters.keywords);
+  }
 
   //extract function parameters from response
   const params: AISessionParameters = {
@@ -353,14 +359,17 @@ export async function getAIParameters(
     response.content[0].type === 'text' &&
     JSON.parse(response.content[0].text).parameters.keywords
       ? JSON.parse(response.content[0].text).parameters.keywords
-      : [];
+      : undefined;
 
   params.dateRange =
     response.content[0].type === 'text' &&
     JSON.parse(response.content[0].text).parameters.dateRange
       ? JSON.parse(response.content[0].text).parameters.dateRange
-      : [];
+      : undefined;
 
+  console.log(
+    `Returning: ${params.keywords} ${params.dateRange?.startDate} ${params.dateRange?.endDate}`,
+  );
   return params;
 }
 
@@ -436,6 +445,79 @@ export async function answerQuestion(query: string): Promise<string> {
              the output should be like:
 
              {
+                "analysis": "You have improved by 200 lbs in the past year.",
+                "visualData": [
+                  {"date": "2024-01-01", "weight": 180},
+                  {"date": "2024-02-01", "weight": 190},
+                  {"date": "2024-03-01", "weight": 200}
+                ]
+              }
+                `,
+    messages: [
+      {
+        role: 'user',
+        content: `${query}`,
+      },
+    ],
+  });
+
+  console.log(answer);
+
+  return answer.content[0].type === 'text'
+    ? JSON.parse(answer.content[0].text).analysis
+    : 'An answer could not be given';
+}
+
+export async function answerQuestionSplit(query: string): Promise<string> {
+  //get session params
+  const params = await getAIParameters(query);
+  console.log('Params');
+  console.log(params);
+  const {userId, redirectToSignIn} = auth();
+  let sessions: AISession[] = [];
+
+  if (userId === null) {
+    redirectToSignIn();
+    return 'redirected to Sign In';
+  }
+  console.log('getting sessions');
+
+  sessions = await getAISessions(params);
+  console.log(sessions);
+
+  //analyze data and answer question
+  // get time range using Claude Haiku
+  const answer = await anthropic.messages.create({
+    model: 'claude-3-haiku-20240307',
+    max_tokens: 1024,
+    temperature: 0,
+    system: `You are an expert in this session history ${JSON.stringify(sessions)}. 
+              
+              Each session has a name, a date, a type and a parsed_data section. 
+              The first 3 are straight forward, the parsed_data is a JSON verion of everything
+              a user wanted to store for that session. 
+
+              The prompt you are given is a question from a user about their data history.
+
+              You must answer questions to the best of your 
+              abilities using only this data. You are to give concise answers 
+              whenever posible. If the question seems too 
+              unrelated to the provided data, don't analyze it.
+              If the question may be answered using visuals, explain which 
+              visuals would best do the job and provide 
+              the structured data necessary to create such visuals. 
+              Be sure to include linebreaks and indentations in the analysis 
+              response to create good looking answers.
+              
+              Format your answers as JSON.
+              Your analysis should be denoted by 'analysis:', and any visual 
+              data should be denoted by 'visualData:'.
+
+              For example, with a query like 
+              'How much has my bench press improved in the last year?', 
+              the output should be like:
+
+              {
                 "analysis": "You have improved by 200 lbs in the past year.",
                 "visualData": [
                   {"date": "2024-01-01", "weight": 180},
