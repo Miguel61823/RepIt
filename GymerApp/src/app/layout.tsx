@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`flex flex-col flex-grow dark:bg-gray-900  bg-gray-100 min-h-screen  dark:text-white text-black ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`flex flex-col flex-grow dark:bg-gray-900  bg-neutral-100 min-h-screen  dark:text-white text-black ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"

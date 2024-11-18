@@ -32,7 +32,7 @@ export const WorkoutCard = ({
   exercises,
 }: Workout) => {
   return (
-    <Card className="overflow-hidden flex flex-col h-full bg-gray-200 dark:bg-gray-800">
+    <Card className="overflow-hidden flex flex-col h-full bg-neutral-200 dark:bg-gray-800">
       <CardHeader className="bg-violet-600 text-white">
         <CardTitle className="text-xl font-bold truncate">{title}</CardTitle>
         <CardDescription className="mt-1 text-white ">
@@ -72,7 +72,7 @@ export const WorkoutCard = ({
             <AlertDialogTrigger asChild>
               <Button
                 variant="ghost"
-                className="text-red-500 hover:text-red-500 hover:bg-gray-50 hover:dark:bg-gray-900"
+                className="text-red-500 hover:text-red-500 hover:bg-neutral-100 hover:dark:bg-gray-900"
               >
                 Delete
               </Button>

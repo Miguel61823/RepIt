@@ -32,6 +32,14 @@ const Topbar = () => {
       router.push('/');
     }
   };
+  const handleDashboardClick = () => {
+    if (isSignedIn) {
+      // redirect to dashboard
+      router.push('/dashboard');
+    } else {
+      router.push('/');
+    }
+  };
   const handleFacilityClick = () => {
     if (isSignedIn) {
       //redirect to gyms page
@@ -42,8 +50,8 @@ const Topbar = () => {
   };
   const handleWorkoutClick = () => {
     if (isSignedIn) {
-      //redirect to dashboard
-      router.push('/dashboard');
+      //redirect to workouts
+      router.push('/workouts');
     } else {
       //redirect to '/'
       router.push('/');
@@ -51,8 +59,16 @@ const Topbar = () => {
   };
   const handleSessionClick = () => {
     if (isSignedIn) {
-      //redirect to gyms page
+      //redirect to sessions
       router.push('/sessions');
+    } else {
+      router.push('/');
+    }
+  };
+  const handleGoalClick = () => {
+    if (isSignedIn) {
+      //redirect to goals
+      router.push('/goals');
     } else {
       router.push('/');
     }
@@ -60,12 +76,15 @@ const Topbar = () => {
 
   return (
     <>
-      <header className="block z-50 sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white text-black py-4 border-b">
+      <header className="block z-50 sticky top-0 bg-neutral-100 dark:bg-gray-800 dark:text-white text-black p-6 border-b">
         <div className="relative flex justify-between items-center text-violet-600 px-2">
           <Button variant="logo" onClick={handleLogoClick}>
             RepIt
           </Button>
           <div className="hidden min-[600px]:flex items-center font-sans">
+            <Button variant="link" onClick={handleDashboardClick}>
+              Dashboard
+            </Button>
             <Button variant="link" onClick={handleFacilityClick}>
               Facilities
             </Button>
@@ -75,10 +94,13 @@ const Topbar = () => {
             <Button variant="link" onClick={handleSessionClick}>
               Sessions
             </Button>
+            <Button variant="link" onClick={handleGoalClick}>
+              Goals
+            </Button>
           </div>
           <div className="flex items-center justify-end w-full">
             <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
-              <div className="px-3">
+              <div className="px-3 mt-1">
                 <SignedIn>
                   <UserButton />
                 </SignedIn>
@@ -97,9 +119,14 @@ const Topbar = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="font-sans bg-gray-200 dark:bg-gray-950 dark:text-white text-black"
+                  className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
+                    <DropdownMenuItem className="">
+                      <Button variant="link" onClick={handleDashboardClick}>
+                        Dashboard
+                      </Button>
+                    </DropdownMenuItem>
                     <DropdownMenuItem className="">
                       <Button variant="link" onClick={handleFacilityClick}>
                         Facilities
@@ -115,6 +142,11 @@ const Topbar = () => {
                         Sessions
                       </Button>
                     </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Button variant="link" onClick={handleGoalClick}>
+                        Goals
+                      </Button>
+                    </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup className="flex flex-row justify-end px-1">
@@ -126,7 +158,7 @@ const Topbar = () => {
               </DropdownMenu>
             </div>
             <div className="hidden min-[600px]:flex items-center">
-              <div className="px-3">
+              <div className="px-3 mt-1">
                 <SignedIn>
                   <UserButton />
                 </SignedIn>

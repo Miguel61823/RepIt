@@ -1,6 +1,7 @@
 //GymerApp/src/app/facilities/_components/facilityCard.tsx
 'use client';
 
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
 import { MapPin, Phone } from 'lucide-react';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
@@ -37,10 +38,19 @@ const FacilityCard = ({ facility }: { facility: Facility }) => {
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(" ");
   };
+=======
+const FacilityCard = ({facility}: {facility: Facility}) => {
+  // const capitalizeAndReplaceUnderscores = (str: string) => {
+  //   return str
+  //     .split('_')
+  //     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+  //     .join(' ');
+  // };
+>>>>>>> 1d9d21232adadd8e9f0d979c998d7700b399cf02
 
   return (
     <div>
-      <Card className="dark:bg-gray-800 bg-neutral-200 overflow-hidden">
+      <Card className="dark:bg-gray-800 bg-neutral-100 overflow-hidden">
         <div className="flex flex-col md:flex-row">
           <div className="p-4 flex-1">
             <CardHeader className="p-0">
@@ -71,18 +81,29 @@ const FacilityCard = ({ facility }: { facility: Facility }) => {
               </div>
             </CardHeader>
             <CardContent className="p-0 mt-4">
+<<<<<<< HEAD
               {/* ADDRESS */}
+=======
+              {/* ADDRESS --- LATER MAYBE USE REVERSE GEOCODING TO GET ACCURATE */}
+>>>>>>> 1d9d21232adadd8e9f0d979c998d7700b399cf02
               {facility.address ? (
                 <div className="flex items-start space-x-2 text-gray-600 dark:text-gray-400 mb-2">
                   <MapPin size={16} className="mt-1 flex-shrink-0" />
                   <span>{facility.address}</span>
                 </div>
+<<<<<<< HEAD
               ) : null}
 
+=======
+              ) : (
+                ''
+              )}
+>>>>>>> 1d9d21232adadd8e9f0d979c998d7700b399cf02
               {/* PHONE */}
               {facility.phone ? (
                 <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mb-3">
                   <Phone size={16} className="flex-shrink-0" />
+<<<<<<< HEAD
                   <span>{facility.phone}</span>
                 </div>
               ) : null}
@@ -94,7 +115,26 @@ const FacilityCard = ({ facility }: { facility: Facility }) => {
                     ? capitalizeAndReplaceUnderscores(facility.leisure.split("_")[0]) + " Center"
                     : capitalizeAndReplaceUnderscores(facility.leisure)}
                 </span>
+=======
+                  <span>{facility.phone ? facility.phone : ''}</span>
+                </div>
+              ) : (
+                ''
+              )}
+              {/* LEISURE */}
+              {facility.leisure.endsWith('centre')}
+              <div className="flex flex-wrap gap-2 mt-2">
+                {facility.leisure.split(',').map((leisure, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm"
+                  >
+                    {leisure}
+                  </span>
+                ))}
+>>>>>>> 1d9d21232adadd8e9f0d979c998d7700b399cf02
               </div>
+
               <div className="mt-4">
                 <div className="grid grid-cols-2 gap-2">
                   <AddEquipmentButton osm_id={facility.osm_id} facilityName={facility.name} onEquipmentAdded={onEquipmentAdded} />

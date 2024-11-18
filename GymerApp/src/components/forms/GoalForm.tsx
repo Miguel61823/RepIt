@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import {sessionFormSchema} from '@/schema/session';
+import {goalFormSchema} from '@/schema/goal';
 import {useForm} from 'react-hook-form';
 import {z} from 'zod';
 import {zodResolver} from '@hookform/resolvers/zod';
@@ -19,53 +19,28 @@ import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
 import {Calendar} from '@/components/ui/calendar';
 import {format} from 'date-fns';
 
-import {Session, updateSession} from '@/server/api/sessions';
+import {createGoal} from '@/server/api/goals';
 
 import {cn} from '@/lib/utils';
 import {Textarea} from '../ui/textarea';
+import {Checkbox} from '../ui/checkbox';
 
-export function EditSessionForm({
-  session_id,
-  name,
-  type,
-  date,
-  session_data,
-}: Session) {
-  const form = useForm<z.infer<typeof sessionFormSchema>>({
-    resolver: zodResolver(sessionFormSchema),
+export function GoalForm() {
+  const form = useForm<z.infer<typeof goalFormSchema>>({
+    resolver: zodResolver(goalFormSchema),
     defaultValues: {
-      name: name,
-      type: type,
-      date: date,
-      session_data: session_data,
+      title: '',
+      description: '',
+      dueDate: new Date(),
+      completed: false,
     },
   });
 
-  const handleTab = (event: React.KeyboardEvent) => {
-    if (event.key === 'Tab') {
-      event.preventDefault();
-      const target = event.target as HTMLTextAreaElement;
-      const start = target.selectionStart;
-      const end = target.selectionEnd;
-
-      const value = target.value;
-      const newValue =
-        value.substring(0, start) + '    ' + value.substring(end);
-
-      form.setValue('session_data', newValue);
-
-      // Set cursor position after the inserted spaces
-      setTimeout(() => {
-        target.selectionStart = target.selectionEnd = start + 4;
-      }, 0);
-    }
-  };
-
-  async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
-    window.dispatchEvent(new Event('closeEditSessionSheet'));
-    const result = await updateSession(session_id, values);
-    if (result?.error) {
-      form.setError('root', {message: 'Edit Session Error. :('});
+  async function onSubmit(values: z.infer<typeof goalFormSchema>) {
+    window.dispatchEvent(new Event('closeGoalSheet'));
+    const data = await createGoal(values);
+    if (data?.error) {
+      form.setError('root', {message: 'Create Goal Error. :('});
     }
   }
 
@@ -74,10 +49,10 @@ export function EditSessionForm({
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-4">
         <FormField
           control={form.control}
-          name="name"
+          name="title"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Session Name</FormLabel>
+              <FormLabel>Goal Title</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -88,12 +63,12 @@ export function EditSessionForm({
 
         <FormField
           control={form.control}
-          name="type"
+          name="description"
           render={({field}) => (
             <FormItem>
-              <FormLabel>Session Type</FormLabel>
+              <FormLabel>Goal Description</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Textarea {...field} rows={5} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -102,10 +77,10 @@ export function EditSessionForm({
 
         <FormField
           control={form.control}
-          name="date"
+          name="dueDate"
           render={({field}) => (
             <FormItem className="flex flex-col">
-              <FormLabel>Date</FormLabel>
+              <FormLabel>Due Date</FormLabel>
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -137,20 +112,23 @@ export function EditSessionForm({
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name="session_data"
+          name="completed"
           render={({field}) => (
-            <FormItem>
-              <FormLabel>Session Data</FormLabel>
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
               <FormControl>
-                <Textarea {...field} onKeyDown={handleTab} rows={10} />
+                <Checkbox checked={field.value} onChange={field.onChange} />
               </FormControl>
-              <FormMessage />
+              <div className="space-y-1 leading-none">
+                <FormLabel>Completed</FormLabel>
+              </div>
             </FormItem>
           )}
         />
-        <Button type="submit">Save Session</Button>
+
+        <Button type="submit">Save Goal</Button>
       </form>
     </Form>
   );

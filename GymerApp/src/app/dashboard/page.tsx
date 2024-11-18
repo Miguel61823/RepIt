@@ -1,13 +1,12 @@
-// "use client"
 import React from 'react';
-import HistoryList from './_components/history';
+import {AIQuestionInputBar} from './components/AIQuestionInputBar';
+import {AIQuestionContainer} from './components/AIQuestionContainer';
 
-export default function Dashboard() {
+export default function DashboardPage() {
   return (
-    <div className="container flex-grow mx-auto dark:bg-gray-900 bg-gray-50 mt-8 px-4">
-      {/* <Metrics/ > */}
-      <HistoryList />
-      {/* <Goals /> */}
+    <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8 dark:bg-gray-900 bg-neutral-100">
+      <h1 className="text-3xl font-bold">Ask RepIt</h1>
+      <AIQuestionContainer />
     </div>
   );
 }

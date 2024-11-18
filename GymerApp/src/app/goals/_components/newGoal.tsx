@@ -9,32 +9,29 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet';
-import {WorkoutForm} from '../../../components/forms/WorkoutForm';
+import {GoalForm} from '../../../components/forms/GoalForm';
 
-export function SheetWrapper() {
+export function NewGoal() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleClose = () => setIsOpen(false);
-    window.addEventListener('closeWorkoutSheet', handleClose);
-    return () => window.removeEventListener('closeWorkoutSheet', handleClose);
+    window.addEventListener('closeGoalSheet', handleClose);
+    return () => window.removeEventListener('closeGoalSheet', handleClose);
   }, []);
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
-        <Button
-          variant="ghost"
-          className="hover:bg-gray-200 hover:dark:bg-gray-800"
-        >
-          + Add Workout
-        </Button>
+        <div className=" dark:text-white text-black">
+          <Button variant="ghost">+ Add Goal</Button>
+        </div>
       </SheetTrigger>
-      <SheetContent side="left" className="overflow-y-auto no-scrollbar">
+      <SheetContent side="right" className="overflow-y-auto no-scrollbar">
         <SheetHeader>
-          <SheetTitle>New Workout</SheetTitle>
+          <SheetTitle>New Goal</SheetTitle>
         </SheetHeader>
-        <WorkoutForm />
+        <GoalForm />
       </SheetContent>
     </Sheet>
   );

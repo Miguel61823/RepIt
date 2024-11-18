@@ -56,11 +56,11 @@ export function SessionForm() {
   };
 
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
+    window.dispatchEvent(new Event('closeSessionSheet'));
     const data = await createSession(values);
     if (data?.error) {
       form.setError('root', {message: 'Create Session Error. :('});
     }
-    window.dispatchEvent(new Event('closeSessionSheet'));
   }
 
   return (
