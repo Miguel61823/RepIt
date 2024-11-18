@@ -1,22 +1,73 @@
+// GymerApp/src/app/facilities/_components/viewEquipmentsButton.tsx
 'use client';
 
-import React from 'react';
-// import {Search, MapPin, Star, Phone, Check} from 'lucide-react';
-// import {Card, CardHeader, CardContent} from '@/components/ui/card';
-import {Button} from '@/components/ui/button';
-// import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { EquipmentData } from '@/drizzle/api/equipment'; // Import the correct EquipmentData type
 
-export const ViewEquipmentsButton = () => {
+interface ViewEquipmentsButtonProps {
+  facilityId: string;
+}
+
+export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({ facilityId }) => {
+  const [equipment, setEquipment] = useState<EquipmentData[]>([]); // Use EquipmentData type for state
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const fetchEquipment = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`/api/equipment?facilityId=${facilityId}`);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch equipment');
+      }
+
+      const data: EquipmentData[] = await response.json(); // Ensure data matches EquipmentData type
+      setEquipment(data);
+      setIsOpen(true); // Open the equipment list when data is fetched
+    } catch (err) {
+      console.error('Error fetching equipment:', err);
+      setError('Error loading equipment data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <Button
         type="button"
-        className="font-medium text-lg w-full"
-        // onClick={async () => addGym(gym)}
+        className="font-medium text-lg w-full bg-purple-600 hover:bg-purple-700 text-white"
+        onClick={fetchEquipment}
+        disabled={loading}
       >
-        View Equipment
+        {loading ? 'Loading...' : 'View Equipment'}
       </Button>
+
+      {error && <p className="text-red-500 mt-2">{error}</p>}
+
+      {isOpen && (
+        <div className="bg-slate-800 mt-4 p-4 rounded">
+          {equipment.length > 0 ? (
+            equipment.map((item) => (
+              <div key={item.osm_id} className="border-b border-slate-700 py-2">
+                <p className="text-white">Name: {item.name}</p>
+                <p className="text-slate-300">Type: {item.type || 'N/A'}</p>
+                <p className="text-slate-300">Condition: {item.condition || 'N/A'}</p>
+                <p className="text-slate-300">Quantity: {item.quantity || 'N/A'}</p>
+                <p className="text-slate-300">Maintenance Date: {item.maintenance_date || 'N/A'}</p>
+                <p className="text-slate-300">Description: {item.description || 'No description'}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-slate-400">No equipment found for this facility.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };

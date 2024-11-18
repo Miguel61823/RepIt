@@ -1,14 +1,35 @@
-import React from 'react';
-import {MapPin, Phone} from 'lucide-react';
-import {Card, CardHeader, CardContent} from '@/components/ui/card';
-// import {Button} from '@/components/ui/button';
-// import {ToastContainer, toast} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import {Facility} from '@/server/api/facilities';
-import {AddEquipmentButton} from './addEquipmentButton';
-import {ViewEquipmentsButton} from './viewEquipmentsButton';
+//GymerApp/src/app/facilities/_components/facilityCard.tsx
+'use client';
 
-const FacilityCard = ({facility}: {facility: Facility}) => {
+import React, { useEffect, useState } from 'react';
+import { MapPin, Phone } from 'lucide-react';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Facility } from '@/server/api/facilities';
+import { AddEquipmentButton } from './addEquipmentButton';
+import { ViewEquipmentsButton } from './viewEquipmentsButton';
+import { EquipmentData } from '@/drizzle/api/equipment'; // Updated import
+
+const FacilityCard = ({ facility }: { facility: Facility }) => {
+  const [equipment, setEquipment] = useState<EquipmentData[]>([]); // Updated type to EquipmentData
+
+  useEffect(() => {
+    const fetchEquipment = async () => {
+      try {
+        const response = await fetch(`/api/equipment?osm_id=${facility.osm_id}`);
+        const data = await response.json();
+        setEquipment(data.data); // Adjusted to match the structure of response JSON
+      } catch (error) {
+        console.error('Error fetching equipment:', error);
+      }
+    };
+
+    fetchEquipment();
+  }, [facility.osm_id]);
+
+  const onEquipmentAdded = () => {
+    // Refetch equipment when new equipment is added
+    fetchEquipment();
+  };
 
   const capitalizeAndReplaceUnderscores = (str: string) => {
     return str
@@ -31,7 +52,7 @@ const FacilityCard = ({facility}: {facility: Facility}) => {
                     <a
                       className="ml-1 italic dark:text-gray-400 text-gray-600"
                       target="_blank"
-                      rel="noopener noferrer"
+                      rel="noopener noreferrer"
                       href={`//${facility.website}`}
                     >
                       - link
@@ -40,50 +61,44 @@ const FacilityCard = ({facility}: {facility: Facility}) => {
                     <a
                       className="ml-1 italic dark:text-gray-400 text-gray-600"
                       target="_blank"
-                      rel="noopener noferrer"
+                      rel="noopener noreferrer"
                       href={`https://www.google.com/search?q=${facility.name}`}
                     >
                       - check the web
                     </a>
                   )}
                 </div>
-                {/* DISTANCE AWAY */}
-                {/* <span className="text-sm text-gray-500">{facility.distance} miles away</span> */}
               </div>
             </CardHeader>
             <CardContent className="p-0 mt-4">
-              {/* ADDRESS --- LATER MAYBE USE REVERSE GEOCODING TO GET ACCURATE */}
-              {facility.address
-                ? <div className="flex items-start space-x-2 text-gray-600 dark:text-gray-400 mb-2">
-                    <MapPin size={16} className="mt-1 flex-shrink-0" />
-                    <span>{facility.address}</span>
-                  </div>
-                : ""
-              }
+              {/* ADDRESS */}
+              {facility.address ? (
+                <div className="flex items-start space-x-2 text-gray-600 dark:text-gray-400 mb-2">
+                  <MapPin size={16} className="mt-1 flex-shrink-0" />
+                  <span>{facility.address}</span>
+                </div>
+              ) : null}
+
               {/* PHONE */}
-              {facility.phone
-                ? <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mb-3">
-                    <Phone size={16} className="flex-shrink-0" />
-                    <span>{facility.phone ? facility.phone : ''}</span>
-                  </div>
-                : ""
-              }
+              {facility.phone ? (
+                <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-400 mb-3">
+                  <Phone size={16} className="flex-shrink-0" />
+                  <span>{facility.phone}</span>
+                </div>
+              ) : null}
+
               {/* LEISURE */}
-              {facility.leisure.endsWith("centre")
-                
-              }
               <div className="flex flex-wrap gap-2 mt-2">
                 <span className="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
                   {facility.leisure.endsWith("centre")
-                  ? capitalizeAndReplaceUnderscores(facility.leisure.split("_")[0]) + " Center"
-                  : capitalizeAndReplaceUnderscores(facility.leisure)
-                  }
+                    ? capitalizeAndReplaceUnderscores(facility.leisure.split("_")[0]) + " Center"
+                    : capitalizeAndReplaceUnderscores(facility.leisure)}
                 </span>
               </div>
               <div className="mt-4">
                 <div className="grid grid-cols-2 gap-2">
-                  <AddEquipmentButton />
-                  <ViewEquipmentsButton />
+                  <AddEquipmentButton osm_id={facility.osm_id} facilityName={facility.name} onEquipmentAdded={onEquipmentAdded} />
+                  <ViewEquipmentsButton equipment={equipment} /> {/* Pass the equipment prop */}
                 </div>
               </div>
             </CardContent>
