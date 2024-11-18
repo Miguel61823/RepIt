@@ -342,7 +342,6 @@ export async function getAIParameters(
                     `,
       },
     ],
-    tools: [],
   });
   console.log(typeof response);
   console.log(response);
