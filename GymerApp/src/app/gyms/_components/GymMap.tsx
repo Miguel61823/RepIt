@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Card } from '@/components/ui/card';
+import React, {useState, useEffect} from 'react';
+import {Card} from '@/components/ui/card';
 
-const GymMap = ({ gyms, center = { lat: 40.7128, lng: -74.0060 } }) => {
+const GymMap = ({gyms, center = {lat: 40.7128, lng: -74.006}}) => {
   const [map, setMap] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [selectedGym, setSelectedGym] = useState(null);
@@ -10,7 +10,8 @@ const GymMap = ({ gyms, center = { lat: 40.7128, lng: -74.0060 } }) => {
     // Load the Google Maps script
     const loadGoogleMapsScript = () => {
       const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places`;
+      script.src =
+        'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places';
       script.async = true;
       script.defer = true;
       script.onload = initializeMap;
@@ -26,15 +27,15 @@ const GymMap = ({ gyms, center = { lat: 40.7128, lng: -74.0060 } }) => {
           styles: [
             {
               featureType: 'poi.business',
-              stylers: [{ visibility: 'on' }]
+              stylers: [{visibility: 'on'}],
             },
             {
               featureType: 'transit',
               elementType: 'labels.icon',
-              stylers: [{ visibility: 'on' }]
-            }
-          ]
-        }
+              stylers: [{visibility: 'on'}],
+            },
+          ],
+        },
       );
 
       setMap(mapInstance);
@@ -44,11 +45,11 @@ const GymMap = ({ gyms, center = { lat: 40.7128, lng: -74.0060 } }) => {
         const marker = new window.google.maps.Marker({
           position: {
             lat: gym.latitude || center.lat,
-            lng: gym.longitude || center.lng
+            lng: gym.longitude || center.lng,
           },
           map: mapInstance,
           title: gym.name,
-          animation: window.google.maps.Animation.DROP
+          animation: window.google.maps.Animation.DROP,
         });
 
         // Create info window for each marker
@@ -59,7 +60,7 @@ const GymMap = ({ gyms, center = { lat: 40.7128, lng: -74.0060 } }) => {
               <p>${gym.address}</p>
               <p>${gym.distance} miles away</p>
             </div>
-          `
+          `,
         });
 
         marker.addListener('click', () => {
