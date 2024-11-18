@@ -1,13 +1,26 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from '@/components/ui/sheet';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useSession } from '@clerk/nextjs';
+import React, {useState, useEffect} from 'react';
+import {Button} from '@/components/ui/button';
+import {Input} from '@/components/ui/input';
+import {Label} from '@/components/ui/label';
+import {Textarea} from '@/components/ui/textarea';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+  SheetFooter,
+} from '@/components/ui/sheet';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import {useSession} from '@clerk/nextjs';
 
 interface AddEquipmentButtonProps {
   osm_id: string;
@@ -15,12 +28,12 @@ interface AddEquipmentButtonProps {
   onEquipmentAdded?: () => void;
 }
 
-export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({ 
-  osm_id, 
-  facilityName, 
-  onEquipmentAdded 
+export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
+  osm_id,
+  facilityName,
+  onEquipmentAdded,
 }) => {
-  const [equipmentList, setEquipmentList] = useState([]);
+  // const [equipmentList, setEquipmentList] = useState([]);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -33,18 +46,18 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
     quantity: '',
     osm_id,
   });
-  const { session } = useSession();
+  const {session} = useSession();
 
-  const viewEquipment = async () => {
-    try {
-      const response = await fetch(`/api/equipment?facilityId=${osm_id}`);
-      if (!response.ok) throw new Error('Failed to fetch equipment');
-      const { data } = await response.json();
-      setEquipmentList(data);
-    } catch (error) {
-      console.error('Error viewing equipment:', error);
-    }
-  };
+  // const viewEquipment = async () => {
+  //   try {
+  //     const response = await fetch(`/api/equipment?facilityId=${osm_id}`);
+  //     if (!response.ok) throw new Error('Failed to fetch equipment');
+  //     const { data } = await response.json();
+  //     setEquipmentList(data);
+  //   } catch (error) {
+  //     console.error('Error viewing equipment:', error);
+  //   }
+  // };
 
   const resetForm = () => {
     setFormData({
@@ -66,7 +79,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
 
     try {
       if (!session) {
-        setErrorMessage("User not authenticated");
+        setErrorMessage('User not authenticated');
         setLoading(false);
         return;
       }
@@ -91,7 +104,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
         throw new Error(errorData.error || 'Failed to add equipment');
       }
 
-      const { data } = await response.json();
+      const {data} = await response.json();
 
       if (onEquipmentAdded) {
         onEquipmentAdded();
@@ -107,8 +120,10 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const {name, value} = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value,
@@ -128,7 +143,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="w-[400px] sm:w-[540px] bg-[#1a1f2e] border-slate-800">
           <SheetHeader>
-            <SheetTitle className="text-purple-400">Add Equipment - {facilityName}</SheetTitle>
+            <SheetTitle className="text-purple-400">
+              Add Equipment - {facilityName}
+            </SheetTitle>
             <SheetDescription className="text-slate-400">
               Add details about the new machine or equipment.
             </SheetDescription>
@@ -136,7 +153,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
 
           <form onSubmit={handleSubmit} className="space-y-6 mt-6">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-slate-300">Equipment Name</Label>
+              <Label htmlFor="name" className="text-slate-300">
+                Equipment Name
+              </Label>
               <Input
                 id="name"
                 name="name"
@@ -149,10 +168,14 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="type" className="text-slate-300">Equipment Type</Label>
+              <Label htmlFor="type" className="text-slate-300">
+                Equipment Type
+              </Label>
               <Select
                 required
-                onValueChange={(value) => setFormData(prev => ({ ...prev, type: value }))}
+                onValueChange={value =>
+                  setFormData(prev => ({...prev, type: value}))
+                }
               >
                 <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
                   <SelectValue placeholder="Select type" />
@@ -160,7 +183,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
                 <SelectContent className="bg-slate-800 border-slate-700 text-white">
                   <SelectItem value="cardio">Cardio</SelectItem>
                   <SelectItem value="strength">Strength Training</SelectItem>
-                  <SelectItem value="functional">Functional Training</SelectItem>
+                  <SelectItem value="functional">
+                    Functional Training
+                  </SelectItem>
                   <SelectItem value="flexibility">Flexibility</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
@@ -168,10 +193,14 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="condition" className="text-slate-300">Condition</Label>
+              <Label htmlFor="condition" className="text-slate-300">
+                Condition
+              </Label>
               <Select
                 required
-                onValueChange={(value) => setFormData(prev => ({ ...prev, condition: value }))}
+                onValueChange={value =>
+                  setFormData(prev => ({...prev, condition: value}))
+                }
               >
                 <SelectTrigger className="bg-slate-800 border-slate-700 text-white">
                   <SelectValue placeholder="Select condition" />
@@ -187,7 +216,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="maintenanceDate" className="text-slate-300">Last Maintenance Date</Label>
+              <Label htmlFor="maintenanceDate" className="text-slate-300">
+                Last Maintenance Date
+              </Label>
               <Input
                 id="maintenanceDate"
                 name="maintenanceDate"
@@ -199,7 +230,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description" className="text-slate-300">Description</Label>
+              <Label htmlFor="description" className="text-slate-300">
+                Description
+              </Label>
               <Textarea
                 id="description"
                 name="description"
@@ -211,7 +244,9 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="quantity" className="text-slate-300">Quantity</Label>
+              <Label htmlFor="quantity" className="text-slate-300">
+                Quantity
+              </Label>
               <Input
                 id="quantity"
                 name="quantity"
@@ -228,8 +263,8 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
             <SheetFooter>
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                 disabled={loading}
               >

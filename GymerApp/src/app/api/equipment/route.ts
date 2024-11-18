@@ -1,19 +1,30 @@
-import { NextResponse } from 'next/server';
-import { addEquipment, getEquipmentByFacility } from '@/drizzle/api/equipment';
-import { auth } from '@clerk/nextjs/server';
+import {NextResponse} from 'next/server';
+import {addEquipment, getEquipmentByFacility} from '@/drizzle/api/equipment';
+import {auth} from '@clerk/nextjs/server';
 
 export async function POST(request: Request) {
-  const { userId } = auth();
+  const {userId} = auth();
   if (!userId) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({error: 'Unauthorized'}, {status: 401});
   }
 
   try {
     const body = await request.json();
-    const { name, type, condition, description, maintenanceDate, quantity, osm_id } = body;
+    const {
+      name,
+      type,
+      condition,
+      description,
+      maintenanceDate,
+      quantity,
+      osm_id,
+    } = body;
 
     if (!name || !osm_id) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+      return NextResponse.json(
+        {error: 'Missing required fields'},
+        {status: 400},
+      );
     }
 
     const identifier = name.toLowerCase().replace(/\s+/g, '-');
@@ -31,27 +42,32 @@ export async function POST(request: Request) {
 
     const result = await addEquipment(equipmentData);
 
-    return NextResponse.json({ message: 'Equipment added successfully', data: result }, { status: 200 });
+    return NextResponse.json(
+      {message: 'Equipment added successfully', data: result},
+      {status: 200},
+    );
   } catch (error) {
     console.error('Error in POST request:', error);
-    return NextResponse.json({ error: 'Failed to add equipment' }, { status: 500 });
+    return NextResponse.json({error: 'Failed to add equipment'}, {status: 500});
   }
 }
 
-
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const facilityId = searchParams.get('facilityId');
+  const {searchParams} = new URL(request.url);
+  const osmId = searchParams.get('osm_id');
 
-  if (!facilityId) {
-    return NextResponse.json({ error: 'facilityId is required' }, { status: 400 });
+  if (!osmId) {
+    return NextResponse.json({error: 'osmId is required'}, {status: 400});
   }
 
   try {
-    const equipment = await getEquipmentByFacility(facilityId);
-    return NextResponse.json({ data: equipment }, { status: 200 });
+    const equipment = await getEquipmentByFacility(osmId);
+    return NextResponse.json({data: equipment}, {status: 200});
   } catch (error) {
     console.error('Error fetching equipment:', error);
-    return NextResponse.json({ error: 'Failed to fetch equipment' }, { status: 500 });
+    return NextResponse.json(
+      {error: 'Failed to fetch equipment'},
+      {status: 500},
+    );
   }
 }
