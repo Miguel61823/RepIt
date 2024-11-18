@@ -516,7 +516,7 @@ export async function answerQuestionSplit(query: string): Promise<string> {
               If the question may be answered using visuals, explain which 
               visuals would best do the job and provide 
               the structured data necessary to create such visuals. 
-              Be sure to include linebreaks and indentations in the analysis 
+              Be sure to include linebreaks and indentations using '\\n' in the analysis 
               response to create good looking answers.
               
               Format your answers as JSON.
@@ -544,7 +544,11 @@ export async function answerQuestionSplit(query: string): Promise<string> {
     ],
   });
 
-  console.log(answer);
+  // console.log(answer);
+
+  if (answer.content[0].type === 'text') {
+    console.log(answer.content[0].text);
+  }
 
   return answer.content[0].type === 'text' &&
     JSON.parse(answer.content[0].text).analysis
