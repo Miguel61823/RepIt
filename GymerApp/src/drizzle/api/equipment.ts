@@ -1,10 +1,10 @@
-import { db } from '@/drizzle/db';
-import { MachinesTable } from '@/drizzle/schema/tables/machine';
-import { eq } from 'drizzle-orm';
-import { FacilitiesTable } from '@/drizzle/schema/tables/facilities'; // Import facility table
+import {db} from '@/drizzle/db';
+import {MachinesTable} from '@/drizzle/schema/tables/machine';
+import {eq} from 'drizzle-orm';
+import {FacilitiesTable} from '@/drizzle/schema/tables/facilities'; // Import facility table
 
 export type EquipmentData = {
-  osm_id: string;  // osm_id corresponds to a facility_id in the facility table
+  osm_id: string; // osm_id corresponds to a facility_id in the facility table
   user_id: string;
   name: string;
   identifier: string;
@@ -32,21 +32,23 @@ export async function addEquipment(data: EquipmentData) {
 
     // Prepare the formatted data for the insert operation
     const formattedData = {
-      osm_id: data.osm_id,  // Use osm_id here, referring to the facility
+      osm_id: data.osm_id, // Use osm_id here, referring to the facility
       user_id: data.user_id,
       name: data.name,
       identifier: data.identifier,
       type: data.type || null,
       condition: data.condition || null,
       description: data.description || null,
-      maintenance_date: data.maintenance_date ? new Date(data.maintenance_date) : null,
+      maintenance_date: data.maintenance_date
+        ? new Date(data.maintenance_date)
+        : null,
       quantity: data.quantity ? Number(data.quantity) : 1,
     };
 
     // Insert the machine data into the MachinesTable
     const result = await db.insert(MachinesTable).values(formattedData);
 
-    return { success: true, data: result };
+    return {success: true, data: result};
   } catch (error) {
     console.error('Error adding equipment:', error);
     throw new Error('Failed to add equipment');
@@ -60,7 +62,7 @@ export async function getEquipmentByFacility(osmId: string) {
       .select()
       .from(MachinesTable)
       .where(eq(MachinesTable.osm_id, osmId)); // Ensure osm_id exists in MachinesTable
-    
+
     return equipment;
   } catch (error) {
     console.error('Error fetching equipment:', error);

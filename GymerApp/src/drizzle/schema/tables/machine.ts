@@ -1,9 +1,11 @@
-import { pgTable, uuid, text, timestamp, integer } from 'drizzle-orm/pg-core';
-import { FacilitiesTable } from './facilities';  // Import FacilitiesTable for reference
+import {pgTable, uuid, text, timestamp, integer} from 'drizzle-orm/pg-core';
+import {FacilitiesTable} from './facilities'; // Import FacilitiesTable for reference
 
 export const MachinesTable = pgTable('machines', {
   id: uuid('id').defaultRandom().primaryKey(),
-  osm_id: uuid('osm_id').notNull().references(() => FacilitiesTable.facility_id), // osm_id now references facility_id in FacilitiesTable
+  osm_id: uuid('osm_id')
+    .notNull()
+    .references(() => FacilitiesTable.facility_id), // osm_id now references facility_id in FacilitiesTable
   user_id: text('user_id').notNull(),
   name: text('name').notNull(),
   identifier: text('identifier').notNull(),
