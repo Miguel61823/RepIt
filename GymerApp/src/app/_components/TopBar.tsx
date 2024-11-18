@@ -88,9 +88,9 @@ const Topbar = () => {
             <Button variant="link" onClick={handleFacilityClick}>
               Facilities
             </Button>
-            <Button variant="link" onClick={handleWorkoutClick}>
+            {/* <Button variant="link" onClick={handleWorkoutClick}>
               Workouts
-            </Button>
+            </Button> */}
             <Button variant="link" onClick={handleSessionClick}>
               Sessions
             </Button>
