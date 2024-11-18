@@ -4,7 +4,7 @@ import {db} from '@/drizzle/db';
 import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
 import {revalidatePath} from 'next/cache';
 import {auth} from '@clerk/nextjs/server';
-import {ilike, and, between} from 'drizzle-orm';
+import {ilike, and, between, sql} from 'drizzle-orm';
 
 export interface Facility {
   osm_id: string;
@@ -19,7 +19,6 @@ export interface Facility {
   opening_hours?: string;
 }
 
-// TODO: FETCH FROM DB INSTEAD OF MOCK DATA
 export async function getFacilities(
   query: string | undefined,
 ): Promise<Facility[]> {
@@ -35,7 +34,6 @@ export async function getFacilities(
     .select()
     .from(FacilitiesTable)
     .where(query ? ilike(FacilitiesTable.name, `%${query}%`) : undefined);
-  // .orderBy(pSqlDistance);
 
   facilities = facilitiesData.map(
     ({
@@ -186,10 +184,9 @@ export async function getNearbyFacilities(
 export async function insertFacilities(
   facilities: Facility[],
 ): Promise<undefined | {error: boolean}> {
-  // Insert all facilities at once, database will handle duplicate osm_ids
-
+  console.log('facilities');
   console.log(facilities);
-  console.log('hiiiiii');
+
   await db
     .insert(FacilitiesTable)
     .values(
@@ -206,7 +203,21 @@ export async function insertFacilities(
         website: facility.website || null,
       })),
     )
-    .onConflictDoNothing({target: FacilitiesTable.osm_id});
+    .onConflictDoUpdate({
+      target: FacilitiesTable.osm_id,
+      set: {
+        name: sql`EXCLUDED.name`,
+        leisure: sql`EXCLUDED.leisure`,
+        lat: sql`EXCLUDED.lat`,
+        lon: sql`EXCLUDED.lon`,
+        address: sql`EXCLUDED.address`,
+        accessibility: sql`EXCLUDED.accessibility`,
+        opening_hours: sql`EXCLUDED.opening_hours`,
+        phone: sql`EXCLUDED.phone`,
+        website: sql`EXCLUDED.website`,
+      },
+    });
+
   // Revalidate relevant paths
   await revalidatePath('/facilities');
   await revalidatePath('/osm');
