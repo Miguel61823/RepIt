@@ -1,23 +1,19 @@
-import {pgTable, uuid, text, index} from 'drizzle-orm/pg-core';
-import {FacilitiesTable} from './facilities';
-// import { MUSCLE_LIST } from "@/data/constants";
+import {pgTable, uuid, text, timestamp, integer} from 'drizzle-orm/pg-core';
+import {FacilitiesTable} from './facilities'; // Import FacilitiesTable for reference
 
-// export const targetMuscleEnum = pgEnum('muscle_enum', MUSCLE_LIST);
-
-// TODO: ADD/REMOVE FIELDS FROM CHAT
-// INSTEAD OF JSONB, USE JUNCTION TABLE FOR GYMS <--> EQUIPMENT RELATIONSHIP
-export const MachinesTable = pgTable(
-  'machine',
-  {
-    machine_id: uuid('machine_id').notNull().primaryKey().defaultRandom(),
-    facility_id: uuid('facility_id')
-      .notNull()
-      .references(() => FacilitiesTable.facility_id, {onDelete: 'cascade'}),
-    name: text('name').notNull(),
-    identifer: text('identifier').notNull(),
-    // target_muscle: targetMuscleEnum("target_muscle").default("none")
-  },
-  table => ({
-    facility_index: index('facility_index').on(table.facility_id),
-  }),
-);
+export const MachinesTable = pgTable('machines', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  osm_id: uuid('osm_id')
+    .notNull()
+    .references(() => FacilitiesTable.facility_id), // osm_id now references facility_id in FacilitiesTable
+  user_id: text('user_id').notNull(),
+  name: text('name').notNull(),
+  identifier: text('identifier').notNull(),
+  type: text('type'),
+  condition: text('condition'),
+  description: text('description'),
+  maintenance_date: timestamp('maintenance_date'),
+  quantity: integer('quantity').notNull().default(1),
+  created_at: timestamp('created_at').notNull().defaultNow(),
+  updated_at: timestamp('updated_at').notNull().defaultNow(),
+});
