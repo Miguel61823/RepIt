@@ -1,5 +1,4 @@
 import React from 'react';
-import {AIQuestionInputBar} from './components/AIQuestionInputBar';
 import {AIQuestionContainer} from './components/AIQuestionContainer';
 
 export default function DashboardPage() {

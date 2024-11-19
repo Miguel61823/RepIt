@@ -34,7 +34,7 @@ export default async function FacilitiesPage({
     <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
       {/* <ToastContainer /> Add ToastContainer here */}
       <Suspense fallback={<div>Loading...</div>}>
-        <FacilitySearchBar search={searchTerm} searchType={'Nearby'} />
+        <FacilitySearchBar searchType={'Nearby'} />
         <FacilityListings search={searchTerm} />
       </Suspense>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {Label} from '@/components/ui/label';
@@ -104,7 +104,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
         throw new Error(errorData.error || 'Failed to add equipment');
       }
 
-      const {data} = await response.json();
+      // const {data} = await response.json();
 
       if (onEquipmentAdded) {
         onEquipmentAdded();
@@ -112,9 +112,11 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
 
       resetForm();
       setOpen(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error:', error);
-      setErrorMessage(error.message || 'An error occurred');
+      setErrorMessage(
+        error instanceof Error ? error.message : 'An error occurred',
+      );
     } finally {
       setLoading(false);
     }
@@ -151,7 +153,10 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             </SheetDescription>
           </SheetHeader>
 
-          <form onSubmit={handleSubmit} className="space-y-6 mt-6">
+          <form
+            onSubmit={handleSubmit}
+            className="space-y-6 mt-6 overflow-y-auto"
+          >
             <div className="space-y-2">
               <Label htmlFor="name" className="text-slate-300">
                 Equipment Name

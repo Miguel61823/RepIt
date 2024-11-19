@@ -1,7 +1,7 @@
 //GymerApp/src/app/facilities/_components/facilityCard.tsx
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {MapPin, Phone} from 'lucide-react';
 import {Card, CardHeader, CardContent} from '@/components/ui/card';
 import {Facility} from '@/server/api/facilities';
@@ -18,7 +18,7 @@ const FacilityCard = ({facility}: {facility: Facility}) => {
       const data = await response.json();
 
       // Adjusted to match the structure of response JSON
-      setEquipment(prevEqupment => {
+      setEquipment(() => {
         return data.data;
       });
     } catch (error) {

@@ -5,13 +5,7 @@ import {Search} from 'lucide-react';
 import {useRouter} from 'next/navigation';
 import {useDebounce} from 'use-debounce';
 
-export const FacilitySearchBar = ({
-  search,
-  searchType,
-}: {
-  search?: string;
-  searchType: string;
-}) => {
+export const FacilitySearchBar = ({searchType}: {searchType: string}) => {
   const router = useRouter();
   const initRender = useRef(true);
   const [searchTerm, setSearchTerm] = useState('');
