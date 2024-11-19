@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { EquipmentData } from '@/drizzle/api/equipment';
+import React, {useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {EquipmentData} from '@/drizzle/api/equipment';
 import {
   Sheet,
   SheetContent,
@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { Dumbbell, Calendar, AlertCircle } from 'lucide-react';
+import {Dumbbell, Calendar, AlertCircle} from 'lucide-react';
 
 // Utility function to determine condition badge color
 const getConditionColor = (condition: string) => {
@@ -74,7 +74,13 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
         onClick={fetchEquipment}
         disabled={loading}
       >
-        {loading ? 'Loading...' : <><Dumbbell className="mr-2 h-5 w-5" /> View Equipment</>}
+        {loading ? (
+          'Loading...'
+        ) : (
+          <>
+            <Dumbbell className="mr-2 h-5 w-5" /> View Equipment
+          </>
+        )}
       </Button>
 
       {error && <p className="text-red-500 mt-2">{error}</p>}
@@ -85,7 +91,9 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
           className="h-[80vh] bg-[#1a1f2e] border-slate-800"
         >
           <SheetHeader>
-            <SheetTitle className="text-purple-400">Equipment Inventory</SheetTitle>
+            <SheetTitle className="text-purple-400">
+              Equipment Inventory
+            </SheetTitle>
             <SheetDescription className="text-slate-400">
               View and manage your gym equipment inventory
             </SheetDescription>
@@ -115,13 +123,15 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                     <div>
                       <span
                         className={`px-2 py-1 rounded-full text-sm ${getConditionColor(
-                          item.condition || 'N/A'
+                          item.condition || 'N/A',
                         )}`}
                       >
                         {item.condition || 'N/A'}
                       </span>
                     </div>
-                    <div className="text-slate-300">{item.description || 'No description'}</div>
+                    <div className="text-slate-300">
+                      {item.description || 'No description'}
+                    </div>
                     <div className="text-slate-300 flex items-center">
                       <Calendar className="mr-2 h-4 w-4 text-purple-400" />
                       {item.maintenance_date
@@ -129,11 +139,13 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                         : 'N/A'}
                     </div>
                     <div className="flex items-center text-slate-300">
-                      <span className="font-semibold">{item.quantity || 'N/A'}</span>
+                      <span className="font-semibold">
+                        {item.quantity || 'N/A'}
+                      </span>
                       {item.quantity && item.quantity <= 2 && (
                         <AlertCircle
                           className="ml-2 h-4 w-4 text-red-400"
-                          title="Low stock"
+                          // title="Low stock"
                         />
                       )}
                     </div>

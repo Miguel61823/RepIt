@@ -19,7 +19,7 @@ export default async function ListingsPage({
   return (
     <div className="container flex-grow max-w-4xl mx-auto mt-8 px-4 mb-8">
       <Suspense fallback={<div>Loading...</div>}>
-        <FacilitySearchBar search={searchTerm} searchType={'Tracked'} />
+        <FacilitySearchBar searchType={'Tracked'} />
 
         <FacilityListings search={searchTerm} />
       </Suspense>

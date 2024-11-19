@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import {Button} from '@/components/ui/button';
 // import {Slider} from '@/components/ui/slider';
 import {AIQuestionInputBar} from './AIQuestionInputBar';
-import {answerQuestionSplit, answerQuestion} from '@/server/api/sessions';
+import {answerQuestionSplit} from '@/server/api/sessions';
 
 export const AIQuestionContainer = () => {
   const [question, setQuestion] = useState<string>('');

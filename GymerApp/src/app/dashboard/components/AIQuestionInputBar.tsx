@@ -1,9 +1,6 @@
 'use client';
 
-import React, {useEffect, useRef, useState} from 'react';
-import {Search} from 'lucide-react';
-import {useRouter} from 'next/navigation';
-import {useDebounce} from 'use-debounce';
+import React from 'react';
 import {Textarea} from '@/components/ui/textarea';
 import {Button} from '@/components/ui/button';
 

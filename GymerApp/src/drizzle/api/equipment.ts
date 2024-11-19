@@ -28,7 +28,7 @@ export async function addEquipment(data: EquipmentData) {
     }
 
     // Use the first matching facility to get facility_id
-    const facility_id = facility[0].facility_id;
+    // const facility_id = facility[0].facility_id;
 
     // Prepare the formatted data for the insert operation
     const formattedData = {
