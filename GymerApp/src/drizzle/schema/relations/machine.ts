@@ -3,8 +3,8 @@ import {MachinesTable} from '../tables/machine';
 import {FacilitiesTable} from '../tables/facilities';
 
 export const machineRelation = relations(MachinesTable, ({one}) => ({
-  gym: one(FacilitiesTable, {
-    fields: [MachinesTable.facility_id],
-    references: [FacilitiesTable.facility_id],
+  facility: one(FacilitiesTable, {
+    fields: [MachinesTable.osm_id], // osm_id in MachinesTable points to facility_id in FacilitiesTable
+    references: [FacilitiesTable.facility_id], // References the facility_id in FacilitiesTable
   }),
 }));
