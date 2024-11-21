@@ -53,6 +53,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-toastify": "^10.0.6",
+    "recharts": "^2.13.3",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",
     "use-debounce": "^10.0.4",
