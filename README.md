@@ -1,3 +1,0 @@
-# RepIt
-
-Fitness App
