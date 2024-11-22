@@ -73,6 +73,14 @@ const Topbar = () => {
       router.push('/');
     }
   };
+  const handleSuppleClick = () => {
+    if (isSignedIn) {
+      //redirect to supplements
+      router.push('/supplements');
+    } else {
+      router.push('/');
+    }
+  };
 
   return (
     <>
@@ -96,6 +104,9 @@ const Topbar = () => {
             </Button>
             <Button variant="link" onClick={handleGoalClick}>
               Goals
+            </Button>
+            <Button variant="link" onClick={handleSuppleClick}>
+              Supplements
             </Button>
           </div>
           <div className="flex items-center justify-end w-full">
@@ -145,6 +156,11 @@ const Topbar = () => {
                     <DropdownMenuItem>
                       <Button variant="link" onClick={handleGoalClick}>
                         Goals
+                      </Button>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Button variant="link" onClick={handleSuppleClick}>
+                        Supplements
                       </Button>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
