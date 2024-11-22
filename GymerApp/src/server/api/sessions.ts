@@ -310,7 +310,7 @@ export async function getAIParameters(
         role: 'user',
         content: `Keep in mind that today's date is ${currentDate}.
                   You are an expert at analyzing session data. You have access to
-                  this function: 
+                  this function:
                   
                   getAISessions()
                   parameters: 
