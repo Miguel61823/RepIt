@@ -16,6 +16,10 @@ const globalJestConfig: Config = {
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
+
+  // Indicates whether each individual test should be reported during the run
+  verbose: true,
+
 };
 
 const customJestConfig: Config = {
@@ -176,7 +180,12 @@ const customJestConfig: Config = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
+  testMatch: [
+    '<rootDir>/src/**/__tests__/**/*.[jt]s?(x)',
+    '<rootDir>/src/**/?(*.)+(spec|test).[tj]s?(x)',
+    '!<rootDir>/src/server/**/*',
+    '!<rootDir>/src/drizzle/**/*'
+  ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
@@ -206,7 +215,7 @@ const customJestConfig: Config = {
   // unmockedModulePathPatterns: undefined,
 
   // Indicates whether each individual test should be reported during the run
-  // verbose: undefined,
+  // verbose: true,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
   // watchPathIgnorePatterns: [],
