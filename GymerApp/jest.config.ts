@@ -19,7 +19,6 @@ const globalJestConfig: Config = {
 
   // Indicates whether each individual test should be reported during the run
   verbose: true,
-
 };
 
 const customJestConfig: Config = {
@@ -43,7 +42,11 @@ const customJestConfig: Config = {
   coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  coveragePathIgnorePatterns: ['/node_modules/'],
+  coveragePathIgnorePatterns: [
+    '/node_modules/',
+    'src/components/ui/',
+    'test-utils.tsx',
+  ],
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -93,7 +96,7 @@ const customJestConfig: Config = {
   modulePaths: ['<rootDir>/src'],
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  moduleDirectories: ['node_modules'],
+  moduleDirectories: ['node_modules', 'utils'],
 
   // An array of file extensions your modules use
   // moduleFileExtensions: [
@@ -184,7 +187,7 @@ const customJestConfig: Config = {
     '<rootDir>/src/**/__tests__/**/*.[jt]s?(x)',
     '<rootDir>/src/**/?(*.)+(spec|test).[tj]s?(x)',
     '!<rootDir>/src/server/**/*',
-    '!<rootDir>/src/drizzle/**/*'
+    '!<rootDir>/src/drizzle/**/*',
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
