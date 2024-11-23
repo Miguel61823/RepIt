@@ -20,7 +20,11 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "test": "jest --watch"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:frontend": "jest --selectProjects frontend",
+    "test:backend": "jest --selectProjects backend",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
