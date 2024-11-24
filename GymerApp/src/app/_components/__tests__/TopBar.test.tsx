@@ -14,15 +14,59 @@ jest.mock('@clerk/nextjs', () => ({
   useAuth: jest.fn(),
   SignedIn: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
   SignedOut: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
-  SignInButton: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+  SignInButton: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
   UserButton: () => <div data-testid="user-button">User Button</div>,
+}));
+
+// Mock components and stylings
+jest.mock('lucide-react', () => ({
+  Menu: () => <div data-testid="mobile-menu-button">Menu</div>,
+}));
+
+jest.mock('@/components/mode-toggle', () => ({
+  ModeToggle: () => <div data-testid="mode-toggle">Mode Toggle</div>,
+}));
+
+jest.mock('@/components/ui/dropdown-menu', () => ({
+  DropdownMenu: ({children}: {children: React.ReactNode}) => (
+    <div className="dropdown-mock">{children}</div>
+  ),
+  DropdownMenuContent: ({children}: {children: React.ReactNode}) => (
+    <div className="dropdown-content-mock">{children}</div>
+  ),
+  DropdownMenuTrigger: ({children}: {children: React.ReactNode}) => (
+    <div className="dropdown-trigger-mock">{children}</div>
+  ),
+  DropdownMenuItem: ({children}: {children: React.ReactNode}) => (
+    <div className="dropdown-item-mock">{children}</div>
+  ),
+  DropdownMenuGroup: ({children}: {children: React.ReactNode}) => (
+    <div className="dropdown-group-mock">{children}</div>
+  ),
+  DropdownMenuSeparator: () => <div className="dropdown-separator-mock" />,
+}));
+
+jest.mock('@/components/ui/button', () => ({
+  Button: ({
+    children,
+    onClick,
+  }: {
+    children: React.ReactNode;
+    onClick?: () => void;
+  }) => (
+    <div className="button-mock" onClick={onClick}>
+      {children}
+    </div>
+  ),
 }));
 
 describe('Topbar Component', () => {
   const mockRouter = {
     push: jest.fn(),
   };
-  
+
   beforeEach(() => {
     (useRouter as jest.Mock).mockReturnValue(mockRouter);
     (useAuth as jest.Mock).mockReturnValue({isSignedIn: true});
@@ -38,12 +82,7 @@ describe('Topbar Component', () => {
   test('renders all navigation links in desktop view', () => {
     render(<Topbar />);
 
-    const navLinks = [
-      'Dashboard',
-      'Facilities',
-      'Sessions',
-      'Goals'
-    ];
+    const navLinks = ['Dashboard', 'Facilities', 'Sessions', 'Goals'];
 
     navLinks.forEach(link => {
       const linkElement = screen.getAllByText(link)[0]; // Get first instance for desktop view
@@ -89,12 +128,7 @@ describe('Topbar Component', () => {
     (useAuth as jest.Mock).mockReturnValue({isSignedIn: false});
     render(<Topbar />);
 
-    const navigationButtons = [
-      'Dashboard',
-      'Facilities',
-      'Sessions',
-      'Goals'
-    ];
+    const navigationButtons = ['Dashboard', 'Facilities', 'Sessions', 'Goals'];
 
     for (const button of navigationButtons) {
       const linkButton = screen.getAllByText(button)[0];
@@ -106,7 +140,7 @@ describe('Topbar Component', () => {
   test('renders mobile menu in small viewport', () => {
     render(<Topbar />);
 
-    const mobileMenuButton = screen.getByTestId('radix-:r0:');
+    const mobileMenuButton = screen.getByTestId('mobile-menu-button');
     expect(mobileMenuButton).toBeInTheDocument();
   });
 
@@ -114,6 +148,11 @@ describe('Topbar Component', () => {
     render(<Topbar />);
 
     const header = screen.getByRole('banner');
-    expect(header).toHaveClass('bg-neutral-100', 'dark:bg-gray-800', 'dark:text-white', 'text-black');
+    expect(header).toHaveClass(
+      'bg-neutral-100',
+      'dark:bg-gray-800',
+      'dark:text-white',
+      'text-black',
+    );
   });
 });

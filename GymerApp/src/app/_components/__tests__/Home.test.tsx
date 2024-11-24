@@ -21,11 +21,18 @@ jest.mock('@clerk/nextjs', () => ({
   }: {
     children: React.ReactNode;
     onClick?: () => void;
-  }) => (
-    <button data-testid="sign-in-button" onClick={mockSignIn}>
-      {children}
-    </button>
-  ),
+  }) => {
+    const handleClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      mockSignIn();
+      onClick?.();
+    };
+
+    return React.cloneElement(children as React.ReactElement, {
+      onClick: handleClick,
+      'data-testid': 'sign-in-button',
+    });
+  },
 }));
 
 jest.mock('@clerk/clerk-react', () => ({
