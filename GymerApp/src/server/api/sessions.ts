@@ -10,6 +10,14 @@ import {sessionFormSchema} from '@/schema/session';
 import {SessionsTable} from '@/drizzle/schema/index';
 import Anthropic from '@anthropic-ai/sdk';
 
+/**
+ * @typedef {Object} Session
+ * @property {string} session_id - Unique identifier for the session.
+ * @property {string} name - Name of the session.
+ * @property {string} type - Type/category of the session.
+ * @property {Date} date - Date of the session.
+ * @property {string} session_data - Raw session data.
+ */
 export interface Session {
   session_id: string;
   name: string;
@@ -39,6 +47,10 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
+/**
+ * Fetches the session history for the authenticated user.
+ * @returns {Promise<Session[]>} List of user sessions.
+ */
 export async function getSessionHistory(): Promise<Session[]> {
   const {userId, redirectToSignIn} = auth();
   let sessions: Session[] = [];
@@ -58,6 +70,11 @@ export async function getSessionHistory(): Promise<Session[]> {
   return sessions;
 }
 
+/**
+ * Creates a new session for the authenticated user.
+ * @param {z.infer<typeof sessionFormSchema>} dirty - Input data for session creation.
+ * @returns {Promise<undefined | {error: boolean}>} Error object or undefined on success.
+ */
 export async function createSession(
   dirty: z.infer<typeof sessionFormSchema>,
 ): Promise<undefined | {error: boolean}> {
@@ -105,6 +122,11 @@ export async function createSession(
   return undefined;
 }
 
+/**
+ * Deletes an existing session by its ID.
+ * @param {string} session_id - The unique identifier of the session to delete.
+ * @returns {Promise<void>} Resolves when the session is deleted.
+ */
 export async function deleteSession(
   deletedSessionId: string,
 ): Promise<undefined | {error: boolean}> {
@@ -121,6 +143,12 @@ export async function deleteSession(
   }
 }
 
+/**
+ * Updates an existing session by its ID.
+ * @param {z.infer<typeof sessionFormSchema>} dirty - New session details.
+ * @param {string} session_id - The unique identifier of the session to update.
+ * @returns {Promise<undefined | {error: boolean}>} Error object or undefined on success.
+ */
 export async function updateSession(
   sessionId: string,
   dirty: z.infer<typeof sessionFormSchema>,
@@ -175,6 +203,12 @@ export async function updateSession(
   }
 }
 
+/**
+ * Fetches AI-enhanced session data by date range.
+ * @param {string} startDate - The start date of the range (YYYY-MM-DD).
+ * @param {string} endDate - The end date of the range (YYYY-MM-DD).
+ * @returns {Promise<Session[]>} List of sessions within the date range.
+ */
 export async function getAISessionsByDate(date_range: {
   startDate: string;
   endDate: string;
@@ -204,6 +238,11 @@ export async function getAISessionsByDate(date_range: {
   return sessions;
 }
 
+/**
+ * Fetches AI-enhanced session data based on keywords.
+ * @param {string[]} keywords - List of keywords to filter sessions.
+ * @returns {Promise<Session[]>} List of sessions matching the keywords.
+ */
 export async function getAISessionsbyKeyword(
   keywords: string[],
 ): Promise<AISession[]> {
@@ -237,6 +276,14 @@ export async function getAISessionsbyKeyword(
   return sessions;
 }
 
+/**
+ * Retrieves AI-enhanced sessions using date and/or keyword filters.
+ * @param {Object} filters - Filters to apply.
+ * @param {string[]} filters.keywords - Keywords to filter sessions.
+ * @param {string} filters.startDate - Start date of the range (optional).
+ * @param {string} filters.endDate - End date of the range (optional).
+ * @returns {Promise<Session[]>} Filtered list of sessions.
+ */
 export async function getAISessions(
   AIparams: AISessionParameters,
 ): Promise<AISession[]> {
@@ -293,6 +340,11 @@ export async function getAISessions(
   return sessions;
 }
 
+/**
+ * Extracts AI parameters (keywords, dates) from a user query.
+ * @param {string} query - The user-provided query.
+ * @returns {Promise<{keywords: string[]; startDate?: string; endDate?: string}>} Extracted parameters.
+ */
 export async function getAIParameters(
   query: string,
 ): Promise<AISessionParameters> {
@@ -383,6 +435,11 @@ export async function getAIParameters(
   return params;
 }
 
+/**
+ * Answers user questions using AI-parsed session data.
+ * @param {string} question - The user-provided question.
+ * @returns {Promise<string>} AI-generated answer to the question.
+ */
 export async function answerQuestion(query: string): Promise<string> {
   // Get current date
   const currentDate = new Date().toDateString();
@@ -478,6 +535,11 @@ export async function answerQuestion(query: string): Promise<string> {
     : 'An answer could not be given';
 }
 
+/**
+ * Splits query handling into parameter extraction and answering.
+ * @param {string} question - The user-provided question.
+ * @returns {Promise<string>} AI-generated answer to the question.
+ */
 export async function answerQuestionSplit(query: string): Promise<string> {
   //get session params
   const params = await getAIParameters(query);
