@@ -1,8 +1,8 @@
 // src/components/EditSupplement.tsx
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import {useEffect, useState} from 'react';
+import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
@@ -13,18 +13,18 @@ import {
 import {EditSupplementForm} from '../../../components/forms/EditSupplementForm';
 import {Supplement} from '@/server/api/supplements';
 
-
 interface EditSupplementProps {
   supplement: Supplement;
 }
 
-export function EditSupplement({ supplement }: EditSupplementProps) {
+export function EditSupplement({supplement}: EditSupplementProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleClose = () => setIsOpen(false);
     window.addEventListener('closeEditSupplementSheet', handleClose);
-    return () => window.removeEventListener('closeEditSupplementSheet', handleClose);
+    return () =>
+      window.removeEventListener('closeEditSupplementSheet', handleClose);
   }, []);
 
   return (
