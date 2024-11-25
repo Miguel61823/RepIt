@@ -2,10 +2,10 @@
 'use client';
 
 import React from 'react';
-import { supplementFormSchema } from '@/schema/supplement';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import {supplementFormSchema} from '@/schema/supplement';
+import {useForm} from 'react-hook-form';
+import {zodResolver} from '@hookform/resolvers/zod';
+import {z} from 'zod';
 import {
   Form,
   FormField,
@@ -14,22 +14,22 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
-import { Checkbox } from '@/components/ui/checkbox';
+import {Input} from '@/components/ui/input';
+import {Button} from '@/components/ui/button';
+import {Textarea} from '@/components/ui/textarea';
+import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover';
+import {Calendar} from '@/components/ui/calendar';
+import {format} from 'date-fns';
+import {Checkbox} from '@/components/ui/checkbox';
 
-import { Supplement, updateSupplement } from '@/server/api/supplements';
-import { cn } from '@/lib/utils';
+import {Supplement, updateSupplement} from '@/server/api/supplements';
+import {cn} from '@/lib/utils';
 
 interface EditSupplementFormProps {
   supplement: Supplement;
 }
 
-export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
+export function EditSupplementForm({supplement}: EditSupplementFormProps) {
   const form = useForm<z.infer<typeof supplementFormSchema>>({
     resolver: zodResolver(supplementFormSchema),
     defaultValues: {
@@ -47,7 +47,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
     window.dispatchEvent(new Event('closeEditSupplementSheet'));
     const result = await updateSupplement(supplement.id, values);
     if (result?.error) {
-      form.setError('root', { message: 'Update Supplement Error. :(' });
+      form.setError('root', {message: 'Update Supplement Error. :('});
     }
   }
 
@@ -57,7 +57,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="name"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Supplement Name</FormLabel>
               <FormControl>
@@ -71,7 +71,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="dosage"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Dosage</FormLabel>
               <FormControl>
@@ -85,7 +85,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="frequency"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Frequency</FormLabel>
               <FormControl>
@@ -99,7 +99,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="instructions"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem>
               <FormLabel>Instructions</FormLabel>
               <FormControl>
@@ -113,7 +113,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="startDate"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-col">
               <FormLabel>Start Date</FormLabel>
               <Popover>
@@ -123,7 +123,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
                       variant="outline"
                       className={cn(
                         'w-[240px] pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground'
+                        !field.value && 'text-muted-foreground',
                       )}
                     >
                       {field.value ? (
@@ -151,7 +151,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="endDate"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-col">
               <FormLabel>End Date (Optional)</FormLabel>
               <Popover>
@@ -161,7 +161,7 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
                       variant="outline"
                       className={cn(
                         'w-[240px] pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground'
+                        !field.value && 'text-muted-foreground',
                       )}
                     >
                       {field.value ? (
@@ -189,13 +189,10 @@ export function EditSupplementForm({ supplement }: EditSupplementFormProps) {
         <FormField
           control={form.control}
           name="isActive"
-          render={({ field }) => (
+          render={({field}) => (
             <FormItem className="flex flex-row items-start space-x-3 space-y-0">
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onChange={field.onChange}
-                />
+                <Checkbox checked={field.value} onChange={field.onChange} />
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>Active</FormLabel>

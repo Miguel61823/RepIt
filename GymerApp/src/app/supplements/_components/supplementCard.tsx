@@ -20,10 +20,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 
-import { Button } from '@/components/ui/button';
-import { Supplement, deleteSupplement } from '@/server/api/supplements';
-import { formatDate } from '@/lib/utils';
-import { EditSupplement } from './editSupplement';
+import {Button} from '@/components/ui/button';
+import {Supplement, deleteSupplement} from '@/server/api/supplements';
+import {formatDate} from '@/lib/utils';
+import {EditSupplement} from './editSupplement';
 
 export const SupplementCard = ({
   id,
@@ -58,10 +58,20 @@ export const SupplementCard = ({
         </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow mb-6 py-4 ">
-        <p className="text-sm mb-3"><strong>Frequency:</strong> {frequency}</p>
-        <p className="text-sm mb-3 whitespace-pre-wrap"><strong>Instructions:</strong> {instructions}</p>
-        {endDate && <p className="text-sm mb-3"><strong>End Date:</strong> {formatDate(endDate)}</p>}
-        <p className="text-sm mb-3"><strong>Status:</strong> {isActive ? 'Active' : 'Inactive'}</p>
+        <p className="text-sm mb-3">
+          <strong>Frequency:</strong> {frequency}
+        </p>
+        <p className="text-sm mb-3 whitespace-pre-wrap">
+          <strong>Instructions:</strong> {instructions}
+        </p>
+        {endDate && (
+          <p className="text-sm mb-3">
+            <strong>End Date:</strong> {formatDate(endDate)}
+          </p>
+        )}
+        <p className="text-sm mb-3">
+          <strong>Status:</strong> {isActive ? 'Active' : 'Inactive'}
+        </p>
       </CardContent>
       <CardFooter>
         <div className="w-full flex justify-between">

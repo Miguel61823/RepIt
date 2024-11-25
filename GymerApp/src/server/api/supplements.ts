@@ -1,14 +1,14 @@
 // src/server/api/supplements.ts
 'use server';
 
-import { z } from 'zod';
-import { db } from '@/drizzle/db';
-import { auth } from '@clerk/nextjs/server';
-import { v4 as uuidv4 } from 'uuid';
-import { eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
-import { supplementFormSchema } from '@/schema/supplement';
-import { SupplementsTable } from '@/drizzle/schema/index';
+import {z} from 'zod';
+import {db} from '@/drizzle/db';
+import {auth} from '@clerk/nextjs/server';
+import {v4 as uuidv4} from 'uuid';
+import {eq} from 'drizzle-orm';
+import {revalidatePath} from 'next/cache';
+import {supplementFormSchema} from '@/schema/supplement';
+import {SupplementsTable} from '@/drizzle/schema/index';
 
 export interface Supplement {
   id: string;
@@ -22,7 +22,7 @@ export interface Supplement {
 }
 
 export async function getSupplements(): Promise<Supplement[]> {
-  const { userId, redirectToSignIn } = auth();
+  const {userId, redirectToSignIn} = auth();
   let supplements: Supplement[] = [];
 
   if (userId === null) {
@@ -30,8 +30,8 @@ export async function getSupplements(): Promise<Supplement[]> {
     return supplements;
   }
   supplements = await db.query.SupplementsTable.findMany({
-    where: ({ user_id }, { eq }) => eq(user_id, userId),
-    orderBy: ({ startDate }, { desc }) => desc(startDate),
+    where: ({user_id}, {eq}) => eq(user_id, userId),
+    orderBy: ({startDate}, {desc}) => desc(startDate),
     columns: {
       user_id: false, // Exclude user_id from results
     },
@@ -41,17 +41,18 @@ export async function getSupplements(): Promise<Supplement[]> {
 }
 
 export async function createSupplement(
-  dirty: z.infer<typeof supplementFormSchema>
-): Promise<undefined | { error: boolean }> {
-  const { userId } = auth();
-  const { success, data } = supplementFormSchema.safeParse(dirty);
+  dirty: z.infer<typeof supplementFormSchema>,
+): Promise<undefined | {error: boolean}> {
+  const {userId} = auth();
+  const {success, data} = supplementFormSchema.safeParse(dirty);
 
   if (!success || userId === null) {
-    return { error: true };
+    return {error: true};
   }
 
   const supplementId = uuidv4();
-  const { name, dosage, frequency, instructions, startDate, endDate, isActive } = data;
+  const {name, dosage, frequency, instructions, startDate, endDate, isActive} =
+    data;
 
   await db
     .insert(SupplementsTable)
@@ -74,19 +75,19 @@ export async function createSupplement(
 
 export async function updateSupplement(
   supplementId: string,
-  dirty: z.infer<typeof supplementFormSchema>
-): Promise<undefined | { error: boolean }> {
-  const { userId, redirectToSignIn } = auth();
+  dirty: z.infer<typeof supplementFormSchema>,
+): Promise<undefined | {error: boolean}> {
+  const {userId, redirectToSignIn} = auth();
 
   if (userId === null) {
     redirectToSignIn();
-    return { error: true };
+    return {error: true};
   }
 
-  const { success, data } = supplementFormSchema.safeParse(dirty);
+  const {success, data} = supplementFormSchema.safeParse(dirty);
 
   if (!success) {
-    return { error: true };
+    return {error: true};
   }
 
   try {
@@ -107,13 +108,13 @@ export async function updateSupplement(
     return undefined;
   } catch (error) {
     console.error('Error updating supplement:', error);
-    return { error: true };
+    return {error: true};
   }
 }
 
 export async function deleteSupplement(
-  supplementId: string
-): Promise<undefined | { error: boolean }> {
+  supplementId: string,
+): Promise<undefined | {error: boolean}> {
   try {
     await db
       .delete(SupplementsTable)
@@ -123,6 +124,6 @@ export async function deleteSupplement(
     return undefined;
   } catch (error) {
     console.error('Error deleting supplement:', error);
-    return { error: true };
+    return {error: true};
   }
 }
