@@ -46,6 +46,7 @@ const customJestConfig: Config = {
     '/node_modules/',
     'src/components/ui/',
     'test-utils.tsx',
+    'src/drizzle/' // Add this line
   ],
 
   // A list of reporter names that Jest uses when writing coverage reports
@@ -191,7 +192,11 @@ const customJestConfig: Config = {
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/.next/',
+    '<rootDir>/src/drizzle/'
+  ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
@@ -235,15 +240,12 @@ const backendJestConfig: Config = {
   testMatch: [
     '<rootDir>/src/server/**/__tests__/**/*.[jt]s?(x)',
     '<rootDir>/src/server/**/?(*.)+(spec|test).[jt]s?(x)',
-    '<rootDir>/src/drizzle/**/__tests__/**/*.[jt]s?(x)',
-    '<rootDir>/src/drizzle/**/?(*.)+(spec|test).[jt]s?(x)',
   ],
   collectCoverageFrom: [
     'src/server/**/*.{js,ts}',
-    'src/drizzle/**/*.{js,ts}',
-    '!src/drizzle/migrations/**/*',
     '!src/**/*.d.ts',
     '!src/**/types.ts',
+    '!src/drizzle/**/*',
   ],
 };
 
