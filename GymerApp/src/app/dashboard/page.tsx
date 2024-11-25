@@ -72,18 +72,6 @@ const StatsCard = ({ label, value, trend }) => (
 export default function DashboardPage() {
   const [activePopup, setActivePopup] = useState(null);
 
-  // Calculate accurate percentages
-  const totalSessions = sessionsData.reduce((acc, curr) => acc + curr.desktop, 0);
-  const lastMonthCompletionRate = Math.round((sessionsData[3].desktop / sessionsData[3].mobile) * 100);
-  
-  const goalsProgress = Math.round(
-    goalsData.reduce((acc, curr) => acc + (curr.desktop / curr.mobile), 0) / goalsData.length * 100
-  );
-  
-  const supplementProgress = Math.round(
-    supplementData.reduce((acc, curr) => acc + (curr.desktop / curr.mobile), 0) / supplementData.length * 100
-  );
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container max-w-6xl mx-auto px-4 py-8">
@@ -93,10 +81,10 @@ export default function DashboardPage() {
             Fitness Dashboard
           </h1>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <StatsCard label="Total Sessions" value={totalSessions} trend={12} />
+            <StatsCard label="Total Sessions" value="24" trend={12} />
             <StatsCard label="Active Goals" value="7/10" trend={-5} />
-            <StatsCard label="Supplement Adherence" value={`${supplementProgress}%`} trend={3} />
-            <StatsCard label="Weekly Progress" value={`${lastMonthCompletionRate}%`} trend={8} />
+            <StatsCard label="Supplement Adherence" value="85%" trend={3} />
+            <StatsCard label="Weekly Progress" value="92%" trend={8} />
           </div>
         </div>
 
@@ -187,30 +175,30 @@ export default function DashboardPage() {
                 <div className="relative pt-1">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Workouts Completed</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{lastMonthCompletionRate}%</span>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">80%</span>
                   </div>
                   <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: `${lastMonthCompletionRate}%` }}></div>
+                    <div className="bg-violet-600" style={{ width: '80%' }}></div>
                   </div>
                 </div>
 
                 <div className="relative pt-1">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Goals Progress</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{goalsProgress}%</span>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">65%</span>
                   </div>
                   <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: `${goalsProgress}%` }}></div>
+                    <div className="bg-violet-600" style={{ width: '65%' }}></div>
                   </div>
                 </div>
 
                 <div className="relative pt-1">
                   <div className="flex justify-between mb-2">
                     <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Supplement Compliance</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{supplementProgress}%</span>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">90%</span>
                   </div>
                   <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: `${supplementProgress}%` }}></div>
+                    <div className="bg-violet-600" style={{ width: '90%' }}></div>
                   </div>
                 </div>
               </div>
@@ -282,24 +270,25 @@ export default function DashboardPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Weekly Average</span>
-                    <span>{Math.round(totalSessions / 4)}</span>
+                    <span>4.2</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Monthly Total</span>
-                    <span>{totalSessions}</span>
+                    <span>16</span>
                   </div>
                 </div>
               </div>
+              
               <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <h3 className="font-bold mb-2">Goals</h3>
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span>Completion Rate</span>
-                    <span>{goalsProgress}%</span>
+                    <span>70%</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Active Goals</span>
-                    <span>{goalsData.length}</span>
+                    <span>10</span>
                   </div>
                 </div>
               </div>

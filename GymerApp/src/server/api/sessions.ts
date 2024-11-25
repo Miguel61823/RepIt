@@ -504,7 +504,7 @@ export async function answerQuestionSplit(query: string): Promise<string> {
     system: `You are an expert in this session history ${JSON.stringify(sessions)}. 
               
               Each session has a name, a date, a type and a parsed_data section. 
-              The first 3 are straight forward, the parsed_data is a JSON verion of everything
+              The first 3 are straight forward, the parsed_data is a JSON version of everything
               a user wanted to store for that session. 
 
               The prompt you are given is a question from a user about their data history.
@@ -512,7 +512,8 @@ export async function answerQuestionSplit(query: string): Promise<string> {
               You must answer questions to the best of your 
               abilities using only this data. You are to give concise answers 
               whenever posible. If the question seems too 
-              unrelated to the provided data, don't analyze it and return an empty.
+              unrelated to the provided data, don't analyze it and return an error message in the 
+              'analysis' JSON object.
               If the question may be answered using visuals, explain which 
               visuals would best do the job and provide 
               the structured data necessary to create such visuals. 
@@ -535,6 +536,38 @@ export async function answerQuestionSplit(query: string): Promise<string> {
                   {"date": "2024-03-01", "weight": 200}
                 ]
               }
+
+              Examples of valid responses:
+
+              1. For a valid question with visualization:
+              {
+                "analysis": "Your bench press increased by 50 lbs over 3 months\\nStarting: 150 lbs\\nEnding: 200 lbs",
+                "visualData": [
+                  {"date": "2024-01-01", "weight": 150},
+                  {"date": "2024-02-01", "weight": 175},
+                  {"date": "2024-03-01", "weight": 200}
+                ]
+              }
+
+              2. For a valid question without visualization:
+              {
+                "analysis": "Your last workout was on March 15, 2024",
+                "visualData": null
+              }
+
+              3. For an unrelated or invalid question:
+              {
+                "analysis": "This question cannot be answered using the available session data. Please ask a question about your recorded sessions.",
+                "visualData": null
+              }
+
+              Rules:
+              1. ALWAYS return a JSON object with both "analysis" and "visualData" fields
+              2. Use "\\n" for line breaks in analysis text
+              3. Never leave analysis empty or undefined
+              4. Set visualData to null if no visualization is needed
+              5. For invalid/unrelated questions, use the exact error message shown in example 3
+
                 `,
     messages: [
       {
@@ -544,10 +577,11 @@ export async function answerQuestionSplit(query: string): Promise<string> {
     ],
   });
 
-  // console.log(answer);
-
   if (answer.content[0].type === 'text') {
     console.log(answer.content[0].text);
+  } else {
+    alert('This question can not be answered with the given data.');
+    return 'An answer could not be given';
   }
 
   return answer.content[0].type === 'text' &&
