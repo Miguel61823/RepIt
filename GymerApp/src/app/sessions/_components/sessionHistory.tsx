@@ -6,7 +6,7 @@ import {getSessionHistory} from '@/server/api/sessions';
 import {SessionCard} from './sessionCard';
 import {NewSession} from './newSession';
 
-const SessionHistoryPage = async () => {
+const SessionHistory = async () => {
   const workouts = getSessionHistory();
 
   return (
@@ -34,4 +34,4 @@ const SessionHistoryPage = async () => {
   );
 };
 
-export default SessionHistoryPage;
+export default SessionHistory;

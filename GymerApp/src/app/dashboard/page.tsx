@@ -75,18 +75,6 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container max-w-6xl mx-auto px-4 py-8">
-        {/* Header with quick stats */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-6 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
-            Fitness Dashboard
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-            <StatsCard label="Total Sessions" value="24" trend={12} />
-            <StatsCard label="Active Goals" value="7/10" trend={-5} />
-            <StatsCard label="Supplement Adherence" value="85%" trend={3} />
-            <StatsCard label="Weekly Progress" value="92%" trend={8} />
-          </div>
-        </div>
 
         {/* AI Section */}
         <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
@@ -94,6 +82,13 @@ export default function DashboardPage() {
             Ask RepIt
           </h2>
           <AIQuestionContainer />
+        </div>
+
+        {/* Sessions Section*/}
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+          <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
+            Sessions
+          </h2>
         </div>
 
         {/* Dashboard Grid */}
@@ -161,49 +156,6 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          {/* Weekly Overview Card */}
-          <div 
-            onClick={() => setActivePopup('overview')}
-            className="bg-white dark:bg-gray-800 rounded-xl p-6 cursor-pointer 
-                     transition-all duration-300 shadow-lg hover:shadow-xl
-                     border border-gray-100 dark:border-gray-700
-                     hover:border-violet-200 dark:hover:border-violet-800"
-          >
-            <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">Weekly Overview</h2>
-            <div className="h-64 space-y-4">
-              <div className="space-y-4">
-                <div className="relative pt-1">
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Workouts Completed</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">80%</span>
-                  </div>
-                  <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: '80%' }}></div>
-                  </div>
-                </div>
-
-                <div className="relative pt-1">
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Goals Progress</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">65%</span>
-                  </div>
-                  <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: '65%' }}></div>
-                  </div>
-                </div>
-
-                <div className="relative pt-1">
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">Supplement Compliance</span>
-                    <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">90%</span>
-                  </div>
-                  <div className="flex h-2 overflow-hidden bg-gray-200 rounded-full">
-                    <div className="bg-violet-600" style={{ width: '90%' }}></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* Popups */}
