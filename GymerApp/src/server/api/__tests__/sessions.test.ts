@@ -41,7 +41,7 @@ describe('Session Functions', () => {
   });
 
   describe('getSessionHistory', () => {
-    it('should return sessions for authenticated user', async () => {
+    test('should return sessions for authenticated user', async () => {
       (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([mockSession]);
       
       const result = await getSessionHistory();
@@ -54,7 +54,7 @@ describe('Session Functions', () => {
       });
     });
 
-    it('should return empty array and redirect when user is not authenticated', async () => {
+    test('should return empty array and redirect when user is not authenticated', async () => {
       (auth as jest.Mock).mockReturnValue({ 
         userId: null, 
         redirectToSignIn: mockRedirectToSignIn 
@@ -87,7 +87,7 @@ describe('Session Functions', () => {
       }));
     });
 
-    it('should create session successfully', async () => {
+    test('should create session successfully', async () => {
       const result = await createSession(mockFormData);
 
       expect(result).toBeUndefined();
@@ -95,7 +95,7 @@ describe('Session Functions', () => {
       expect(revalidatePath).toHaveBeenCalledWith('/sessions');
     });
 
-    it('should handle form validation failure', async () => {
+    test('should handle form validation failure', async () => {
       (sessionFormSchema.safeParse as jest.Mock).mockReturnValue({
         success: false,
         data: undefined,
@@ -114,7 +114,7 @@ describe('Session Functions', () => {
       expect(db.insert).not.toHaveBeenCalled();
     });
 
-    it('should handle unauthenticated user', async () => {
+    test('should handle unauthenticated user', async () => {
       (auth as jest.Mock).mockReturnValue({ 
         userId: null,
         redirectToSignIn: mockRedirectToSignIn
@@ -126,7 +126,7 @@ describe('Session Functions', () => {
       expect(db.insert).not.toHaveBeenCalled();
     });
 
-    it('should handle Anthropic API failure', async () => {
+    test('should handle Anthropic API failure', async () => {
       (Anthropic as unknown as jest.Mock).mockImplementation(() => ({
         messages: {
           create: jest.fn().mockRejectedValue(new Error('API Error')),
@@ -167,7 +167,7 @@ describe('Session Functions', () => {
       });
     });
 
-    it('should update session successfully', async () => {
+    test('should update session successfully', async () => {
       // Ensure auth returns proper user ID
       (auth as jest.Mock).mockReturnValue({
         userId: 'test-user-id',
@@ -187,7 +187,7 @@ describe('Session Functions', () => {
       expect(revalidatePath).toHaveBeenCalledWith('/sessions');
     });
 
-    it('should handle form validation failure', async () => {
+    test('should handle form validation failure', async () => {
       (sessionFormSchema.safeParse as jest.Mock).mockReturnValue({
         success: false,
         data: undefined,
@@ -206,7 +206,7 @@ describe('Session Functions', () => {
       expect(db.update).not.toHaveBeenCalled();
     });
 
-    it('should handle unauthenticated user', async () => {
+    test('should handle unauthenticated user', async () => {
       (auth as jest.Mock).mockReturnValue({ 
         userId: null,
         redirectToSignIn: mockRedirectToSignIn
@@ -219,7 +219,7 @@ describe('Session Functions', () => {
       expect(db.update).not.toHaveBeenCalled();
     });
 
-    it('should handle database update error', async () => {
+    test('should handle database update error', async () => {
       (db.update as jest.Mock).mockReturnValue({
         set: jest.fn().mockReturnValue({
           where: jest.fn().mockRejectedValue(new Error('Update failed')),
@@ -259,7 +259,7 @@ describe('Session Functions', () => {
   });
 
   describe('deleteSession', () => {
-    it('should delete session successfully', async () => {
+    test('should delete session successfully', async () => {
       (db.delete as jest.Mock).mockReturnValue({
         where: jest.fn().mockResolvedValue(undefined),
       });
@@ -271,7 +271,7 @@ describe('Session Functions', () => {
       expect(revalidatePath).toHaveBeenCalledWith('/sessions');
     });
 
-    it('should handle deletion error', async () => {
+    test('should handle deletion error', async () => {
       (db.delete as jest.Mock).mockReturnValue({
         where: jest.fn().mockRejectedValue(new Error('Delete failed')),
       });
@@ -292,7 +292,7 @@ describe('Session Functions', () => {
       endDate: '2024-03-31',
     };
 
-    it('should return sessions within date range for authenticated user', async () => {
+    test('should return sessions within date range for authenticated user', async () => {
       (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([mockAISession]);
 
       const result = await getAISessionsByDate(dateRange);
@@ -309,7 +309,7 @@ describe('Session Functions', () => {
       });
     });
 
-    it('should return empty array and redirect when user is not authenticated', async () => {
+    test('should return empty array and redirect when user is not authenticated', async () => {
       (auth as jest.Mock).mockReturnValue({ 
         userId: null, 
         redirectToSignIn: mockRedirectToSignIn 
