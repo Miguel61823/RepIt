@@ -24,7 +24,7 @@ jest.mock('@clerk/nextjs/server', () => ({
 // Mock schema validation
 jest.mock('@/schema/session', () => ({
   sessionFormSchema: {
-    safeParse: jest.fn((data) => ({
+    safeParse: jest.fn(data => ({
       success: true,
       data,
     })),
@@ -61,7 +61,7 @@ jest.mock('@anthropic-ai/sdk', () => ({
   default: jest.fn(() => ({
     messages: {
       create: jest.fn().mockResolvedValue({
-        content: [{ type: 'text', text: '{"test": "data"}' }],
+        content: [{type: 'text', text: '{"test": "data"}'}],
       }),
     },
   })),

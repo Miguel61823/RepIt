@@ -46,7 +46,7 @@ const customJestConfig: Config = {
     '/node_modules/',
     'src/components/ui/',
     'test-utils.tsx',
-    'src/drizzle/' // Add this line
+    'src/drizzle/', // Add this line
   ],
 
   // A list of reporter names that Jest uses when writing coverage reports
@@ -195,7 +195,7 @@ const customJestConfig: Config = {
   testPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
-    '<rootDir>/src/drizzle/'
+    '<rootDir>/src/drizzle/',
   ],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files

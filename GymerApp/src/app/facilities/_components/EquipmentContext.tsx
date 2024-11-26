@@ -1,19 +1,19 @@
 // context/EquipmentContext.tsx
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, {createContext, useContext, useState} from 'react';
 
 const EquipmentContext = createContext(null);
 
-export const EquipmentProvider = ({ children }) => {
+export const EquipmentProvider = ({children}) => {
   const [equipmentList, setEquipmentList] = useState([]);
 
-  const addEquipment = (equipment) => {
-    setEquipmentList((prev) => [...prev, { id: Date.now(), ...equipment }]);
+  const addEquipment = equipment => {
+    setEquipmentList(prev => [...prev, {id: Date.now(), ...equipment}]);
   };
 
   return (
-    <EquipmentContext.Provider value={{ equipmentList, addEquipment }}>
+    <EquipmentContext.Provider value={{equipmentList, addEquipment}}>
       {children}
     </EquipmentContext.Provider>
   );
