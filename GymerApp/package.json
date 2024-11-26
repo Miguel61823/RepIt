@@ -20,8 +20,8 @@
     "prepare": "npm run compile",
     "pretest": "npm run compile",
     "posttest": "npm run lint",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --selectProjects frontend backend",
+    "test:watch": "jest --watch --selectProjects frontend backend",
     "test:frontend": "jest --selectProjects frontend",
     "test:backend": "jest --selectProjects backend",
     "test:coverage": "jest --coverage"
@@ -30,7 +30,6 @@
     "@anthropic-ai/sdk": "^0.32.1",
     "@clerk/nextjs": "^5.7.2",
     "@clerk/themes": "^2.1.40",
-    "@hookform/resolvers": "^3.9.0",
     "@neondatabase/serverless": "^0.10.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -65,6 +64,11 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.25.9",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-typescript": "^7.26.0",
+    "@hookform/resolvers": "^3.9.1",
     "@jest/globals": "^29.7.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
@@ -74,6 +78,7 @@
     "@types/node": "^22.7.5",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "babel-jest": "^29.7.0",
     "drizzle-kit": "^0.26.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.14",
