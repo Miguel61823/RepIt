@@ -144,6 +144,13 @@ export function SessionForm() {
             </FormItem>
           )}
         />
+
+          {form.formState.errors.root && (
+            <div className="text-red-500">
+              {form.formState.errors.root.message}
+            </div>
+          )}
+
         <Button type="submit">Save Session</Button>
       </form>
     </Form>

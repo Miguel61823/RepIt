@@ -142,10 +142,7 @@ const backendJestConfig: Config = {
 const jestConfig = async (): Promise<Config> => {
   const frontendConfig = await createJestConfig(customJestConfig)();
   const backendConfig = await createJestConfig(backendJestConfig)();
-
-  console.log('Frontend Config:', frontendConfig);
-  console.log('Backend Config:', backendConfig);
-
+  
   return {
     ...globalJestConfig,
     projects: [
