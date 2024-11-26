@@ -24,7 +24,7 @@ jest.mock('@clerk/nextjs/server', () => ({
 // Mock schema validation
 jest.mock('@/schema/session', () => ({
   sessionFormSchema: {
-    safeParse: jest.fn(data => ({
+    safeParse: jest.fn((data) => ({
       success: true,
       data,
     })),
