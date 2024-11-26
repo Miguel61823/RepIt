@@ -143,7 +143,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
       </Button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent className="w-[400px] sm:w-[540px] bg-[#1a1f2e] border-slate-800">
+        <SheetContent className="w-[400px] sm:w-[540px] bg-[#1a1f2e] border-slate-800 overflow-y-auto">
           <SheetHeader>
             <SheetTitle className="text-purple-400">
               Add Equipment - {facilityName}
