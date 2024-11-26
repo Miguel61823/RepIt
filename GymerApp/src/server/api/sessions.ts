@@ -42,7 +42,6 @@ export interface AISessionParameters {
 }
 
 // Anthropic client setup
-
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
