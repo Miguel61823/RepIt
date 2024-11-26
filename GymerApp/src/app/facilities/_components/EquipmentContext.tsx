@@ -1,15 +1,37 @@
 // context/EquipmentContext.tsx
 'use client';
 
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useContext, useState, ReactNode} from 'react';
 
-const EquipmentContext = createContext(null);
+// Interfaces for equipment stuff
+export interface EquipmentData {
+  osm_id: string;
+  user_id: string;
+  name: string;
+  identifier: string;
+  type?: string;
+  condition?: string;
+  description?: string;
+  maintenance_date?: string;
+  quantity?: number;
+}
 
-export const EquipmentProvider = ({children}) => {
-  const [equipmentList, setEquipmentList] = useState([]);
+interface EquipmentContextType {
+  equipmentList: EquipmentData[];
+  addEquipment: (equipment: EquipmentData) => void;
+}
 
-  const addEquipment = equipment => {
-    setEquipmentList(prev => [...prev, {id: Date.now(), ...equipment}]);
+interface EquipmentProviderProps {
+  children: ReactNode;
+}
+
+const EquipmentContext = createContext<EquipmentContextType | null>(null);
+
+export const EquipmentProvider: React.FC<EquipmentProviderProps> = ({children}) => {
+  const [equipmentList, setEquipmentList] = useState<EquipmentData[]>([]);
+
+  const addEquipment = (equipment: EquipmentData) => {
+    setEquipmentList((prev: EquipmentData[]) => [...prev, equipment]);
   };
 
   return (
@@ -19,7 +41,7 @@ export const EquipmentProvider = ({children}) => {
   );
 };
 
-export const useEquipment = () => {
+export const useEquipment = (): EquipmentContextType => {
   const context = useContext(EquipmentContext);
   if (!context) {
     throw new Error('useEquipment must be used within an EquipmentProvider');
