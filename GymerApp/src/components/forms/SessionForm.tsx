@@ -24,6 +24,20 @@ import {createSession} from '@/server/api/sessions';
 import {cn} from '@/lib/utils';
 import {Textarea} from '../ui/textarea';
 
+/**
+ * A form component for creating or editing a session.
+ * 
+ * @component
+ * 
+ * @typedef {Object} SessionFormProps
+ * @property {string} name - The name of the session.
+ * @property {string} type - The type of the session.
+ * @property {Date} date - The selected date for the session.
+ * @property {string} session_data - Additional session information, entered as text.
+ * 
+ * @example
+ * <SessionForm />
+ */
 export function SessionForm() {
   const form = useForm<z.infer<typeof sessionFormSchema>>({
     resolver: zodResolver(sessionFormSchema),
@@ -35,6 +49,7 @@ export function SessionForm() {
     },
   });
 
+  // Handles the "Tab" key press to insert spaces in the session data text area
   const handleTab = (event: React.KeyboardEvent) => {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -55,6 +70,7 @@ export function SessionForm() {
     }
   };
 
+  // Handles form submission, calling the API to create a new session
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
     window.dispatchEvent(new Event('closeSessionSheet'));
     const data = await createSession(values);

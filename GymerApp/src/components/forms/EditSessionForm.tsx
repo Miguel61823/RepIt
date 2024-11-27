@@ -24,6 +24,27 @@ import {Session, updateSession} from '@/server/api/sessions';
 import {cn} from '@/lib/utils';
 import {Textarea} from '../ui/textarea';
 
+/**
+ * A form component for editing an existing session.
+ * 
+ * @component
+ * 
+ * @typedef {Object} EditSessionFormProps
+ * @property {string} session_id - The unique ID of the session being edited.
+ * @property {string} name - The name of the session.
+ * @property {string} type - The type of the session.
+ * @property {Date} date - The date of the session.
+ * @property {string} session_data - Additional session details, provided as text.
+ * 
+ * @example
+ * <EditSessionForm
+ *   session_id="123"
+ *   name="Running"
+ *   type="Running"
+ *   date={new Date('2024-01-01')}
+ *   session_data="Ran 5 miles"
+ * />
+ */
 export function EditSessionForm({
   session_id,
   name,
@@ -41,6 +62,7 @@ export function EditSessionForm({
     },
   });
 
+  // Handles the "Tab" key press to insert spaces in the session data text area
   const handleTab = (event: React.KeyboardEvent) => {
     if (event.key === 'Tab') {
       event.preventDefault();
@@ -61,6 +83,7 @@ export function EditSessionForm({
     }
   };
 
+  // Handles form submission, sending updated session data to the server
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
     window.dispatchEvent(new Event('closeEditSessionSheet'));
     const result = await updateSession(session_id, values);
