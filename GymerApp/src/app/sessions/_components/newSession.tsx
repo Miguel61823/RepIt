@@ -12,6 +12,13 @@ import {
 } from '@/components/ui/sheet';
 import {SessionForm} from '../../../components/forms/SessionForm';
 
+/**
+ * The `NewSession` component provides a button to trigger a sheet where users can add a new session.
+ * It listens for a `closeSessionSheet` event to close the sheet automatically when the event is fired.
+ *
+ * @returns {JSX.Element} A button that opens a right-side sheet for creating a new session.
+ *
+ */
 export function NewSession() {
   const [isOpen, setIsOpen] = useState(false);
 

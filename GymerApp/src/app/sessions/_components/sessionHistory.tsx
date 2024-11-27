@@ -5,6 +5,13 @@
 import {NewSession} from './newSession';
 import {SessionsList} from './sessionsList';
 
+/**
+ * The `SessionHistory` component serves as the main interface for managing and viewing session history.
+ * It includes a header with options to create a new session and displays a list of all existing sessions.
+ *
+ * @returns {Promise<JSX.Element>} A layout comprising a header and session list section.
+ * 
+ */
 const SessionHistory = async () => {
   return (
     <div className="min-h-screen bg-neutral-100 dark:bg-gray-900">

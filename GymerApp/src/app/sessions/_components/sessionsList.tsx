@@ -2,6 +2,12 @@
 import {SessionCard} from './sessionCard';
 import {getSessionHistory} from '@/server/api/sessions';
 
+/**
+ * The `SessionsList` component fetches and displays a grid of session cards, representing the user's session history.
+ *
+ * @returns {Promise<JSX.Element>} A grid layout of `SessionCard` components populated with session data.
+ * 
+ */
 export const SessionsList = async () => {
   const results = await getSessionHistory();
   return (

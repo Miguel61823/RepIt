@@ -24,6 +24,20 @@ import {Session, deleteSession} from '@/server/api/sessions';
 import {formatDate} from '@/lib/utils';
 import {EditSession} from './editSession';
 
+/**
+ * The `SessionCard` component renders a card displaying session details, including the name, type, date, and session data.
+ * It includes buttons to edit the session via a sheet or delete it with a confirmation dialog.
+ *
+ * @param {Session} props - The session data to display.
+ * @param {string} props.session_id - Unique identifier for the session.
+ * @param {string} props.type - Type of the session (e.g., "Meeting", "Workshop").
+ * @param {string} props.name - Name of the session.
+ * @param {Date} props.date - Date of the session.
+ * @param {string} props.session_data - Additional data or notes for the session.
+ *
+ * @returns {JSX.Element} A styled card displaying session details with options to edit or delete.
+ *
+ */
 export const SessionCard = ({
   session_id,
   type,
