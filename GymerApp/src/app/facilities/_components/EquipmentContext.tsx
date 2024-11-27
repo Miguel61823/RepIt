@@ -27,7 +27,9 @@ interface EquipmentProviderProps {
 
 const EquipmentContext = createContext<EquipmentContextType | null>(null);
 
-export const EquipmentProvider: React.FC<EquipmentProviderProps> = ({children}) => {
+export const EquipmentProvider: React.FC<EquipmentProviderProps> = ({
+  children,
+}) => {
   const [equipmentList, setEquipmentList] = useState<EquipmentData[]>([]);
 
   const addEquipment = (equipment: EquipmentData) => {

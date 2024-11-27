@@ -1,5 +1,5 @@
-import { GoalCard } from './goalCard';
-import { getGoalHistory } from '@/server/api/goals';
+import {GoalCard} from './goalCard';
+import {getGoalHistory} from '@/server/api/goals';
 
 export const GoalsList = async () => {
   const results = await getGoalHistory();
@@ -11,4 +11,3 @@ export const GoalsList = async () => {
     </div>
   );
 };
-
