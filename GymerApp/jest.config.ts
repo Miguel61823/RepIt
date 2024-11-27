@@ -50,7 +50,7 @@ const customJestConfig: Config = {
     '/node_modules/',
     'src/components/ui/',
     'test-utils.tsx',
-    'src/drizzle/' // Add this line
+    'src/drizzle/', // Add this line
   ],
 
   // An object that configures minimum threshold enforcement for coverage results
@@ -100,7 +100,7 @@ const customJestConfig: Config = {
     '<rootDir>/.next/',
     '<rootDir>/src/drizzle/',
     '<rootDir>/src/server/',
-    '<rootDir>/src/server/api/sessions.ts'
+    '<rootDir>/src/server/api/sessions.ts',
   ],
 
   // A map from regular expressions to paths to transformers
@@ -126,11 +126,8 @@ const backendJestConfig: Config = {
     '<rootDir>/src/server/**/?(*.)+(spec|test).[jt]s?(x)',
   ],
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/.next/',
-  ],
-  
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+
   collectCoverageFrom: [
     'src/server/**/*.{js,ts}',
     '!src/**/*.d.ts',
@@ -142,7 +139,7 @@ const backendJestConfig: Config = {
 const jestConfig = async (): Promise<Config> => {
   const frontendConfig = await createJestConfig(customJestConfig)();
   const backendConfig = await createJestConfig(backendJestConfig)();
-  
+
   return {
     ...globalJestConfig,
     projects: [

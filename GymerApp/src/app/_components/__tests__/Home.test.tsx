@@ -1,12 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import Home from '../Home';
-import {
-  render,
-  screen,
-  setupAuthMock,
-  setupRouterMock,
-} from '../../../../utils/test-utils';
+import {render, screen, setupAuthMock} from '../../../../utils/test-utils';
 
 const mockSignIn = jest.fn();
 

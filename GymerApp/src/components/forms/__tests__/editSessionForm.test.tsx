@@ -1,7 +1,7 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { EditSessionForm } from '../EditSessionForm';
+import {EditSessionForm} from '../EditSessionForm';
 import * as sessionsApi from '@/server/api/sessions';
 
 // Mock the updateSession function
@@ -35,17 +35,18 @@ describe('EditSessionForm', () => {
     expect(screen.getByLabelText('Session Name')).toHaveValue('Test Session');
     expect(screen.getByLabelText('Session Type')).toHaveValue('Training');
     expect(screen.getByText('December 31st, 2023')).toBeInTheDocument(); // local timezone of Date
-    expect(screen.getByLabelText('Session Data')).toHaveValue('Initial session data');
+    expect(screen.getByLabelText('Session Data')).toHaveValue(
+      'Initial session data',
+    );
   });
-
 
   test('handles tab key in textarea', () => {
     render(<EditSessionForm {...mockSession} />);
 
     const textarea = screen.getByLabelText('Session Data');
-    
+
     // Simulate tab key press
-    fireEvent.keyDown(textarea, { key: 'Tab', preventDefault: () => {} });
+    fireEvent.keyDown(textarea, {key: 'Tab', preventDefault: () => {}});
 
     // Check if 4 spaces were added
     expect(textarea).toHaveValue('    Initial session data');
@@ -58,7 +59,10 @@ describe('EditSessionForm', () => {
 
     // Update some fields
     await userEvent.clear(screen.getByLabelText('Session Name'));
-    await userEvent.type(screen.getByLabelText('Session Name'), 'Updated Session');
+    await userEvent.type(
+      screen.getByLabelText('Session Name'),
+      'Updated Session',
+    );
 
     // Submit the form
     const submitButton = screen.getByText('Save Session');
@@ -79,7 +83,7 @@ describe('EditSessionForm', () => {
   });
 
   test('handles form submission error', async () => {
-    (sessionsApi.updateSession as jest.Mock).mockResolvedValue({ error: true });
+    (sessionsApi.updateSession as jest.Mock).mockResolvedValue({error: true});
     render(<EditSessionForm {...mockSession} />);
 
     // Submits form

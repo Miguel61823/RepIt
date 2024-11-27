@@ -5,6 +5,7 @@ import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -30,6 +31,7 @@ export function NewSession() {
       <SheetContent side="right" className="overflow-y-auto no-scrollbar">
         <SheetHeader>
           <SheetTitle>New Session</SheetTitle>
+          <SheetDescription></SheetDescription>
         </SheetHeader>
         <SessionForm />
       </SheetContent>

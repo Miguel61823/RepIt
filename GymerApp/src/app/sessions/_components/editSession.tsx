@@ -3,6 +3,7 @@ import {Button} from '@/components/ui/button';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -33,6 +34,7 @@ export function EditSession(EditedSession: Session) {
       <SheetContent side="right" className="overflow-y-auto no-scrollbar">
         <SheetHeader>
           <SheetTitle>Edit Session</SheetTitle>
+          <SheetDescription></SheetDescription>
         </SheetHeader>
         <EditSessionForm {...EditedSession} />
       </SheetContent>

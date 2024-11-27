@@ -145,11 +145,11 @@ export function SessionForm() {
           )}
         />
 
-          {form.formState.errors.root && (
-            <div className="text-red-500">
-              {form.formState.errors.root.message}
-            </div>
-          )}
+        {form.formState.errors.root && (
+          <div className="text-red-500">
+            {form.formState.errors.root.message}
+          </div>
+        )}
 
         <Button type="submit">Save Session</Button>
       </form>

@@ -3,7 +3,7 @@
 // import React from "react";
 
 import {NewSession} from './newSession';
-import {SessionsList} from './SessionsList';
+import {SessionsList} from './sessionsList';
 
 const SessionHistory = async () => {
   return (

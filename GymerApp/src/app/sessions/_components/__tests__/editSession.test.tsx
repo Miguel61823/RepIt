@@ -1,55 +1,95 @@
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import { EditSession } from '../editSession';
-// import { Session } from '@/server/api/sessions';
+import React from 'react';
+import {render, screen} from '@testing-library/react';
+import {EditSession} from '../editSession';
+import {Session} from '@/server/api/sessions';
 
-// const mockSession: Session = {
-//   session_id: '1',
-//   type: 'Test Type',
-//   name: 'Test Session',
-//   date: new Date(),
-//   session_data: 'Test data'
-// };
+jest.mock('@/components/forms/EditSessionForm', () => ({
+  EditSessionForm: (props: Session) => (
+    <div data-testid="edit-session-form">{JSON.stringify(props)}</div>
+  ),
+}));
 
-// describe('EditSession Component', () => {
-//   beforeEach(() => {
-//     // Clear any existing event listeners
-//     window.removeEventListener = jest.fn();
-//   });
+// Mock the Sheet and SheetContent components to always render children
+jest.mock('@/components/ui/sheet', () => ({
+  Sheet: ({children}: {children: React.ReactNode}) => (
+    <div data-testid="sheet">{children}</div>
+  ),
+  SheetContent: ({children}: {children: React.ReactNode}) => (
+    <div data-testid="sheet-content">{children}</div>
+  ),
+  SheetTrigger: ({children}: {children: React.ReactNode}) => children,
+  SheetHeader: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTitle: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetDescription: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+}));
 
-//   it('renders edit button', () => {
-//     render(<EditSession {...mockSession} />);
-//     const editButton = screen.getByText('Edit');
-//     expect(editButton).toBeInTheDocument();
-//   });
+describe('EditSession Component', () => {
+  const mockSession = {
+    session_id: '1',
+    name: 'Test Session',
+    type: 'Training',
+    date: new Date('2024-01-01'),
+    session_data: 'Initial session data',
+  };
 
-//   it('opens sheet when edit button is clicked', () => {
-//     render(<EditSession {...mockSession} />);
-//     const editButton = screen.getByText('Edit');
-//     fireEvent.click(editButton);
-    
-//     const sheetTitle = screen.getByText('Edit Session');
-//     expect(sheetTitle).toBeInTheDocument();
-//   });
+  beforeEach(() => {
+    jest.clearAllMocks();
+    window.removeEventListener = jest.fn();
+  });
 
-//   it('adds and removes event listener', () => {
-//     const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-//     const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+  test('renders edit button', () => {
+    render(<EditSession {...mockSession} />);
 
-//     const { unmount } = render(<EditSession {...mockSession} />);
-    
-//     expect(addEventListenerSpy).toHaveBeenCalledWith(
-//       'closeEditSessionSheet', 
-//       expect.any(Function)
-//     );
+    const editButton = screen.getByRole('button', {name: /edit/i});
+    expect(editButton).toBeInTheDocument();
+  });
 
-//     unmount();
+  test('adds and removes window event listener for closeEditSessionSheet', () => {
+    const addEventListener = jest.spyOn(window, 'addEventListener');
+    const removeEventListener = jest.spyOn(window, 'removeEventListener');
 
-//     expect(removeEventListenerSpy).toHaveBeenCalledWith(
-//       'closeEditSessionSheet', 
-//       expect.any(Function)
-//     );
-//   });
-// });
+    const {unmount} = render(<EditSession {...mockSession} />);
 
-test.todo('test');
+    // Check that event listener was added
+    expect(addEventListener).toHaveBeenCalledWith(
+      'closeEditSessionSheet',
+      expect.any(Function),
+    );
+
+    // Unmount and check that event listener was removed
+    unmount();
+    expect(removeEventListener).toHaveBeenCalledWith(
+      'closeEditSessionSheet',
+      expect.any(Function),
+    );
+  });
+
+  test('renders EditSessionForm with correct props', () => {
+    // Use a spy to force isOpen to be true
+    const useStateSpy = jest.spyOn(React, 'useState');
+    useStateSpy.mockImplementation(() => [true, jest.fn()]);
+
+    render(<EditSession {...mockSession} />);
+
+    const editSessionForm = screen.getByTestId('edit-session-form');
+    expect(editSessionForm).toBeInTheDocument();
+
+    // Check that the form receives the correct session props
+    expect(editSessionForm).toHaveTextContent(JSON.stringify(mockSession));
+
+    useStateSpy.mockRestore();
+  });
+
+  test('sheet content contains correct title', () => {
+    render(<EditSession {...mockSession} />);
+
+    const sheetTitle = screen.getByText('Edit Session');
+    expect(sheetTitle).toBeInTheDocument();
+  });
+});

@@ -7,11 +7,11 @@ import {
   type Session,
   type AISession,
 } from '../sessions';
-import { db } from '@/drizzle/db';
-import { auth } from '@clerk/nextjs/server';
-import { revalidatePath } from 'next/cache';
+import {db} from '@/drizzle/db';
+import {auth} from '@clerk/nextjs/server';
+import {revalidatePath} from 'next/cache';
 import Anthropic from '@anthropic-ai/sdk';
-import { sessionFormSchema } from '@/schema/session';
+import {sessionFormSchema} from '@/schema/session';
 
 // Mock data
 const mockSession: Session = {
@@ -26,12 +26,12 @@ const mockAISession: AISession = {
   name: 'Test Session',
   type: 'workout',
   date: new Date('2024-03-20'),
-  parsed_data: { test: 'data' },
+  parsed_data: {test: 'data'},
 };
 
 describe('Session Functions', () => {
   const mockRedirectToSignIn = jest.fn();
-  
+
   beforeEach(() => {
     jest.clearAllMocks();
     (auth as jest.Mock).mockReturnValue({
@@ -42,26 +42,28 @@ describe('Session Functions', () => {
 
   describe('getSessionHistory', () => {
     test('should return sessions for authenticated user', async () => {
-      (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([mockSession]);
-      
+      (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([
+        mockSession,
+      ]);
+
       const result = await getSessionHistory();
-      
+
       expect(result).toEqual([mockSession]);
       expect(db.query.SessionsTable.findMany).toHaveBeenCalledWith({
         where: expect.any(Function),
         orderBy: expect.any(Function),
-        columns: { user_id: false },
+        columns: {user_id: false},
       });
     });
 
     test('should return empty array and redirect when user is not authenticated', async () => {
-      (auth as jest.Mock).mockReturnValue({ 
-        userId: null, 
-        redirectToSignIn: mockRedirectToSignIn 
+      (auth as jest.Mock).mockReturnValue({
+        userId: null,
+        redirectToSignIn: mockRedirectToSignIn,
       });
-      
+
       const result = await getSessionHistory();
-      
+
       expect(result).toEqual([]);
       expect(mockRedirectToSignIn).toHaveBeenCalled();
     });
@@ -76,7 +78,7 @@ describe('Session Functions', () => {
     };
 
     const mockAnthropicResponse = {
-      content: [{ type: 'text', text: '{"test": "data"}' }],
+      content: [{type: 'text', text: '{"test": "data"}'}],
     };
 
     beforeEach(() => {
@@ -103,26 +105,26 @@ describe('Session Functions', () => {
 
       const invalidFormData = {
         type: 'invalid-type',
-        name: '',  // Invalid empty name
+        name: '', // Invalid empty name
         date: 'invalid-date',
         session_data: null,
       };
 
       const result = await createSession(invalidFormData as any);
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(db.insert).not.toHaveBeenCalled();
     });
 
     test('should handle unauthenticated user', async () => {
-      (auth as jest.Mock).mockReturnValue({ 
+      (auth as jest.Mock).mockReturnValue({
         userId: null,
-        redirectToSignIn: mockRedirectToSignIn
+        redirectToSignIn: mockRedirectToSignIn,
       });
 
       const result = await createSession(mockFormData);
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(db.insert).not.toHaveBeenCalled();
     });
 
@@ -135,7 +137,7 @@ describe('Session Functions', () => {
 
       const result = await createSession(mockFormData);
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(db.insert).not.toHaveBeenCalled();
     });
   });
@@ -149,7 +151,7 @@ describe('Session Functions', () => {
     };
 
     const mockAnthropicResponse = {
-      content: [{ type: 'text', text: '{"updated": "data"}' }],
+      content: [{type: 'text', text: '{"updated": "data"}'}],
     };
 
     beforeEach(() => {
@@ -158,10 +160,10 @@ describe('Session Functions', () => {
           create: jest.fn().mockResolvedValue(mockAnthropicResponse),
         },
       }));
-  
+
       // Mock the complete DB update chain
       const mockWhere = jest.fn().mockResolvedValue(undefined);
-      const mockSet = jest.fn().mockReturnValue({ where: mockWhere });
+      const mockSet = jest.fn().mockReturnValue({where: mockWhere});
       (db.update as jest.Mock).mockReturnValue({
         set: mockSet,
       });
@@ -173,7 +175,7 @@ describe('Session Functions', () => {
         userId: 'test-user-id',
         redirectToSignIn: jest.fn(),
       });
-  
+
       // Ensure schema validation passes
       (sessionFormSchema.safeParse as jest.Mock).mockReturnValue({
         success: true,
@@ -200,21 +202,24 @@ describe('Session Functions', () => {
         session_data: null,
       };
 
-      const result = await updateSession('test-session-id', invalidFormData as any);
+      const result = await updateSession(
+        'test-session-id',
+        invalidFormData as any,
+      );
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(db.update).not.toHaveBeenCalled();
     });
 
     test('should handle unauthenticated user', async () => {
-      (auth as jest.Mock).mockReturnValue({ 
+      (auth as jest.Mock).mockReturnValue({
         userId: null,
-        redirectToSignIn: mockRedirectToSignIn
+        redirectToSignIn: mockRedirectToSignIn,
       });
 
       const result = await updateSession('test-session-id', mockFormData);
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(mockRedirectToSignIn).toHaveBeenCalled();
       expect(db.update).not.toHaveBeenCalled();
     });
@@ -235,25 +240,25 @@ describe('Session Functions', () => {
       (Anthropic as unknown as jest.Mock).mockImplementation(() => ({
         messages: {
           create: jest.fn().mockResolvedValue({
-            content: [{ type: 'text', text: '{"updated": "data"}' }],
+            content: [{type: 'text', text: '{"updated": "data"}'}],
           }),
         },
       }));
-    
+
       // Setup the database mock to throw an error
       const mockError = new Error('Update failed');
       const mockWhere = jest.fn().mockRejectedValue(mockError);
-      const mockSet = jest.fn().mockReturnValue({ where: mockWhere });
+      const mockSet = jest.fn().mockReturnValue({where: mockWhere});
       (db.update as jest.Mock).mockReturnValue({
         set: mockSet,
       });
 
       const result = await updateSession('test-session-id', mockFormData);
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(console.error).toHaveBeenCalledWith(
         'Error updating session:',
-        mockError
+        mockError,
       );
     });
   });
@@ -278,10 +283,10 @@ describe('Session Functions', () => {
 
       const result = await deleteSession('test-session-id');
 
-      expect(result).toEqual({ error: true });
+      expect(result).toEqual({error: true});
       expect(console.error).toHaveBeenCalledWith(
         'Error deleting session:',
-        expect.any(Error)
+        expect.any(Error),
       );
     });
   });
@@ -293,7 +298,9 @@ describe('Session Functions', () => {
     };
 
     test('should return sessions within date range for authenticated user', async () => {
-      (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([mockAISession]);
+      (db.query.SessionsTable.findMany as jest.Mock).mockResolvedValue([
+        mockAISession,
+      ]);
 
       const result = await getAISessionsByDate(dateRange);
 
@@ -310,9 +317,9 @@ describe('Session Functions', () => {
     });
 
     test('should return empty array and redirect when user is not authenticated', async () => {
-      (auth as jest.Mock).mockReturnValue({ 
-        userId: null, 
-        redirectToSignIn: mockRedirectToSignIn 
+      (auth as jest.Mock).mockReturnValue({
+        userId: null,
+        redirectToSignIn: mockRedirectToSignIn,
       });
 
       const result = await getAISessionsByDate(dateRange);

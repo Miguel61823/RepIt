@@ -1,46 +1,95 @@
-// import React from 'react';
-// import { render, screen, fireEvent } from '@testing-library/react';
-// import { NewSession } from '../newSession';
+import React, {act} from 'react';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {NewSession} from '../newSession';
 
-// describe('NewSession Component', () => {
-//   beforeEach(() => {
-//     // Clear any existing event listeners
-//     window.removeEventListener = jest.fn();
-//   });
+jest.mock('@/components/forms/SessionForm', () => ({
+  SessionForm: () => <div data-testid="session-form">Mocked Session Form</div>,
+}));
 
-//   it('renders add session button', () => {
-//     render(<NewSession />);
-//     const addButton = screen.getByText('+ Add Session');
-//     expect(addButton).toBeInTheDocument();
-//   });
+describe('NewSession Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-//   it('opens sheet when add session button is clicked', () => {
-//     render(<NewSession />);
-//     const addButton = screen.getByText('+ Add Session');
-//     fireEvent.click(addButton);
-    
-//     const sheetTitle = screen.getByText('New Session');
-//     expect(sheetTitle).toBeInTheDocument();
-//   });
+  test('renders the "Add Session" button', () => {
+    render(<NewSession />);
 
-//   it('adds and removes event listener', () => {
-//     const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
-//     const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    const addSessionButton = screen.getByRole('button', {
+      name: /\+ Add Session/i,
+    });
+    expect(addSessionButton).toBeInTheDocument();
+  });
 
-//     const { unmount } = render(<NewSession />);
-    
-//     expect(addEventListenerSpy).toHaveBeenCalledWith(
-//       'closeSessionSheet', 
-//       expect.any(Function)
-//     );
+  test('opens the sheet when the button is clicked', () => {
+    render(<NewSession />);
 
-//     unmount();
+    const addSessionButton = screen.getByRole('button', {
+      name: /\+ Add Session/i,
+    });
+    act(() => {
+      fireEvent.click(addSessionButton);
+    });
 
-//     expect(removeEventListenerSpy).toHaveBeenCalledWith(
-//       'closeSessionSheet', 
-//       expect.any(Function)
-//     );
-//   });
-// });
+    const sheetTitle = screen.getByRole('heading', {name: /New Session/i});
+    expect(sheetTitle).toBeInTheDocument();
+  });
 
-test.todo('todo');
+  test('renders the SessionForm component', () => {
+    render(<NewSession />);
+
+    const addSessionButton = screen.getByRole('button', {
+      name: /\+ Add Session/i,
+    });
+    act(() => {
+      fireEvent.click(addSessionButton);
+    });
+
+    const sessionForm = screen.getByTestId('session-form');
+    expect(sessionForm).toBeInTheDocument();
+  });
+
+  test('adds and removes event listener for closeSessionSheet', () => {
+    const addEventListenerSpy = jest.spyOn(window, 'addEventListener');
+    const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+
+    const {unmount} = render(<NewSession />);
+
+    // Check that the event listener was added
+    expect(addEventListenerSpy).toHaveBeenCalledWith(
+      'closeSessionSheet',
+      expect.any(Function),
+    );
+
+    // Check that the event listener was removed
+    unmount();
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'closeSessionSheet',
+      expect.any(Function),
+    );
+
+    addEventListenerSpy.mockRestore();
+    removeEventListenerSpy.mockRestore();
+  });
+
+  test('closes the sheet when closeSessionSheet event is dispatched', () => {
+    render(<NewSession />);
+
+    // Open the sheet first
+    const addSessionButton = screen.getByRole('button', {
+      name: /\+ Add Session/i,
+    });
+    act(() => {
+      fireEvent.click(addSessionButton);
+    });
+
+    // Verify sheet is open
+    const sheetTitle = screen.getByRole('heading', {name: /New Session/i});
+    expect(sheetTitle).toBeInTheDocument();
+
+    // Dispatch the close event
+    act(() => {
+      const closeEvent = new Event('closeSessionSheet');
+      window.dispatchEvent(closeEvent);
+    });
+  });
+});

@@ -19,4 +19,3 @@ Object.defineProperty(window, 'matchMedia', {
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
-
