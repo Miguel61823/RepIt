@@ -27,41 +27,6 @@ const Home = () => {
 
   return (
     <main className="container flex-grow mx-auto px-4">
-      <header
-        className={`fixed top-0 left-0 right-0 z-10 bg-transparent transition-colors duration-300 ${
-          isScrolled ? 'bg-gray-800 shadow-lg' : ''
-        }`}
-      >
-        <nav className="flex justify-between items-center py-4 px-6">
-          <div className="text-white font-bold text-xl">
-            <a href="/">Template DSGN</a>
-          </div>
-          <ul className="flex space-x-6 text-white">
-            <li><a href="/about">About</a></li>
-            <li><a href="/download">Download</a></li>
-            <li><a href="/pricing">Pricing</a></li>
-            <li><a href="/features">Features</a></li>
-            <li><a href="/contact">Contact</a></li>
-          </ul>
-          <div>
-            <SignedOut>
-              <SignInButton mode="modal">
-                <Button variant="landing" className="px-6 py-2 text-white bg-violet-600 hover:bg-violet-700 transition-colors">
-                  Sign In
-                </Button>
-              </SignInButton>
-            </SignedOut>
-            <SignedIn>
-              <Link href="/dashboard" passHref>
-                <Button variant="landing" className="px-6 py-2 text-white bg-violet-600 hover:bg-violet-700 transition-colors">
-                  Go To Dashboard
-                </Button>
-              </Link>
-            </SignedIn>
-          </div>
-        </nav>
-      </header>
-
       <section className="mt-24 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">

@@ -28,20 +28,14 @@ const Topbar = () => {
 
   const handleLogoClick = () => {
     if (isSignedIn) {
-      //redirect to dashboard
       router.push('/');
     } else {
-      //redirect to '/'
       router.push('/');
     }
   };
 
-  const handleLinkHover = (link) => {
-    setActiveLink(link);
-  };
-
   const handleLinkClick = (link) => {
-    setActiveLink(link);
+    setActiveLink(null);
     if (isSignedIn) {
       switch (link) {
         case 'dashboard':
@@ -49,6 +43,9 @@ const Topbar = () => {
           break;
         case 'facilities':
           router.push('/facilities');
+          break;
+        case 'workouts':
+          router.push('/workouts');
           break;
         case 'sessions':
           router.push('/sessions');
@@ -67,6 +64,14 @@ const Topbar = () => {
     }
   };
 
+  const links = [
+    'dashboard', 
+    'facilities', 
+    'sessions', 
+    'goals', 
+    'supplements'
+  ];
+
   return (
     <>
       <header className="block z-50 sticky top-0 bg-neutral-100 dark:bg-gray-800 dark:text-white text-black p-6 border-b">
@@ -74,93 +79,34 @@ const Topbar = () => {
           <Button variant="logo" onClick={handleLogoClick}>
             RepIt
           </Button>
+          
+          {/* Desktop Navigation */}
           <div className="hidden min-[600px]:flex items-center font-sans">
-            <Button
-              variant="link"
-              onClick={() => handleLinkClick('dashboard')}
-              onMouseEnter={() => handleLinkHover('dashboard')}
-              onMouseLeave={() => handleLinkHover(null)}
-              className={`relative ${
-                activeLink === 'dashboard' ? 'text-violet-600' : ''
-              }`}
-            >
-              Dashboard
-              {activeLink === 'dashboard' && (
-                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-              )}
-            </Button>
-            <Button
-              variant="link"
-              onClick={() => handleLinkClick('facilities')}
-              onMouseEnter={() => handleLinkHover('facilities')}
-              onMouseLeave={() => handleLinkHover(null)}
-              className={`relative ${
-                activeLink === 'facilities' ? 'text-violet-600' : ''
-              }`}
-            >
-              Facilities
-              {activeLink === 'facilities' && (
-                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-              )}
-            </Button>
-            <Button
-              variant="link"
-              onClick={() => handleLinkClick('sessions')}
-              onMouseEnter={() => handleLinkHover('sessions')}
-              onMouseLeave={() => handleLinkHover(null)}
-              className={`relative ${
-                activeLink === 'sessions' ? 'text-violet-600' : ''
-              }`}
-            >
-              Sessions
-              {activeLink === 'sessions' && (
-                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-              )}
-            </Button>
-            <Button
-              variant="link"
-              onClick={() => handleLinkClick('goals')}
-              onMouseEnter={() => handleLinkHover('goals')}
-              onMouseLeave={() => handleLinkHover(null)}
-              className={`relative ${
-                activeLink === 'goals' ? 'text-violet-600' : ''
-              }`}
-            >
-              Goals
-              {activeLink === 'goals' && (
-                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-              )}
-            </Button>
-            <Button
-              variant="link"
-              onClick={() => handleLinkClick('supplements')}
-              onMouseEnter={() => handleLinkHover('supplements')}
-              onMouseLeave={() => handleLinkHover(null)}
-              className={`relative ${
-                activeLink === 'supplements' ? 'text-violet-600' : ''
-              }`}
-            >
-              Supplements
-              {activeLink === 'supplements' && (
-                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-              )}
-            </Button>
+            {links.map((link) => (
+              <Button
+                key={link}
+                variant="link"
+                onClick={() => handleLinkClick(link)}
+                onMouseEnter={() => setActiveLink(link)}
+                onMouseLeave={() => setActiveLink(null)}
+                className={`relative group ${
+                  activeLink === link ? 'text-violet-600' : ''
+                }`}
+              >
+                {link.charAt(0).toUpperCase() + link.slice(1)}
+                <span 
+                  className={`absolute left-0 right-0 bottom-0 h-1 bg-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out ${
+                    activeLink === link ? 'scale-x-100' : ''
+                  }`}
+                />
+              </Button>
+            ))}
           </div>
-          <div className="flex items-center justify-end w-full">
-            <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
-              <div className="px-3 mt-1">
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
 
-                <SignedOut>
-                  <SignInButton mode="modal">
-                    <button className="bg-violet-600 px-4 py-2 rounded-lg text-white">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-              </div>
+          {/* Navigation and User Actions */}
+          <div className="flex items-center justify-end w-full">
+            {/* Mobile View */}
+            <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild className="cursor-pointer">
                   <Menu />
@@ -170,25 +116,35 @@ const Topbar = () => {
                   className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
-                    <DropdownMenuItem className="">
-                      <Button
-                        variant="link"
-                        onClick={() => handleLinkClick('dashboard')}
-                        onMouseEnter={() => handleLinkHover('dashboard')}
-                        onMouseLeave={() => handleLinkHover(null)}
-                        className={`relative ${
-                          activeLink === 'dashboard' ? 'text-violet-600' : ''
-                        }`}
-                      >
-                        Dashboard
-                        {activeLink === 'dashboard' && (
-                          <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
-                        )}
-                      </Button>
-                    </DropdownMenuItem>
+                    {[...links, 'workouts'].map((link) => (
+                      <DropdownMenuItem key={link} className="">
+                        <Button
+                          variant="link"
+                          onClick={() => handleLinkClick(link)}
+                          className="w-full text-left group relative"
+                        >
+                          {link.charAt(0).toUpperCase() + link.slice(1)}
+                          <span 
+                            className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
+                          />
+                        </Button>
+                      </DropdownMenuItem>
+                    ))}
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
-                  <DropdownMenuGroup className="flex flex-row justify-end px-1">
+                  <DropdownMenuGroup className="flex flex-row justify-between px-1 items-center">
+                    <DropdownMenuItem>
+                      <SignedIn>
+                        <UserButton />
+                      </SignedIn>
+                      <SignedOut>
+                        <SignInButton mode="modal">
+                          <button className="bg-violet-600 px-4 py-2 rounded-lg text-white">
+                            Sign In
+                          </button>
+                        </SignInButton>
+                      </SignedOut>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                       <ModeToggle />
                     </DropdownMenuItem>
@@ -196,6 +152,8 @@ const Topbar = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
+
+            {/* Desktop View */}
             <div className="hidden min-[600px]:flex items-center">
               <div className="px-3 mt-1">
                 <SignedIn>
@@ -215,24 +173,8 @@ const Topbar = () => {
               </div>
             </div>
           </div>
-          <div></div>
         </div>
       </header>
-
-      <style jsx>{`
-        @keyframes link-underline {
-          0% {
-            width: 0;
-          }
-          100% {
-            width: 100%;
-          }
-        }
-
-        .animate-link-underline {
-          animation: link-underline 0.3s ease-in-out forwards;
-        }
-      `}</style>
     </>
   );
 };
