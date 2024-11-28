@@ -1,10 +1,6 @@
 'use client';
 
 import React, {Suspense, useState} from 'react';
-// import {Search, MapPin, Star, Phone, Check} from 'lucide-react';
-// import {Card, CardHeader, CardContent} from '@/components/ui/card';
-// import {Button} from '@/components/ui/button';
-// import {ToastContainer, toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FacilityCard from './facilityCard';
 import {
@@ -15,6 +11,7 @@ import {
 import {Button} from '@/components/ui/button';
 import {Slider} from '@/components/ui/slider';
 import findSportsFacilities from '@/lib/osm';
+import { Search, Compass } from 'lucide-react';
 
 // Utility function to calculate distance using the Haversine formula
 const calculateDistance = (
@@ -136,7 +133,20 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
         <div className="font-medium mt-4">Radius: {range} km</div>
         {!isLoading ? (
           <div className="mt-2">
-            <Button onClick={handleDBSearch} className="left-0">
+            <Button 
+              onClick={handleDBSearch} 
+              className="
+                flex items-center justify-center space-x-2 
+                bg-purple-600 hover:bg-purple-700 
+                text-white 
+                transition-all duration-300 
+                ease-in-out 
+                transform hover:-translate-y-0.5 
+                shadow-md hover:shadow-lg
+                px-4 py-2
+              "
+            >
+              <Search className="w-5 h-5 mr-2" />
               Search
             </Button>
           </div>
@@ -155,7 +165,23 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
           )}
         </Suspense>
       </div>
-      <Button onClick={handleOSMSearch}>I don&apos;t see my facility</Button>
+      <Button 
+        onClick={handleOSMSearch}
+        variant="outline"
+        className="
+          flex items-center justify-center space-x-2 
+          border-2 border-purple-500 
+          text-purple-500 
+          hover:bg-blue-50 
+          transition-all duration-300 
+          ease-in-out 
+          transform hover:-translate-y-0.5 
+          px-4 py-2
+        "
+      >
+        <Compass className="w-5 h-5 mr-2" />
+        I don&apos;t see my facility
+      </Button>
     </div>
   );
 };
