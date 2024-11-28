@@ -81,7 +81,7 @@ const Topbar = () => {
           </Button>
           
           {/* Desktop Navigation */}
-          <div className="hidden min-[600px]:flex items-center font-sans">
+          <div className="hidden min-[720px]:flex items-center font-sans">
             {links.map((link) => (
               <Button
                 key={link}
@@ -106,7 +106,7 @@ const Topbar = () => {
           {/* Navigation and User Actions */}
           <div className="flex items-center justify-end w-full">
             {/* Mobile View */}
-            <div className="min-[600px]:hidden flex gap-3 px-4 items-center">
+            <div className="min-[720px]:hidden flex gap-3 px-4 items-center">
               <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild className="cursor-pointer">
                   <Menu />
@@ -154,7 +154,7 @@ const Topbar = () => {
             </div>
 
             {/* Desktop View */}
-            <div className="hidden min-[600px]:flex items-center">
+            <div className="hidden min-[720px]:flex items-center">
               <div className="px-3 mt-1">
                 <SignedIn>
                   <UserButton />
