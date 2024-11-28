@@ -73,10 +73,6 @@ const customJestConfig: Config = {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy', // Handle CSS imports (with CSS modules)
-    '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js', // Handle CSS imports (without CSS modules)
-    '^.+\\.(jpg|jpeg|png|gif|webp|avif|svg|ico)$':
-      '<rootDir>/__mocks__/fileMock.js', // Handle image imports
-    '^.+\\.(woff|woff2|eot|ttf|otf)$': '<rootDir>/__mocks__/fileMock.js', // Handle font imports
   },
 
   // A preset that is used as a base for Jest's configuration

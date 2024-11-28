@@ -1,3 +1,4 @@
+// Deprecated
 import {index, pgTable, text, uuid, integer} from 'drizzle-orm/pg-core';
 import {WorkoutsTable} from './workout';
 
