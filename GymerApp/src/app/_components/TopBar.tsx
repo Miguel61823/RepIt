@@ -1,7 +1,7 @@
 'use client';
 
-import {ModeToggle} from '@/components/mode-toggle';
-import {Button} from '@/components/ui/button';
+import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
 import {
   SignedIn,
   SignedOut,
@@ -9,7 +9,7 @@ import {
   useAuth,
   UserButton,
 } from '@clerk/nextjs';
-import {useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,11 +18,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {Menu} from 'lucide-react';
+import { Menu } from 'lucide-react';
+import { useState } from 'react';
 
 const Topbar = () => {
   const router = useRouter();
-  const {isSignedIn} = useAuth();
+  const { isSignedIn } = useAuth();
+  const [activeLink, setActiveLink] = useState(null);
+
   const handleLogoClick = () => {
     if (isSignedIn) {
       //redirect to dashboard
@@ -32,51 +35,33 @@ const Topbar = () => {
       router.push('/');
     }
   };
-  const handleDashboardClick = () => {
-    if (isSignedIn) {
-      // redirect to dashboard
-      router.push('/dashboard');
-    } else {
-      router.push('/');
-    }
+
+  const handleLinkHover = (link) => {
+    setActiveLink(link);
   };
-  const handleFacilityClick = () => {
+
+  const handleLinkClick = (link) => {
+    setActiveLink(link);
     if (isSignedIn) {
-      //redirect to gyms page
-      router.push('/facilities');
-    } else {
-      router.push('/');
-    }
-  };
-  const handleWorkoutClick = () => {
-    if (isSignedIn) {
-      //redirect to workouts
-      router.push('/workouts');
-    } else {
-      //redirect to '/'
-      router.push('/');
-    }
-  };
-  const handleSessionClick = () => {
-    if (isSignedIn) {
-      //redirect to sessions
-      router.push('/sessions');
-    } else {
-      router.push('/');
-    }
-  };
-  const handleGoalClick = () => {
-    if (isSignedIn) {
-      //redirect to goals
-      router.push('/goals');
-    } else {
-      router.push('/');
-    }
-  };
-  const handleSuppleClick = () => {
-    if (isSignedIn) {
-      //redirect to supplements
-      router.push('/supplements');
+      switch (link) {
+        case 'dashboard':
+          router.push('/dashboard');
+          break;
+        case 'facilities':
+          router.push('/facilities');
+          break;
+        case 'sessions':
+          router.push('/sessions');
+          break;
+        case 'goals':
+          router.push('/goals');
+          break;
+        case 'supplements':
+          router.push('/supplements');
+          break;
+        default:
+          break;
+      }
     } else {
       router.push('/');
     }
@@ -90,23 +75,75 @@ const Topbar = () => {
             RepIt
           </Button>
           <div className="hidden min-[600px]:flex items-center font-sans">
-            <Button variant="link" onClick={handleDashboardClick}>
+            <Button
+              variant="link"
+              onClick={() => handleLinkClick('dashboard')}
+              onMouseEnter={() => handleLinkHover('dashboard')}
+              onMouseLeave={() => handleLinkHover(null)}
+              className={`relative ${
+                activeLink === 'dashboard' ? 'text-violet-600' : ''
+              }`}
+            >
               Dashboard
+              {activeLink === 'dashboard' && (
+                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+              )}
             </Button>
-            <Button variant="link" onClick={handleFacilityClick}>
+            <Button
+              variant="link"
+              onClick={() => handleLinkClick('facilities')}
+              onMouseEnter={() => handleLinkHover('facilities')}
+              onMouseLeave={() => handleLinkHover(null)}
+              className={`relative ${
+                activeLink === 'facilities' ? 'text-violet-600' : ''
+              }`}
+            >
               Facilities
+              {activeLink === 'facilities' && (
+                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+              )}
             </Button>
-            {/* <Button variant="link" onClick={handleWorkoutClick}>
-              Workouts
-            </Button> */}
-            <Button variant="link" onClick={handleSessionClick}>
+            <Button
+              variant="link"
+              onClick={() => handleLinkClick('sessions')}
+              onMouseEnter={() => handleLinkHover('sessions')}
+              onMouseLeave={() => handleLinkHover(null)}
+              className={`relative ${
+                activeLink === 'sessions' ? 'text-violet-600' : ''
+              }`}
+            >
               Sessions
+              {activeLink === 'sessions' && (
+                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+              )}
             </Button>
-            <Button variant="link" onClick={handleGoalClick}>
+            <Button
+              variant="link"
+              onClick={() => handleLinkClick('goals')}
+              onMouseEnter={() => handleLinkHover('goals')}
+              onMouseLeave={() => handleLinkHover(null)}
+              className={`relative ${
+                activeLink === 'goals' ? 'text-violet-600' : ''
+              }`}
+            >
               Goals
+              {activeLink === 'goals' && (
+                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+              )}
             </Button>
-            <Button variant="link" onClick={handleSuppleClick}>
+            <Button
+              variant="link"
+              onClick={() => handleLinkClick('supplements')}
+              onMouseEnter={() => handleLinkHover('supplements')}
+              onMouseLeave={() => handleLinkHover(null)}
+              className={`relative ${
+                activeLink === 'supplements' ? 'text-violet-600' : ''
+              }`}
+            >
               Supplements
+              {activeLink === 'supplements' && (
+                <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+              )}
             </Button>
           </div>
           <div className="flex items-center justify-end w-full">
@@ -134,39 +171,25 @@ const Topbar = () => {
                 >
                   <DropdownMenuGroup>
                     <DropdownMenuItem className="">
-                      <Button variant="link" onClick={handleDashboardClick}>
+                      <Button
+                        variant="link"
+                        onClick={() => handleLinkClick('dashboard')}
+                        onMouseEnter={() => handleLinkHover('dashboard')}
+                        onMouseLeave={() => handleLinkHover(null)}
+                        className={`relative ${
+                          activeLink === 'dashboard' ? 'text-violet-600' : ''
+                        }`}
+                      >
                         Dashboard
-                      </Button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="">
-                      <Button variant="link" onClick={handleFacilityClick}>
-                        Facilities
-                      </Button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Button variant="link" onClick={handleWorkoutClick}>
-                        Workouts
-                      </Button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Button variant="link" onClick={handleSessionClick}>
-                        Sessions
-                      </Button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Button variant="link" onClick={handleGoalClick}>
-                        Goals
-                      </Button>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                      <Button variant="link" onClick={handleSuppleClick}>
-                        Supplements
+                        {activeLink === 'dashboard' && (
+                          <div className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 animate-link-underline" />
+                        )}
                       </Button>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup className="flex flex-row justify-end px-1">
-                    <DropdownMenuItem onSelect={e => e.preventDefault()}>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                       <ModeToggle />
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -195,6 +218,21 @@ const Topbar = () => {
           <div></div>
         </div>
       </header>
+
+      <style jsx>{`
+        @keyframes link-underline {
+          0% {
+            width: 0;
+          }
+          100% {
+            width: 100%;
+          }
+        }
+
+        .animate-link-underline {
+          animation: link-underline 0.3s ease-in-out forwards;
+        }
+      `}</style>
     </>
   );
 };

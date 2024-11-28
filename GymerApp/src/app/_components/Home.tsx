@@ -1,17 +1,68 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Features from './Features';
-import {SignInButton} from '@clerk/nextjs';
-// eslint-disable-next-line n/no-extraneous-import
-import {SignedIn, SignedOut} from '@clerk/clerk-react';
-import {Button} from '@/components/ui/button';
+import { SignInButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/clerk-react';
+import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Zap, CheckCircle, TrendingUp } from 'lucide-react';
 
 const Home = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.pageYOffset > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <main className="container flex-grow mx-auto mt-8 px-4">
-      <section className="text-center mb-16">
+    <main className="container flex-grow mx-auto px-4">
+      <header
+        className={`fixed top-0 left-0 right-0 z-10 bg-transparent transition-colors duration-300 ${
+          isScrolled ? 'bg-gray-800 shadow-lg' : ''
+        }`}
+      >
+        <nav className="flex justify-between items-center py-4 px-6">
+          <div className="text-white font-bold text-xl">
+            <a href="/">Template DSGN</a>
+          </div>
+          <ul className="flex space-x-6 text-white">
+            <li><a href="/about">About</a></li>
+            <li><a href="/download">Download</a></li>
+            <li><a href="/pricing">Pricing</a></li>
+            <li><a href="/features">Features</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+          <div>
+            <SignedOut>
+              <SignInButton mode="modal">
+                <Button variant="landing" className="px-6 py-2 text-white bg-violet-600 hover:bg-violet-700 transition-colors">
+                  Sign In
+                </Button>
+              </SignInButton>
+            </SignedOut>
+            <SignedIn>
+              <Link href="/dashboard" passHref>
+                <Button variant="landing" className="px-6 py-2 text-white bg-violet-600 hover:bg-violet-700 transition-colors">
+                  Go To Dashboard
+                </Button>
+              </Link>
+            </SignedIn>
+          </div>
+        </nav>
+      </header>
+
+      <section className="mt-24 text-center">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white mb-4">
             Transform Your Fitness Journey
@@ -28,7 +79,7 @@ const Home = () => {
               <SignInButton mode="modal">
                 <Button 
                   variant="landing" 
-                  className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-violet-600 text-white"
                 >
                   Get Started for Free
                 </Button>
@@ -38,7 +89,7 @@ const Home = () => {
               <Link href="/dashboard" passHref>
                 <Button 
                   variant="landing" 
-                  className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-violet-600 text-white"
                 >
                   Go To Dashboard
                 </Button>
@@ -48,12 +99,12 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="bg-neutral-100 dark:bg-gray-800 rounded-xl p-12 shadow-md">
+      <section className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-xl p-12 shadow-md mt-16">
         <div className="text-center mb-12">
-          <h3 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">
+          <h3 className="text-3xl font-bold mb-4 text-white">
             Why Choose RepIt?
           </h3>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-200 max-w-3xl mx-auto">
             We've designed RepIt to make fitness tracking simple, insightful, and motivating.
           </p>
         </div>
