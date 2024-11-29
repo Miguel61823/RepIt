@@ -1,8 +1,8 @@
 'use client';
 
-import React, {useState} from 'react';
-import {Button} from '@/components/ui/button';
-import {EquipmentData} from '@/drizzle/api/equipment';
+import React, { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { EquipmentData } from '@/drizzle/api/equipment';
 import {
   Sheet,
   SheetContent,
@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import {Dumbbell, Calendar, AlertCircle} from 'lucide-react';
+import { Dumbbell, Calendar, AlertCircle, Trash2 } from 'lucide-react';
 
 // Utility function to determine condition badge color
 const getConditionColor = (condition: string) => {
@@ -56,7 +56,13 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
       }
 
       const data = await response.json();
-      setEquipment(data.data);
+
+      // Filter out equipment named "delete"
+      const filteredEquipment = data.data.filter(
+        (item: EquipmentData) => item.name.toLowerCase() !== 'delete'
+      );
+
+      setEquipment(filteredEquipment);
       setIsOpen(true); // Open the sheet when data is fetched
     } catch (err) {
       console.error('Error fetching equipment:', err);
@@ -66,6 +72,33 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
     }
   };
 
+const deleteEquipment = async (name: string, osmId: string) => {
+  const identifier = name.toLowerCase().replace(/\s+/g, '-');  // Generate the identifier
+
+  try {
+    const response = await fetch(`/api/equipment`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        identifier,  // Send the correct identifier field
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete equipment');
+    }
+
+    console.log(`Successfully deleted equipment: ${name}`);
+  } catch (error) {
+    console.error('Error deleting equipment:', error);
+  }
+};
+
+  
+  
+  
   return (
     <div className="bg-[#1a1f2e]">
       <Button
@@ -101,13 +134,14 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
 
           <div className="mt-6 overflow-y-auto max-h-[calc(80vh-120px)]">
             {/* Table header */}
-            <div className="grid grid-cols-6 gap-4 px-4 py-2 bg-slate-800 rounded-t-lg">
+            <div className="grid grid-cols-7 gap-4 px-4 py-2 bg-slate-800 rounded-t-lg">
               <div className="text-slate-300 font-medium">Name</div>
               <div className="text-slate-300 font-medium">Type</div>
               <div className="text-slate-300 font-medium">Condition</div>
               <div className="text-slate-300 font-medium">Description</div>
               <div className="text-slate-300 font-medium">Maintenance</div>
               <div className="text-slate-300 font-medium">Qty</div>
+              <div className="text-slate-300 font-medium">Actions</div>
             </div>
 
             {/* Table rows */}
@@ -116,7 +150,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                 equipment.map((item, index) => (
                   <div
                     key={`${index}`}
-                    className="grid grid-cols-6 gap-4 px-4 py-3 hover:bg-slate-800/50"
+                    className="grid grid-cols-7 gap-4 px-4 py-3 hover:bg-slate-800/50"
                   >
                     <div className="text-white font-medium">{item.name}</div>
                     <div className="text-slate-300">{item.type || 'N/A'}</div>
@@ -145,9 +179,17 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                       {item.quantity && item.quantity <= 2 && (
                         <AlertCircle
                           className="ml-2 h-4 w-4 text-red-400"
-                          // title="Low stock"
                         />
                       )}
+                    </div>
+                    <div className="flex items-center">
+                      <Button
+                        type="button"
+                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                        onClick={() => deleteEquipment(item.name, osmId)}
+                      >
+                        <Trash2 className="mr-1 h-4 w-4" /> Delete
+                      </Button>
                     </div>
                   </div>
                 ))
