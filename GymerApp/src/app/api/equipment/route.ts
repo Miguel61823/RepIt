@@ -1,5 +1,5 @@
 import {NextResponse} from 'next/server';
-import {addEquipment, getEquipmentByFacility} from '@/drizzle/api/equipment';
+import {addEquipment, getEquipmentByFacility, markEquipmentAsDeleted} from '@/drizzle/api/equipment';
 import {auth} from '@clerk/nextjs/server';
 
 export async function POST(request: Request) {
@@ -67,6 +67,40 @@ export async function GET(request: Request) {
     console.error('Error fetching equipment:', error);
     return NextResponse.json(
       {error: 'Failed to fetch equipment'},
+      {status: 500},
+    );
+  }
+}
+
+export async function DELETE(request: Request) {
+  const {userId} = auth();
+  if (!userId) {
+    return NextResponse.json({error: 'Unauthorized'}, {status: 401});
+  }
+
+  try {
+    const body = await request.json();
+    console.log('Received body:', body);  // Log the received body
+
+    const {identifier} = body;
+
+    if (!identifier) {
+      return NextResponse.json(
+        {error: 'Identifier is required'},
+        {status: 400},
+      );
+    }
+
+    const result = await markEquipmentAsDeleted(identifier);
+
+    return NextResponse.json(
+      {message: 'Equipment marked as deleted', data: result},
+      {status: 200},
+    );
+  } catch (error) {
+    console.error('Error in DELETE request:', error);
+    return NextResponse.json(
+      {error: 'Failed to mark equipment as deleted'},
       {status: 500},
     );
   }

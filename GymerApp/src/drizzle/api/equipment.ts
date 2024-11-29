@@ -69,3 +69,29 @@ export async function getEquipmentByFacility(osmId: string) {
     throw new Error('Failed to fetch equipment');
   }
 }
+
+
+export async function markEquipmentAsDeleted(identifier: string) {
+  try {
+    // Check if the equipment exists in the MachinesTable
+    const equipment = await db
+      .select()
+      .from(MachinesTable)
+      .where(eq(MachinesTable.identifier, identifier));
+
+    if (!equipment.length) {
+      throw new Error('No matching equipment found with the given identifier');
+    }
+
+    // Update the name of the equipment to "delete"
+    const result = await db
+      .update(MachinesTable)
+      .set({ name: 'delete' })
+      .where(eq(MachinesTable.identifier, identifier));
+
+    return { success: true, data: result };
+  } catch (error) {
+    console.error('Error marking equipment as deleted:', error);
+    throw new Error('Failed to mark equipment as deleted');
+  }
+}
