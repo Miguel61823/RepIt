@@ -29,8 +29,8 @@ cp .env.example .env
 ```
 
 Required environment variables:
-- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`: Your Clerk publishable key
-- `CLERK_SECRET_KEY`: Your Clerk secret key
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`= Your Clerk publishable key
+- `CLERK_SECRET_KEY`= Your Clerk secret key
 
 - `DATABASE_URL`= Your Neon Postgres Database URL
 - `ANTHROPIC_API_KEY`= Your Anthropic api key
