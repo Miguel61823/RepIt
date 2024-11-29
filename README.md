@@ -10,6 +10,7 @@
 ```bash
 git clone https://github.com/Miguel61823/RepIt.git
 cd repit
+cd gymerapp
 ```
 
 2. Install Dependencies
