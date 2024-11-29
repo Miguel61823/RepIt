@@ -57,7 +57,7 @@ describe('FacilityListings', () => {
       {osm_id: '2', name: 'Facility B', lat: 37.7849, lon: -122.4094},
     ];
 
-    mockGeolocation.getCurrentPosition.mockImplementation((resolve) =>
+    mockGeolocation.getCurrentPosition.mockImplementation(resolve =>
       resolve({coords: {latitude: 37.7749, longitude: -122.4194}}),
     );
 
@@ -66,7 +66,9 @@ describe('FacilityListings', () => {
     render(<FacilityListings search={undefined} />);
     fireEvent.click(screen.getByText('Search'));
 
-    await waitFor(() => expect(facilitiesApi.getNearbyFacilities).toHaveBeenCalled());
+    await waitFor(() =>
+      expect(facilitiesApi.getNearbyFacilities).toHaveBeenCalled(),
+    );
 
     expect(screen.getByText('Facility A')).toBeInTheDocument();
     expect(screen.getByText('Facility B')).toBeInTheDocument();
@@ -77,7 +79,7 @@ describe('FacilityListings', () => {
       {osm_id: '3', name: 'Facility C', lat: 37.7649, lon: -122.4294},
     ];
 
-    mockGeolocation.getCurrentPosition.mockImplementation((resolve) =>
+    mockGeolocation.getCurrentPosition.mockImplementation(resolve =>
       resolve({coords: {latitude: 37.7749, longitude: -122.4194}}),
     );
 
@@ -93,6 +95,8 @@ describe('FacilityListings', () => {
         2000, // range * 1000
       ),
     );
-    expect(facilitiesApi.insertFacilities).toHaveBeenCalledWith(mockOSMFacilities);
+    expect(facilitiesApi.insertFacilities).toHaveBeenCalledWith(
+      mockOSMFacilities,
+    );
   });
 });

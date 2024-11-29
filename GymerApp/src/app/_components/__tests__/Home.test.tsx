@@ -66,8 +66,8 @@ describe('Home Component', () => {
     expect(screen.getByText('with RepIt')).toBeInTheDocument();
     expect(
       screen.getByText(
-        'Your ultimate companion in fitness tracking. Effortlessly log workouts, track progress, and stay motivated with intelligent insights that help you crush your health goals.'
-      )
+        'Your ultimate companion in fitness tracking. Effortlessly log workouts, track progress, and stay motivated with intelligent insights that help you crush your health goals.',
+      ),
     ).toBeInTheDocument();
   });
 

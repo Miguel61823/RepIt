@@ -1,7 +1,7 @@
 'use client';
 
-import { ModeToggle } from '@/components/mode-toggle';
-import { Button } from '@/components/ui/button';
+import {ModeToggle} from '@/components/mode-toggle';
+import {Button} from '@/components/ui/button';
 import {
   SignedIn,
   SignedOut,
@@ -9,7 +9,7 @@ import {
   useAuth,
   UserButton,
 } from '@clerk/nextjs';
-import { useRouter } from 'next/navigation';
+import {useRouter} from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,12 +18,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Menu } from 'lucide-react';
-import { useState } from 'react';
+import {Menu} from 'lucide-react';
+import {useState} from 'react';
 
 const Topbar = () => {
   const router = useRouter();
-  const { isSignedIn } = useAuth();
+  const {isSignedIn} = useAuth();
   const [activeLink, setActiveLink] = useState(null);
 
   const handleLogoClick = () => {
@@ -34,7 +34,7 @@ const Topbar = () => {
     }
   };
 
-  const handleLinkClick = (link) => {
+  const handleLinkClick = link => {
     setActiveLink(null);
     if (isSignedIn) {
       switch (link) {
@@ -64,13 +64,7 @@ const Topbar = () => {
     }
   };
 
-  const links = [
-    'dashboard', 
-    'facilities', 
-    'sessions', 
-    'goals', 
-    'supplements'
-  ];
+  const links = ['dashboard', 'facilities', 'sessions', 'goals', 'supplements'];
 
   return (
     <>
@@ -79,10 +73,10 @@ const Topbar = () => {
           <Button variant="logo" onClick={handleLogoClick}>
             RepIt
           </Button>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden min-[720px]:flex items-center font-sans">
-            {links.map((link) => (
+            {links.map(link => (
               <Button
                 key={link}
                 variant="link"
@@ -94,7 +88,7 @@ const Topbar = () => {
                 }`}
               >
                 {link.charAt(0).toUpperCase() + link.slice(1)}
-                <span 
+                <span
                   className={`absolute left-0 right-0 bottom-0 h-1 bg-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out ${
                     activeLink === link ? 'scale-x-100' : ''
                   }`}
@@ -116,7 +110,7 @@ const Topbar = () => {
                   className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
-                    {[...links, 'workouts'].map((link) => (
+                    {[...links, 'workouts'].map(link => (
                       <DropdownMenuItem key={link} className="">
                         <Button
                           variant="link"
@@ -124,9 +118,7 @@ const Topbar = () => {
                           className="w-full text-left group relative"
                         >
                           {link.charAt(0).toUpperCase() + link.slice(1)}
-                          <span 
-                            className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out"
-                          />
+                          <span className="absolute left-0 right-0 bottom-0 h-1 bg-violet-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-in-out" />
                         </Button>
                       </DropdownMenuItem>
                     ))}
@@ -145,7 +137,7 @@ const Topbar = () => {
                         </SignInButton>
                       </SignedOut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <DropdownMenuItem onSelect={e => e.preventDefault()}>
                       <ModeToggle />
                     </DropdownMenuItem>
                   </DropdownMenuGroup>

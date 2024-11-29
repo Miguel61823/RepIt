@@ -10,7 +10,7 @@ import {SessionsList} from './sessionsList';
  * It includes a header with options to create a new session and displays a list of all existing sessions.
  *
  * @returns {Promise<JSX.Element>} A layout comprising a header and session list section.
- * 
+ *
  */
 const SessionHistory = async () => {
   return (

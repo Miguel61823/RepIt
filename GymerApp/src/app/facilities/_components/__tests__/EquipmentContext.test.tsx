@@ -1,6 +1,10 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {EquipmentProvider, useEquipment, EquipmentData} from '../EquipmentContext';
+import {
+  EquipmentProvider,
+  useEquipment,
+  EquipmentData,
+} from '../EquipmentContext';
 
 // Mock component to test the context
 const MockComponent: React.FC = () => {
@@ -27,7 +31,7 @@ const MockComponent: React.FC = () => {
         Add Equipment
       </button>
       <ul data-testid="equipment-list">
-        {equipmentList.map((equipment) => (
+        {equipmentList.map(equipment => (
           <li key={equipment.identifier}>{equipment.name}</li>
         ))}
       </ul>
@@ -40,7 +44,7 @@ describe('EquipmentContext', () => {
     render(
       <EquipmentProvider>
         <div>Test Child</div>
-      </EquipmentProvider>
+      </EquipmentProvider>,
     );
 
     expect(screen.getByText('Test Child')).toBeInTheDocument();
@@ -53,7 +57,7 @@ describe('EquipmentContext', () => {
     };
 
     expect(() => render(<TestComponent />)).toThrow(
-      'useEquipment must be used within an EquipmentProvider'
+      'useEquipment must be used within an EquipmentProvider',
     );
   });
 
@@ -61,7 +65,7 @@ describe('EquipmentContext', () => {
     render(
       <EquipmentProvider>
         <MockComponent />
-      </EquipmentProvider>
+      </EquipmentProvider>,
     );
 
     const addButton = screen.getByTestId('add-button');

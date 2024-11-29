@@ -8,15 +8,15 @@ import {EquipmentData} from '@/drizzle/api/equipment';
 global.fetch = jest.fn();
 
 const mockFacility: Facility = {
-    osm_id: 'facility123',
-    name: 'Test Facility',
-    address: '123 Test Street',
-    phone: '123-456-7890',
-    leisure: 'fitness_centre',
-    website: 'https://testfacility.com',
-    lat: undefined,
-    lon: undefined,
-    accessibility: ''
+  osm_id: 'facility123',
+  name: 'Test Facility',
+  address: '123 Test Street',
+  phone: '123-456-7890',
+  leisure: 'fitness_centre',
+  website: 'https://testfacility.com',
+  lat: undefined,
+  lon: undefined,
+  accessibility: '',
 };
 
 const mockEquipment: EquipmentData[] = [
@@ -61,7 +61,7 @@ describe('FacilityCard Component', () => {
     const googleSearchLink = screen.getByText('- check the web');
     expect(googleSearchLink).toHaveAttribute(
       'href',
-      'https://www.google.com/search?q=Test Facility'
+      'https://www.google.com/search?q=Test Facility',
     );
   });
 
@@ -93,7 +93,7 @@ describe('FacilityCard Component', () => {
     // Wait for fetch to fail
     expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=facility123');
     expect(
-      screen.queryByText('Treadmill') // Ensure no equipment is displayed
+      screen.queryByText('Treadmill'), // Ensure no equipment is displayed
     ).not.toBeInTheDocument();
   });
 });

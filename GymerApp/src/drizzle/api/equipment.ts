@@ -70,7 +70,6 @@ export async function getEquipmentByFacility(osmId: string) {
   }
 }
 
-
 export async function markEquipmentAsDeleted(identifier: string) {
   try {
     // Check if the equipment exists in the MachinesTable
@@ -86,10 +85,10 @@ export async function markEquipmentAsDeleted(identifier: string) {
     // Update the name of the equipment to "delete"
     const result = await db
       .update(MachinesTable)
-      .set({ name: 'delete' })
+      .set({name: 'delete'})
       .where(eq(MachinesTable.identifier, identifier));
 
-    return { success: true, data: result };
+    return {success: true, data: result};
   } catch (error) {
     console.error('Error marking equipment as deleted:', error);
     throw new Error('Failed to mark equipment as deleted');

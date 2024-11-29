@@ -25,7 +25,9 @@ describe('FacilitySearchBar', () => {
 
   it('renders the search bar with initial state', () => {
     render(<FacilitySearchBar searchType="Nearby" />);
-    expect(screen.getByPlaceholderText('Search facilities')).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText('Search facilities'),
+    ).toBeInTheDocument();
     expect(screen.getByText('Nearby Athletic Facilities')).toBeInTheDocument();
   });
 
@@ -44,7 +46,9 @@ describe('FacilitySearchBar', () => {
     fireEvent.change(input, {target: {value: 'basketball'}});
 
     await act(async () => {
-      await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/facilities?search=basketball'));
+      await waitFor(() =>
+        expect(pushMock).toHaveBeenCalledWith('/facilities?search=basketball'),
+      );
     });
   });
 
@@ -56,7 +60,9 @@ describe('FacilitySearchBar', () => {
     fireEvent.change(input, {target: {value: 'swimming'}});
 
     await act(async () => {
-      await waitFor(() => expect(pushMock).toHaveBeenCalledWith('/facilities?search=swimming'));
+      await waitFor(() =>
+        expect(pushMock).toHaveBeenCalledWith('/facilities?search=swimming'),
+      );
     });
   });
 

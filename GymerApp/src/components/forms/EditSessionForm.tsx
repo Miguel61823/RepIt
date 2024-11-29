@@ -26,16 +26,16 @@ import {Textarea} from '../ui/textarea';
 
 /**
  * A form component for editing an existing session.
- * 
+ *
  * @component
- * 
+ *
  * @typedef {Object} EditSessionFormProps
  * @property {string} session_id - The unique ID of the session being edited.
  * @property {string} name - The name of the session.
  * @property {string} type - The type of the session.
  * @property {Date} date - The date of the session.
  * @property {string} session_data - Additional session details, provided as text.
- * 
+ *
  * @example
  * <EditSessionForm
  *   session_id="123"

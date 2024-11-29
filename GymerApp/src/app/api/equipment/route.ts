@@ -1,5 +1,9 @@
 import {NextResponse} from 'next/server';
-import {addEquipment, getEquipmentByFacility, markEquipmentAsDeleted} from '@/drizzle/api/equipment';
+import {
+  addEquipment,
+  getEquipmentByFacility,
+  markEquipmentAsDeleted,
+} from '@/drizzle/api/equipment';
 import {auth} from '@clerk/nextjs/server';
 
 export async function POST(request: Request) {
@@ -80,7 +84,7 @@ export async function DELETE(request: Request) {
 
   try {
     const body = await request.json();
-    console.log('Received body:', body);  // Log the received body
+    console.log('Received body:', body); // Log the received body
 
     const {identifier} = body;
 

@@ -1,11 +1,11 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Features from './Features';
-import { SignInButton } from '@clerk/nextjs';
-import { SignedIn, SignedOut } from '@clerk/clerk-react';
-import { Button } from '@/components/ui/button';
+import {SignInButton} from '@clerk/nextjs';
+import {SignedIn, SignedOut} from '@clerk/clerk-react';
+import {Button} from '@/components/ui/button';
 import Link from 'next/link';
-import { Zap, CheckCircle, TrendingUp } from 'lucide-react';
+import {Zap, CheckCircle, TrendingUp} from 'lucide-react';
 
 const Home = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -36,14 +36,15 @@ const Home = () => {
             with RepIt
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-            Your ultimate companion in fitness tracking. Effortlessly log workouts, track progress, 
-            and stay motivated with intelligent insights that help you crush your health goals.
+            Your ultimate companion in fitness tracking. Effortlessly log
+            workouts, track progress, and stay motivated with intelligent
+            insights that help you crush your health goals.
           </p>
           <div className="flex justify-center space-x-4">
             <SignedOut>
               <SignInButton mode="modal">
-                <Button 
-                  variant="landing" 
+                <Button
+                  variant="landing"
                   className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-violet-600 text-white"
                 >
                   Get Started for Free
@@ -52,8 +53,8 @@ const Home = () => {
             </SignedOut>
             <SignedIn>
               <Link href="/dashboard" passHref>
-                <Button 
-                  variant="landing" 
+                <Button
+                  variant="landing"
                   className="px-8 py-3 text-lg font-semibold shadow-lg hover:shadow-xl transition-all bg-violet-600 text-white"
                 >
                   Go To Dashboard
@@ -70,7 +71,8 @@ const Home = () => {
             Why Choose RepIt?
           </h3>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            We've designed RepIt to make fitness tracking simple, insightful, and motivating.
+            We've designed RepIt to make fitness tracking simple, insightful,
+            and motivating.
           </p>
         </div>
         <Features />

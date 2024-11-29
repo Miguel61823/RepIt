@@ -8,7 +8,7 @@ import {
 const Features = () => {
   return (
     <section id="features" className="mb-2">
-      <h3 className="text-violet-600 text-2xl font-bold mb-6">Key Features</h3>
+      <h3 className="text-white text-2xl font-bold mb-6">Key Features</h3>
       <div className="grid md:grid-cols-3 gap-8">
         <Card className="overflow-hidden flex flex-col h-full dark:bg-gray-900 bg-neutral-100 dark:text-white">
           <CardHeader>

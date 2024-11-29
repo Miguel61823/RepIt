@@ -18,7 +18,7 @@ describe('ViewEquipmentsButton', () => {
         osmId="12345"
         equipment={[]}
         setEquipment={mockSetEquipment}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {name: /View Equipment/i});
@@ -32,7 +32,7 @@ describe('ViewEquipmentsButton', () => {
         osmId="12345"
         equipment={[]}
         setEquipment={mockSetEquipment}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {name: /View Equipment/i});
@@ -63,14 +63,18 @@ describe('ViewEquipmentsButton', () => {
         osmId="12345"
         equipment={[]}
         setEquipment={mockSetEquipment}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {name: /View Equipment/i});
     fireEvent.click(button);
 
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'));
-    await waitFor(() => expect(mockSetEquipment).toHaveBeenCalledWith(expect.any(Array)));
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'),
+    );
+    await waitFor(() =>
+      expect(mockSetEquipment).toHaveBeenCalledWith(expect.any(Array)),
+    );
 
     // Check that the sheet content is displayed
     expect(screen.getByText(/Equipment Inventory/i)).toBeInTheDocument();
@@ -89,15 +93,19 @@ describe('ViewEquipmentsButton', () => {
         osmId="12345"
         equipment={[]}
         setEquipment={mockSetEquipment}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {name: /View Equipment/i});
     fireEvent.click(button);
 
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'));
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'),
+    );
 
-    expect(screen.getByText(/Error loading equipment data/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Error loading equipment data/i),
+    ).toBeInTheDocument();
   });
 
   it('displays a message when no equipment data is available', async () => {
@@ -111,14 +119,18 @@ describe('ViewEquipmentsButton', () => {
         osmId="12345"
         equipment={[]}
         setEquipment={mockSetEquipment}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {name: /View Equipment/i});
     fireEvent.click(button);
 
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'));
+    await waitFor(() =>
+      expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=12345'),
+    );
 
-    expect(screen.getByText(/No equipment found for this facility/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/No equipment found for this facility/i),
+    ).toBeInTheDocument();
   });
 });

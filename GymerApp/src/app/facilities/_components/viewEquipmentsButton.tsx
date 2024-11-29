@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { EquipmentData } from '@/drizzle/api/equipment';
+import React, {useState} from 'react';
+import {Button} from '@/components/ui/button';
+import {EquipmentData} from '@/drizzle/api/equipment';
 import {
   Sheet,
   SheetContent,
@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
-import { Dumbbell, Calendar, AlertCircle, Trash2 } from 'lucide-react';
+import {Dumbbell, Calendar, AlertCircle, Trash2} from 'lucide-react';
 
 // Utility function to determine condition badge color
 const getConditionColor = (condition: string) => {
@@ -59,7 +59,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
 
       // Filter out equipment named "delete"
       const filteredEquipment = data.data.filter(
-        (item: EquipmentData) => item.name.toLowerCase() !== 'delete'
+        (item: EquipmentData) => item.name.toLowerCase() !== 'delete',
       );
 
       setEquipment(filteredEquipment);
@@ -72,33 +72,30 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
     }
   };
 
-const deleteEquipment = async (name: string, osmId: string) => {
-  const identifier = name.toLowerCase().replace(/\s+/g, '-');  // Generate the identifier
+  const deleteEquipment = async (name: string, osmId: string) => {
+    const identifier = name.toLowerCase().replace(/\s+/g, '-'); // Generate the identifier
 
-  try {
-    const response = await fetch(`/api/equipment`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        identifier,  // Send the correct identifier field
-      }),
-    });
+    try {
+      const response = await fetch(`/api/equipment`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          identifier, // Send the correct identifier field
+        }),
+      });
 
-    if (!response.ok) {
-      throw new Error('Failed to delete equipment');
+      if (!response.ok) {
+        throw new Error('Failed to delete equipment');
+      }
+
+      console.log(`Successfully deleted equipment: ${name}`);
+    } catch (error) {
+      console.error('Error deleting equipment:', error);
     }
 
-    console.log(`Successfully deleted equipment: ${name}`);
-  } catch (error) {
-    console.error('Error deleting equipment:', error);
-  }
-};
 
-  
-  
-  
   return (
     <div className="bg-[#1a1f2e]">
       <Button
@@ -177,9 +174,7 @@ const deleteEquipment = async (name: string, osmId: string) => {
                         {item.quantity || 'N/A'}
                       </span>
                       {item.quantity && item.quantity <= 2 && (
-                        <AlertCircle
-                          className="ml-2 h-4 w-4 text-red-400"
-                        />
+                        <AlertCircle className="ml-2 h-4 w-4 text-red-400" />
                       )}
                     </div>
                     <div className="flex items-center">

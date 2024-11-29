@@ -26,15 +26,15 @@ import {Textarea} from '../ui/textarea';
 
 /**
  * A form component for creating or editing a session.
- * 
+ *
  * @component
- * 
+ *
  * @typedef {Object} SessionFormProps
  * @property {string} name - The name of the session.
  * @property {string} type - The type of the session.
  * @property {Date} date - The selected date for the session.
  * @property {string} session_data - Additional session information, entered as text.
- * 
+ *
  * @example
  * <SessionForm />
  */

@@ -12,7 +12,7 @@ import {EditSessionForm} from '../../../components/forms/EditSessionForm';
 import {Session} from '@/server/api/sessions';
 
 /**
- * The `EditSession` component provides a button to open a sheet where users can edit a session's details. 
+ * The `EditSession` component provides a button to open a sheet where users can edit a session's details.
  * It listens for a `closeEditSessionSheet` event to automatically close the sheet if needed.
  *
  * @param {Session} EditedSession - The session object to edit.
