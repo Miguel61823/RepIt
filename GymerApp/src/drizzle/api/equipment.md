@@ -103,3 +103,45 @@ const equipmentData = {
 const result = await addEquipment(equipmentData);
 console.log(result);
 ```
+
+
+
+
+---
+
+### `markEquipmentAsDeleted(identifier: string)`
+
+This function updates the name of a specific equipment record to `'delete'`, effectively marking it as deleted.
+
+#### **Parameters**
+
+- `identifier` (string): The unique identifier of the equipment to be marked as deleted (Required).
+
+#### **Workflow**
+
+1. **Validation**: The function first checks if the equipment with the given `identifier` exists in the `MachinesTable`.
+2. **Update Operation**: If the equipment exists, the `name` field of the equipment is updated to `'delete'`.
+3. **Return Success**: Returns a success message with the updated equipment data.
+
+#### **Responses**
+
+- **Success**:
+
+  - Returns an object containing the success status and the updated equipment data.
+  - Example:
+    ```json
+    {
+      "success": true,
+      "data": { ... } // Updated equipment data
+    }
+    ```
+
+- **Failure**:
+  - If no equipment is found with the given `identifier`, an error is thrown with the message `'No matching equipment found with the given identifier'`.
+  - If any other error occurs during the process, an error is thrown with the message `'Failed to mark equipment as deleted'`.
+
+#### **Example Usage**
+
+```javascript
+const result = await markEquipmentAsDeleted('excavator-12345');
+console.log(result);
