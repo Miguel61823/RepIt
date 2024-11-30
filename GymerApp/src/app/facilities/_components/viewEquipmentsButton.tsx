@@ -94,6 +94,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
     } catch (error) {
       console.error('Error deleting equipment:', error);
     }
+  };
 
 
   return (
