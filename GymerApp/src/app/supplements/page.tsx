@@ -1,5 +1,5 @@
 // src/app/supplements/page.tsx
-import SupplementHistory from './_components/supplementHistory';
+import SupplementHistory from './_components/SupplementHistory';
 
 const SupplementsPage = () => {
   return (

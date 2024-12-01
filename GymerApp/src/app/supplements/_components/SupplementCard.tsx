@@ -23,7 +23,7 @@ import {
 import {Button} from '@/components/ui/button';
 import {Supplement, deleteSupplement} from '@/server/api/supplements';
 import {formatDate} from '@/lib/utils';
-import {EditSupplement} from './editSupplement';
+import {EditSupplement} from './EditSupplement';
 
 export const SupplementCard = ({
   id,

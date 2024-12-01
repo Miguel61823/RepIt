@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { NewSupplement } from '../newSupplement';
+import { NewSupplement } from '../NewSupplement';
 
 jest.mock('@/components/forms/SupplementForm', () => ({
   SupplementForm: () => <div data-testid="supplement-form" />,

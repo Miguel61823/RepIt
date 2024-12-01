@@ -1,6 +1,6 @@
 // components/SupplementsList.tsx
 import {getSupplements} from '@/server/api/supplements';
-import {SupplementCard} from './supplementCard';
+import {SupplementCard} from './SupplementCard';
 
 export const SupplementsList = async () => {
   const supplements = await getSupplements();

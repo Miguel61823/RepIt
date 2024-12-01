@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { SupplementCard } from '../supplementCard';
+import { SupplementCard } from '../SupplementCard';
 import { deleteSupplement } from '@/server/api/supplements';
 import { formatDate } from '@/lib/utils';
 

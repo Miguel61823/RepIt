@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { EditSupplement } from '../editSupplement';
+import { EditSupplement } from '../EditSupplement';
 import { Supplement } from '@/server/api/supplements';
 
 jest.mock('@/components/forms/EditSupplementForm', () => ({

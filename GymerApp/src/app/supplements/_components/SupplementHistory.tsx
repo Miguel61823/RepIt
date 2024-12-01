@@ -1,7 +1,7 @@
 // src/app/supplements/_components/supplementHistory.tsx
 import {getSupplements} from '@/server/api/supplements';
-import {SupplementCard} from './supplementCard';
-import {NewSupplement} from './newSupplement';
+import {SupplementCard} from './SupplementCard';
+import {NewSupplement} from './NewSupplement';
 
 const SupplementHistory = async () => {
   const supplements = await getSupplements();

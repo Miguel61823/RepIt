@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import SupplementHistory from '../supplementHistory';
+import SupplementHistory from '../SupplementHistory';
 
 jest.mock('../newSupplement', () => ({
   NewSupplement: jest.fn(() => <div data-testid="new-supplement-component" />),
