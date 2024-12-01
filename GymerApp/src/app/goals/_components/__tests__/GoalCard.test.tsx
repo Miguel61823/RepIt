@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { GoalCard } from '../goalCard';
+import { GoalCard } from '../GoalCard';
 import { deleteGoal, toggleGoalCompletion } from '@/server/api/goals';
 import { formatDate } from '@/lib/utils';
 

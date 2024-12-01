@@ -1,4 +1,4 @@
-import {GoalCard} from './goalCard';
+import {GoalCard} from './GoalCard';
 import {getGoalHistory} from '@/server/api/goals';
 
 export const GoalsList = async () => {

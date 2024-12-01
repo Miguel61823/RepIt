@@ -22,7 +22,7 @@ import {
 import {Button} from '@/components/ui/button';
 import {Goal, deleteGoal, toggleGoalCompletion} from '@/server/api/goals';
 import {formatDate} from '@/lib/utils';
-import {EditGoal} from './editGoal';
+import {EditGoal} from './EditGoal';
 
 export const GoalCard = ({
   goal_id,

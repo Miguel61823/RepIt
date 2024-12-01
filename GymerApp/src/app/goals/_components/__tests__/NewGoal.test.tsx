@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { NewGoal } from '../newGoal';
+import { NewGoal } from '../NewGoal';
 
 jest.mock('@/components/forms/GoalForm', () => ({
   GoalForm: () => <div data-testid="goal-form" />,

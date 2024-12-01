@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { EditGoal } from '../editGoal';
+import { EditGoal } from '../EditGoal';
 import { Goal } from '@/server/api/goals';
 
 jest.mock('@/components/forms/EditGoalForm', () => ({

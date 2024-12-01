@@ -1,4 +1,4 @@
-import GoalHistoryPage from './_components/goalHistory';
+import GoalHistoryPage from './_components/GoalHistory';
 
 const GoalsPage = () => {
   return (

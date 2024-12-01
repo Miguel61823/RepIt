@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import GoalHistoryPage from '../goalHistory';
+import GoalHistoryPage from '../GoalHistory';
 import { getGoalHistory } from '@/server/api/goals';
 
 jest.mock('@/server/api/goals', () => ({

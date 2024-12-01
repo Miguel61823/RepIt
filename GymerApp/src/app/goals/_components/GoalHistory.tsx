@@ -1,6 +1,6 @@
 import {getGoalHistory} from '@/server/api/goals';
-import {GoalCard} from './goalCard';
-import {NewGoal} from './newGoal';
+import {GoalCard} from './GoalCard';
+import {NewGoal} from './NewGoal';
 
 const GoalHistoryPage = async () => {
   const goals = await getGoalHistory();
