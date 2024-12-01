@@ -2,7 +2,7 @@
 
 import React, {Suspense, useState} from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import FacilityCard from './facilityCard';
+import FacilityCard from './FacilityCard';
 import {
   Facility,
   getNearbyFacilities,

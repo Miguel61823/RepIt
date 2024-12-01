@@ -4,8 +4,8 @@ import React, {Suspense} from 'react';
 // import { Button } from '@/components/ui/button';
 // import { ToastContainer, toast } from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
-import {FacilitySearchBar} from './_components/facilitySearchBar';
-import FacilityListings from './_components/facilityListings';
+import {FacilitySearchBar} from './_components/FacilitySearchBar';
+import FacilityListings from './_components/FacilityListings';
 
 export default async function FacilitiesPage({
   searchParams,

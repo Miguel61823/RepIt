@@ -5,8 +5,8 @@ import React, {useState} from 'react';
 import {MapPin, Phone} from 'lucide-react';
 import {Card, CardHeader, CardContent} from '@/components/ui/card';
 import {Facility} from '@/server/api/facilities';
-import {AddEquipmentButton} from './addEquipmentButton';
-import {ViewEquipmentsButton} from './viewEquipmentsButton';
+import {AddEquipmentButton} from './AddEquipmentButton';
+import {ViewEquipmentsButton} from './ViewEquipmentsButton';
 import {EquipmentData} from '@/drizzle/api/equipment'; // Updated import
 
 const FacilityCard = ({facility}: {facility: Facility}) => {
