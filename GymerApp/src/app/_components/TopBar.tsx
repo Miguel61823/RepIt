@@ -24,7 +24,7 @@ import {useState} from 'react';
 const Topbar = () => {
   const router = useRouter();
   const {isSignedIn} = useAuth();
-  const [activeLink, setActiveLink] = useState(null);
+  const [activeLink, setActiveLink] = useState<string | null>(null);
 
   const handleLogoClick = () => {
     if (isSignedIn) {
@@ -34,7 +34,7 @@ const Topbar = () => {
     }
   };
 
-  const handleLinkClick = link => {
+  const handleLinkClick = (link: string) => {
     setActiveLink(null);
     if (isSignedIn) {
       switch (link) {
