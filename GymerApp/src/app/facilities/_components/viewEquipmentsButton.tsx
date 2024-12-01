@@ -74,6 +74,9 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
 
   const deleteEquipment = async (name: string, osmId: string) => {
     const identifier = name.toLowerCase().replace(/\s+/g, '-'); // Generate the identifier
+    setEquipment(prevEquipment => 
+      prevEquipment.filter(item => item.name !== name)
+    );
 
     try {
       const response = await fetch(`/api/equipment`, {
