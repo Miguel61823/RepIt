@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
-import FacilityCard from '../facilityCard';
+import FacilityCard from '../FacilityCard';
 import {Facility} from '@/server/api/facilities';
 import {EquipmentData} from '@/drizzle/api/equipment';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
-import {AddEquipmentButton} from '../addEquipmentButton';
+import {AddEquipmentButton} from '../AddEquipmentButton';
 import {useSession} from '@clerk/nextjs';
 
 jest.mock('@clerk/nextjs', () => ({

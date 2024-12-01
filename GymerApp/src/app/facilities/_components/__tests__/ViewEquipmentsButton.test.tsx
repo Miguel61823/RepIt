@@ -1,7 +1,7 @@
 // __tests__/ViewEquipmentsButton.test.tsx
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
-import {ViewEquipmentsButton} from '../viewEquipmentsButton';
+import {ViewEquipmentsButton} from '../ViewEquipmentsButton';
 
 global.fetch = jest.fn();
 

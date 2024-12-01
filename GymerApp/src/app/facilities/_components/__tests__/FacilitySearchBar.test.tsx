@@ -2,7 +2,7 @@
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import {useRouter} from 'next/navigation';
-import {FacilitySearchBar} from '../facilitySearchBar';
+import {FacilitySearchBar} from '../FacilitySearchBar';
 import {act} from 'react-dom/test-utils';
 
 jest.mock('next/navigation', () => ({

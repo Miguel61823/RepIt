@@ -1,7 +1,7 @@
 // __tests__/AddFacilityButton.test.tsx
 import React from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
-import {AddFacilityButton} from '../addFacilityButton';
+import {AddFacilityButton} from '../AddFacilityButton';
 import {addFacility} from '@/server/api/facilities';
 
 jest.mock('@/server/api/facilities', () => ({

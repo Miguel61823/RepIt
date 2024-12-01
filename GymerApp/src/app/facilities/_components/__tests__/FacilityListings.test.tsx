@@ -1,7 +1,7 @@
 // __tests__/FacilityListings.test.tsx
 import React from 'react';
 import {render, screen, fireEvent, waitFor} from '@testing-library/react';
-import FacilityListings from '../facilityListings';
+import FacilityListings from '../FacilityListings';
 import * as facilitiesApi from '@/server/api/facilities';
 import findSportsFacilities from '@/lib/osm';
 
