@@ -74,12 +74,12 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
 
   const deleteEquipment = async (name: string, osmId: string) => {
     const identifier = name.toLowerCase().replace(/\s+/g, '-'); // Generate the identifier
-    setEquipment(prevEquipment => 
-      prevEquipment.filter(item => item.name !== name)
+    setEquipment(prevEquipment =>
+      prevEquipment.filter(item => item.name !== name),
     );
 
     try {
-      const response = await fetch(`/api/equipment`, {
+      const response = await fetch('/api/equipment', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,6 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
       console.error('Error deleting equipment:', error);
     }
   };
-
 
   return (
     <div className="bg-[#1a1f2e]">

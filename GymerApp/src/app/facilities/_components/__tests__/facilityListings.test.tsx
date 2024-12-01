@@ -23,8 +23,25 @@ jest.mock('react-toastify', () => ({
 const mockGeolocation = {
   getCurrentPosition: jest.fn(),
 };
-global.navigator.geolocation = mockGeolocation;
 
+beforeAll(() => {
+  // Store the original geolocation
+  const originalGeolocation = global.navigator.geolocation;
+
+  // Replace geolocation with mock implementation
+  Object.defineProperty(global.navigator, 'geolocation', {
+    value: mockGeolocation,
+    configurable: true,
+  });
+
+  // Cleanup after tests
+  return () => {
+    Object.defineProperty(global.navigator, 'geolocation', {
+      value: originalGeolocation,
+      configurable: true,
+    });
+  };
+});
 describe('FacilityListings', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -52,16 +69,34 @@ describe('FacilityListings', () => {
   });
 
   it('calls handleDBSearch and displays facilities', async () => {
-    const mockFacilities = [
-      {osm_id: '1', name: 'Facility A', lat: 37.7749, lon: -122.4194},
-      {osm_id: '2', name: 'Facility B', lat: 37.7849, lon: -122.4094},
+    const mockFacilities: facilitiesApi.Facility[] = [
+      {
+        osm_id: '1',
+        name: 'Facility A',
+        lat: 37.7749,
+        lon: -122.4194,
+        leisure: 'fitness',
+        address: '123 Street',
+        accessibility: 'door',
+      },
+      {
+        osm_id: '2',
+        name: 'Facility B',
+        lat: 37.7849,
+        lon: -122.4094,
+        leisure: 'fitness',
+        address: '123 Street',
+        accessibility: 'door',
+      },
     ];
 
     mockGeolocation.getCurrentPosition.mockImplementation(resolve =>
       resolve({coords: {latitude: 37.7749, longitude: -122.4194}}),
     );
 
-    facilitiesApi.getNearbyFacilities.mockResolvedValue(mockFacilities);
+    (facilitiesApi.getNearbyFacilities as jest.Mock).mockResolvedValue(
+      mockFacilities,
+    );
 
     render(<FacilityListings search={undefined} />);
     fireEvent.click(screen.getByText('Search'));

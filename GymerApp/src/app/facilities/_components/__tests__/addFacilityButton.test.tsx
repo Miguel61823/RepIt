@@ -10,11 +10,17 @@ jest.mock('@/server/api/facilities', () => ({
 
 describe('AddFacilityButton', () => {
   const mockFacility = {
+    osm_id: '456',
     id: '123',
     name: 'Test Facility',
     location: '123 Main St',
     type: 'Gym',
     contact: 'test@example.com',
+    leisure: 'fitness',
+    lat: 1,
+    lon: 2,
+    address: '1234 Street',
+    accessibility: 'door',
   };
 
   beforeEach(() => {
