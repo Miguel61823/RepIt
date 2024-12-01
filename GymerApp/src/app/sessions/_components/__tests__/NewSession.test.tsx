@@ -1,6 +1,6 @@
 import React, {act} from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
-import {NewSession} from '../newSession';
+import {NewSession} from '../NewSession';
 
 jest.mock('@/components/forms/SessionForm', () => ({
   SessionForm: () => <div data-testid="session-form">Mocked Session Form</div>,

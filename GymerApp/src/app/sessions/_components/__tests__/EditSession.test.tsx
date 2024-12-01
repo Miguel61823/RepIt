@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {EditSession} from '../editSession';
+import {EditSession} from '../EditSession';
 import {Session} from '@/server/api/sessions';
 
 jest.mock('@/components/forms/EditSessionForm', () => ({

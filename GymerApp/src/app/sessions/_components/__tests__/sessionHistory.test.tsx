@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import SessionHistory from '../sessionHistory';
+import SessionHistory from '../SessionHistory';
 
 jest.mock('../newSession', () => ({
   NewSession: jest.fn(() => (

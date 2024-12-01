@@ -1,5 +1,5 @@
 // components/SessionsList.tsx
-import {SessionCard} from './sessionCard';
+import {SessionCard} from './SessionCard';
 import {getSessionHistory} from '@/server/api/sessions';
 
 /**

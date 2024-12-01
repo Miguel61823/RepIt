@@ -2,8 +2,8 @@
 
 // import React from "react";
 
-import {NewSession} from './newSession';
-import {SessionsList} from './sessionsList';
+import {NewSession} from './NewSession';
+import {SessionsList} from './SessionsList';
 
 /**
  * The `SessionHistory` component serves as the main interface for managing and viewing session history.

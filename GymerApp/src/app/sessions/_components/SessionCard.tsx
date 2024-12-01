@@ -22,7 +22,7 @@ import {
 import {Button} from '@/components/ui/button';
 import {Session, deleteSession} from '@/server/api/sessions';
 import {formatDate} from '@/lib/utils';
-import {EditSession} from './editSession';
+import {EditSession} from './EditSession';
 
 /**
  * The `SessionCard` component renders a card displaying session details, including the name, type, date, and session data.

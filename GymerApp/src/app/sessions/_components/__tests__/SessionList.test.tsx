@@ -1,7 +1,7 @@
 // src/app/sessions/_components/__tests__/sessionsList.test.tsx
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {SessionsList} from '../sessionsList';
+import {SessionsList} from '../SessionsList';
 import {getSessionHistory} from '@/server/api/sessions';
 
 // Mock the sessions API

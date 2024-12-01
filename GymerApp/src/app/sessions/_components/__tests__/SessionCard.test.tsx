@@ -1,6 +1,6 @@
 import React, {act} from 'react';
 import {render, screen, fireEvent} from '@testing-library/react';
-import {SessionCard} from '../sessionCard';
+import {SessionCard} from '../SessionCard';
 import {deleteSession} from '@/server/api/sessions';
 import {formatDate} from '@/lib/utils';
 

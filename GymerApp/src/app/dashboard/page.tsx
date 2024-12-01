@@ -1,7 +1,7 @@
 import React from 'react';
 import {AIQuestionContainer} from './components/AIQuestionContainer';
 import {Suspense} from 'react';
-import {SessionsList} from '../sessions/_components/sessionsList';
+import {SessionsList} from '../sessions/_components/SessionsList';
 import {SupplementsList} from '../supplements/_components/SupplementsList';
 import {GoalsList} from '../goals/_components/GoalsList';
 

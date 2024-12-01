@@ -1,4 +1,4 @@
-import SessionHistory from './_components/sessionHistory';
+import SessionHistory from './_components/SessionHistory';
 
 const SessionsPage = () => {
   return (
