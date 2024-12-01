@@ -76,3 +76,68 @@ const response = await fetch('/api/equipment', {
 });
 const data = await response.json();
 ```
+### `DELETE /api/equipment`
+
+This endpoint pseudo deletes equipment from the database by renaming and filtering.
+
+#### **Parameters (Request Query)**
+
+- `id` (string): The unique identifier of the equipment to be deleted (Required).
+
+#### **Workflow**
+
+1. **Authorization**: The request checks for a valid user ID from Clerk (`userId`). If no `userId` is found, it returns a `401 Unauthorized` response.
+2. **Validation**: The request ensures that the `id` parameter is provided. If the `id` is missing, it returns a `400 Bad Request` response.
+3. **Database Deletion**: The equipment with the given `id` is removed from the `MachinesTable`.
+
+#### **Responses**
+
+- `200 OK`: Equipment deleted successfully.
+  - **Response Body**:
+    ```json
+    {
+      "message": "Equipment deleted successfully"
+    }
+    ```
+- `400 Bad Request`: Missing required fields or invalid data.
+  - **Response Body**:
+    ```json
+    {
+      "error": "Missing required field: id"
+    }
+    ```
+- `401 Unauthorized`: User not authenticated.
+  - **Response Body**:
+    ```json
+    {
+      "error": "Unauthorized"
+    }
+    ```
+- `404 Not Found`: Equipment with the provided `id` not found.
+  - **Response Body**:
+    ```json
+    {
+      "error": "Equipment not found"
+    }
+    ```
+- `500 Internal Server Error`: Server or database failure.
+  - **Response Body**:
+    ```json
+    {
+      "error": "Failed to delete equipment"
+    }
+    ```
+
+#### **Example Usage**
+
+```javascript
+const response = await fetch('/api/equipment?id=12345', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer your-token-here',
+  },
+});
+const data = await response.json();
+
+
+
