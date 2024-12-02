@@ -1,10 +1,10 @@
 import {db} from '@/drizzle/db';
 import {MachinesTable} from '@/drizzle/schema/tables/machine';
 import {eq} from 'drizzle-orm';
-import {FacilitiesTable} from '@/drizzle/schema/tables/facilities'; // Import facility table
+import {FacilitiesTable} from '@/drizzle/schema/tables/facilities';
 
 export type EquipmentData = {
-  osm_id: string; // osm_id corresponds to a facility_id in the facility table
+  osm_id: string;
   user_id: string;
   name: string;
   identifier: string;
@@ -17,22 +17,17 @@ export type EquipmentData = {
 
 export async function addEquipment(data: EquipmentData) {
   try {
-    // Check if osm_id maps to a valid facility_id in the FacilitiesTable
     const facility = await db
       .select()
       .from(FacilitiesTable)
-      .where(eq(FacilitiesTable.osm_id, data.osm_id)); // osm_id references a facility_id
+      .where(eq(FacilitiesTable.osm_id, data.osm_id));
 
     if (!facility.length) {
       throw new Error('Invalid osm_id, no matching facility found');
     }
 
-    // Use the first matching facility to get facility_id
-    // const facility_id = facility[0].facility_id;
-
-    // Prepare the formatted data for the insert operation
     const formattedData = {
-      osm_id: data.osm_id, // Use osm_id here, referring to the facility
+      osm_id: data.osm_id,
       user_id: data.user_id,
       name: data.name,
       identifier: data.identifier,
@@ -45,7 +40,6 @@ export async function addEquipment(data: EquipmentData) {
       quantity: data.quantity ? Number(data.quantity) : 1,
     };
 
-    // Insert the machine data into the MachinesTable
     const result = await db.insert(MachinesTable).values(formattedData);
 
     return {success: true, data: result};
@@ -57,11 +51,10 @@ export async function addEquipment(data: EquipmentData) {
 
 export async function getEquipmentByFacility(osmId: string) {
   try {
-    // Fetch all machines linked to the given osm_id (which corresponds to facility_id in MachinesTable)
     const equipment = await db
       .select()
       .from(MachinesTable)
-      .where(eq(MachinesTable.osm_id, osmId)); // Ensure osm_id exists in MachinesTable
+      .where(eq(MachinesTable.osm_id, osmId));
 
     return equipment;
   } catch (error) {
@@ -70,9 +63,8 @@ export async function getEquipmentByFacility(osmId: string) {
   }
 }
 
-export async function markEquipmentAsDeleted(identifier: string) {
+export async function deleteEquipment(identifier: string) {
   try {
-    // Check if the equipment exists in the MachinesTable
     const equipment = await db
       .select()
       .from(MachinesTable)
@@ -82,15 +74,13 @@ export async function markEquipmentAsDeleted(identifier: string) {
       throw new Error('No matching equipment found with the given identifier');
     }
 
-    // Update the name of the equipment to "delete"
     const result = await db
-      .update(MachinesTable)
-      .set({name: 'delete'})
+      .delete(MachinesTable)
       .where(eq(MachinesTable.identifier, identifier));
 
     return {success: true, data: result};
   } catch (error) {
-    console.error('Error marking equipment as deleted:', error);
-    throw new Error('Failed to mark equipment as deleted');
+    console.error('Error deleting equipment:', error);
+    throw new Error('Failed to delete equipment');
   }
 }

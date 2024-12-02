@@ -2,7 +2,7 @@ import {NextResponse} from 'next/server';
 import {
   addEquipment,
   getEquipmentByFacility,
-  markEquipmentAsDeleted,
+  deleteEquipment,
 } from '@/drizzle/api/equipment';
 import {auth} from '@clerk/nextjs/server';
 
@@ -84,8 +84,6 @@ export async function DELETE(request: Request) {
 
   try {
     const body = await request.json();
-    console.log('Received body:', body); // Log the received body
-
     const {identifier} = body;
 
     if (!identifier) {
@@ -95,16 +93,16 @@ export async function DELETE(request: Request) {
       );
     }
 
-    const result = await markEquipmentAsDeleted(identifier);
+    const result = await deleteEquipment(identifier);
 
     return NextResponse.json(
-      {message: 'Equipment marked as deleted', data: result},
+      {message: 'Equipment deleted', data: result},
       {status: 200},
     );
   } catch (error) {
     console.error('Error in DELETE request:', error);
     return NextResponse.json(
-      {error: 'Failed to mark equipment as deleted'},
+      {error: 'Failed to delete equipment'},
       {status: 500},
     );
   }

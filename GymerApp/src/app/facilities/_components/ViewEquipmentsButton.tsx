@@ -56,14 +56,8 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
       }
 
       const data = await response.json();
-
-      // Filter out equipment named "delete"
-      const filteredEquipment = data.data.filter(
-        (item: EquipmentData) => item.name.toLowerCase() !== 'delete',
-      );
-
-      setEquipment(filteredEquipment);
-      setIsOpen(true); // Open the sheet when data is fetched
+      setEquipment(data.data);
+      setIsOpen(true);
     } catch (err) {
       console.error('Error fetching equipment:', err);
       setError('Error loading equipment data');
@@ -72,10 +66,13 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
     }
   };
 
-  const deleteEquipment = async (name: string, osmId: string) => {
-    const identifier = name.toLowerCase().replace(/\s+/g, '-'); // Generate the identifier
+  const deleteEquipment = async (item: EquipmentData) => {
+    const identifier = item.identifier;
+    const originalEquipment = equipment;
+
+    // Optimistically remove the item from the UI
     setEquipment(prevEquipment =>
-      prevEquipment.filter(item => item.name !== name),
+      prevEquipment.filter(equipItem => equipItem.identifier !== identifier)
     );
 
     try {
@@ -85,17 +82,18 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          identifier, // Send the correct identifier field
+          identifier,
         }),
       });
 
       if (!response.ok) {
         throw new Error('Failed to delete equipment');
       }
-
-      console.log(`Successfully deleted equipment: ${name}`);
     } catch (error) {
       console.error('Error deleting equipment:', error);
+      
+      // Rollback the equipment list
+      setEquipment(originalEquipment);
     }
   };
 
@@ -147,9 +145,9 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
             {/* Table rows */}
             <div className="divide-y divide-slate-700">
               {equipment && equipment.length > 0 ? (
-                equipment.map((item, index) => (
+                equipment.map((item) => (
                   <div
-                    key={`${index}`}
+                    key={item.identifier}
                     className="grid grid-cols-7 gap-4 px-4 py-3 hover:bg-slate-800/50"
                   >
                     <div className="text-white font-medium">{item.name}</div>
@@ -184,7 +182,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                       <Button
                         type="button"
                         className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                        onClick={() => deleteEquipment(item.name, osmId)}
+                        onClick={() => deleteEquipment(item)}
                       >
                         <Trash2 className="mr-1 h-4 w-4" /> Delete
                       </Button>
