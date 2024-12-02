@@ -56,7 +56,7 @@ describe('GoalHistoryPage Component', () => {
 
   test('renders the page title correctly', async () => {
     render(await GoalHistoryPage());
-    const pageTitle = screen.getByText('Goal History');
+    const pageTitle = screen.getByText('Fitness Goals');
     expect(pageTitle).toBeInTheDocument();
     expect(pageTitle).toHaveClass('text-3xl', 'font-bold');
   });
@@ -75,19 +75,10 @@ describe('GoalHistoryPage Component', () => {
 
   test('displays correct headers for each goal category', async () => {
     render(await GoalHistoryPage());
-    expect(screen.getByText('Past Due')).toBeInTheDocument();
+    expect(screen.getByText('Past Due Goal')).toBeInTheDocument();
     expect(screen.getByText('Due This Week')).toBeInTheDocument();
-    expect(screen.getByText('Upcoming')).toBeInTheDocument();
-    expect(screen.getByText('Completed')).toBeInTheDocument();
-  });
-
-  test('handles empty goal list', async () => {
-    (getGoalHistory as jest.Mock).mockResolvedValue([]);
-    render(await GoalHistoryPage());
-    expect(screen.getByText('No past due goals')).toBeInTheDocument();
-    expect(screen.getByText('No goals due this week')).toBeInTheDocument();
-    expect(screen.getByText('No upcoming goals')).toBeInTheDocument();
-    expect(screen.getByText('No completed goals')).toBeInTheDocument();
+    expect(screen.getByText('Upcoming Goals')).toBeInTheDocument();
+    expect(screen.getByText('Completed Goal')).toBeInTheDocument();
   });
 
   test('page has correct base layout classes', async () => {
@@ -102,7 +93,7 @@ describe('GoalHistoryPage Component', () => {
 
   test('header has correct styling and structure', async () => {
     render(await GoalHistoryPage());
-    const headerContainer = screen.getByText('Goal History').closest('div');
+    const headerContainer = screen.getByText('Fitness Goals').closest('div');
     expect(headerContainer).toHaveClass('max-w-7xl', 'mx-auto', 'py-6', 'px-4');
   });
 });

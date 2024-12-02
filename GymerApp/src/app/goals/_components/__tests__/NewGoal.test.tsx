@@ -13,13 +13,13 @@ describe('NewGoal Component', () => {
 
   test('renders the "Add Goal" button', () => {
     render(<NewGoal />);
-    const addButton = screen.getByText('Add Goal');
+    const addButton = screen.getByText('+ Add Goal');
     expect(addButton).toBeInTheDocument();
   });
 
   test('opens sheet when "Add Goal" button is clicked', () => {
     render(<NewGoal />);
-    const addButton = screen.getByText('Add Goal');
+    const addButton = screen.getByText('+ Add Goal');
     fireEvent.click(addButton);
     const sheetHeader = screen.getByText('New Goal');
     expect(sheetHeader).toBeInTheDocument();
@@ -27,7 +27,7 @@ describe('NewGoal Component', () => {
 
   test('renders goal form when sheet is opened', () => {
     render(<NewGoal />);
-    const addButton = screen.getByText('Add Goal');
+    const addButton = screen.getByText('+ Add Goal');
     fireEvent.click(addButton);
     const goalForm = screen.getByTestId('goal-form');
     expect(goalForm).toBeInTheDocument();
@@ -35,7 +35,7 @@ describe('NewGoal Component', () => {
 
   test('closes sheet when closeGoalSheet event is fired', () => {
     render(<NewGoal />);
-    const addButton = screen.getByText('Add Goal');
+    const addButton = screen.getByText('+ Add Goal');
     fireEvent.click(addButton);
 
     let sheetHeader = screen.getByText('New Goal');
