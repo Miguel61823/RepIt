@@ -1,5 +1,5 @@
 import {render, screen} from '@testing-library/react';
-import Plans from '../plans';
+import Plans from '../Plans';
 
 describe('Plans Component', () => {
   test('renders the title', () => {
