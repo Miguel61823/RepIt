@@ -2,11 +2,11 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import SupplementHistory from '../SupplementHistory';
 
-jest.mock('../newSupplement', () => ({
+jest.mock('../NewSupplement', () => ({
   NewSupplement: jest.fn(() => <div data-testid="new-supplement-component" />),
 }));
 
-jest.mock('../supplementsList', () => ({
+jest.mock('../SupplementsList', () => ({
   SupplementsList: jest.fn(() => (
     <div data-testid="supplements-list-component" />
   )),

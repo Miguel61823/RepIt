@@ -2,13 +2,13 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import SessionHistory from '../SessionHistory';
 
-jest.mock('../newSession', () => ({
+jest.mock('../NewSession', () => ({
   NewSession: jest.fn(() => (
     <div data-testid="new-session-component">New Session</div>
   )),
 }));
 
-jest.mock('../sessionsList', () => ({
+jest.mock('../SessionsList', () => ({
   SessionsList: jest.fn(() => (
     <div data-testid="sessions-list-component">Sessions List</div>
   )),

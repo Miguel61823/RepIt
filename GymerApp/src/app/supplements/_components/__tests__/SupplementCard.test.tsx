@@ -13,7 +13,7 @@ jest.mock('@/lib/utils', () => ({
   formatDate: jest.fn(),
 }));
 
-jest.mock('../editSupplement', () => ({
+jest.mock('../EditSupplement', () => ({
   EditSupplement: () => <div data-testid="edit-supplement" />,
 }));
 

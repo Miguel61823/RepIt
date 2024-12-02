@@ -7,7 +7,7 @@ jest.mock('@/server/api/goals', () => ({
   getGoalHistory: jest.fn(),
 }));
 
-jest.mock('../goalCard', () => ({
+jest.mock('../GoalCard', () => ({
   GoalCard: ({title}: {title: string}) => (
     <div data-testid="goal-card">{title}</div>
   ),

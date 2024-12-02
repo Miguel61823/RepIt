@@ -7,7 +7,7 @@ jest.mock('@/server/api/supplements', () => ({
   getSupplements: jest.fn(),
 }));
 
-jest.mock('../supplementCard', () => ({
+jest.mock('../SupplementCard', () => ({
   SupplementCard: ({name}: {name: string}) => (
     <div data-testid="supplement-card">{name}</div>
   ),

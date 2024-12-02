@@ -9,7 +9,7 @@ jest.mock('@/server/api/sessions', () => ({
   getSessionHistory: jest.fn(),
 }));
 
-jest.mock('../sessionCard', () => ({
+jest.mock('../SessionCard', () => ({
   SessionCard: ({name}: {name: string}) => (
     <div data-testid="session-card">{name}</div>
   ),
