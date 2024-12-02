@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { SupplementCard } from '../SupplementCard';
-import { deleteSupplement } from '@/server/api/supplements';
-import { formatDate } from '@/lib/utils';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {SupplementCard} from '../SupplementCard';
+import {deleteSupplement} from '@/server/api/supplements';
+import {formatDate} from '@/lib/utils';
 
 jest.mock('@/server/api/supplements', () => ({
   deleteSupplement: jest.fn(),

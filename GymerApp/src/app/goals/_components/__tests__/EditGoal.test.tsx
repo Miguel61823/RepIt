@@ -1,17 +1,21 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { EditGoal } from '../EditGoal';
-import { Goal } from '@/server/api/goals';
+import {render, screen} from '@testing-library/react';
+import {EditGoal} from '../EditGoal';
+import {Goal} from '@/server/api/goals';
 
 jest.mock('@/components/forms/EditGoalForm', () => ({
   EditGoalForm: (props: Goal) => <div data-testid="edit-goal-form" />,
 }));
 
 jest.mock('@/components/ui/sheet', () => ({
-  Sheet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTrigger: ({ children }: { children: React.ReactNode }) => children,
-  SheetHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Sheet: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+  SheetContent: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTrigger: ({children}: {children: React.ReactNode}) => children,
+  SheetHeader: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe('EditGoal Component', () => {

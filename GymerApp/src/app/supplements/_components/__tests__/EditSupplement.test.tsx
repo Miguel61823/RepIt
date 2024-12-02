@@ -1,17 +1,23 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { EditSupplement } from '../EditSupplement';
-import { Supplement } from '@/server/api/supplements';
+import {render, screen} from '@testing-library/react';
+import {EditSupplement} from '../EditSupplement';
+import {Supplement} from '@/server/api/supplements';
 
 jest.mock('@/components/forms/EditSupplementForm', () => ({
-  EditSupplementForm: (props: Supplement) => <div data-testid="edit-supplement-form" />,
+  EditSupplementForm: (props: Supplement) => (
+    <div data-testid="edit-supplement-form" />
+  ),
 }));
 
 jest.mock('@/components/ui/sheet', () => ({
-  Sheet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTrigger: ({ children }: { children: React.ReactNode }) => children,
-  SheetHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Sheet: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+  SheetContent: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTrigger: ({children}: {children: React.ReactNode}) => children,
+  SheetHeader: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe('EditSupplement Component', () => {

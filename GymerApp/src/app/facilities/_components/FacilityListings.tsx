@@ -154,7 +154,7 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
           ''
         )}
       </div>
-      <div className="space-y-4">
+      <div className="space-y-4 py-2">
         <Suspense fallback={<div>Loading...</div>}>
           {isLoading ? (
             <div>Getting nearby facilities...</div>

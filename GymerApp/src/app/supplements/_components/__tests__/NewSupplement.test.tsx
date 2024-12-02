@@ -1,16 +1,20 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { NewSupplement } from '../NewSupplement';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {NewSupplement} from '../NewSupplement';
 
 jest.mock('@/components/forms/SupplementForm', () => ({
   SupplementForm: () => <div data-testid="supplement-form" />,
 }));
 
 jest.mock('@/components/ui/sheet', () => ({
-  Sheet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTrigger: ({ children }: { children: React.ReactNode }) => children,
-  SheetHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
+  Sheet: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+  SheetContent: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTrigger: ({children}: {children: React.ReactNode}) => children,
+  SheetHeader: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe('NewSupplement Component', () => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { GoalCard } from '../GoalCard';
-import { deleteGoal, toggleGoalCompletion } from '@/server/api/goals';
-import { formatDate } from '@/lib/utils';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {GoalCard} from '../GoalCard';
+import {deleteGoal, toggleGoalCompletion} from '@/server/api/goals';
+import {formatDate} from '@/lib/utils';
 
 jest.mock('@/server/api/goals', () => ({
   deleteGoal: jest.fn(),

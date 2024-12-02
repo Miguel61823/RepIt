@@ -1,14 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import GoalHistoryPage from '../GoalHistory';
-import { getGoalHistory } from '@/server/api/goals';
+import {getGoalHistory} from '@/server/api/goals';
 
 jest.mock('@/server/api/goals', () => ({
   getGoalHistory: jest.fn(),
 }));
 
 jest.mock('../goalCard', () => ({
-  GoalCard: ({ title }: { title: string }) => <div data-testid="goal-card">{title}</div>,
+  GoalCard: ({title}: {title: string}) => (
+    <div data-testid="goal-card">{title}</div>
+  ),
 }));
 
 jest.mock('../newGoal', () => ({
@@ -17,10 +19,34 @@ jest.mock('../newGoal', () => ({
 
 describe('GoalHistoryPage Component', () => {
   const mockGoals = [
-    { id: '1', title: 'Past Due Goal', description: 'Test', dueDate: new Date('2023-01-01'), completed: false },
-    { id: '2', title: 'This Week Goal', description: 'Test', dueDate: new Date(), completed: false },
-    { id: '3', title: 'Upcoming Goal', description: 'Test', dueDate: new Date('2025-01-01'), completed: false },
-    { id: '4', title: 'Completed Goal', description: 'Test', dueDate: new Date(), completed: true },
+    {
+      id: '1',
+      title: 'Past Due Goal',
+      description: 'Test',
+      dueDate: new Date('2023-01-01'),
+      completed: false,
+    },
+    {
+      id: '2',
+      title: 'This Week Goal',
+      description: 'Test',
+      dueDate: new Date(),
+      completed: false,
+    },
+    {
+      id: '3',
+      title: 'Upcoming Goal',
+      description: 'Test',
+      dueDate: new Date('2025-01-01'),
+      completed: false,
+    },
+    {
+      id: '4',
+      title: 'Completed Goal',
+      description: 'Test',
+      dueDate: new Date(),
+      completed: true,
+    },
   ];
 
   beforeEach(() => {
@@ -65,9 +91,13 @@ describe('GoalHistoryPage Component', () => {
   });
 
   test('page has correct base layout classes', async () => {
-    const { container } = render(await GoalHistoryPage());
+    const {container} = render(await GoalHistoryPage());
     const mainContainer = container.firstChild;
-    expect(mainContainer).toHaveClass('min-h-screen', 'bg-neutral-100', 'dark:bg-gray-900');
+    expect(mainContainer).toHaveClass(
+      'min-h-screen',
+      'bg-neutral-100',
+      'dark:bg-gray-900',
+    );
   });
 
   test('header has correct styling and structure', async () => {

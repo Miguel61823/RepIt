@@ -1,14 +1,16 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { SupplementsList } from '../SupplementsList';
-import { getSupplements } from '@/server/api/supplements';
+import {render, screen} from '@testing-library/react';
+import {SupplementsList} from '../SupplementsList';
+import {getSupplements} from '@/server/api/supplements';
 
 jest.mock('@/server/api/supplements', () => ({
   getSupplements: jest.fn(),
 }));
 
 jest.mock('../supplementCard', () => ({
-  SupplementCard: ({ name }: { name: string }) => <div data-testid="supplement-card">{name}</div>,
+  SupplementCard: ({name}: {name: string}) => (
+    <div data-testid="supplement-card">{name}</div>
+  ),
 }));
 
 describe('SupplementsList Component', () => {
@@ -52,7 +54,7 @@ describe('SupplementsList Component', () => {
 
   test('renders with correct grid layout', async () => {
     (getSupplements as jest.Mock).mockResolvedValue(mockSupplements);
-    const { container } = render(await SupplementsList());
+    const {container} = render(await SupplementsList());
 
     const gridContainer = container.firstChild;
     expect(gridContainer).toHaveClass('grid');
@@ -63,7 +65,7 @@ describe('SupplementsList Component', () => {
 
   test('handles empty supplement list', async () => {
     (getSupplements as jest.Mock).mockResolvedValue([]);
-    const { container } = render(await SupplementsList());
+    const {container} = render(await SupplementsList());
 
     const supplementCards = screen.queryAllByTestId('supplement-card');
     expect(supplementCards).toHaveLength(0);
@@ -73,7 +75,11 @@ describe('SupplementsList Component', () => {
   });
 
   test('handles API error', async () => {
-    (getSupplements as jest.Mock).mockRejectedValue(new Error('Failed to fetch supplements'));
-    await expect(SupplementsList()).rejects.toThrow('Failed to fetch supplements');
+    (getSupplements as jest.Mock).mockRejectedValue(
+      new Error('Failed to fetch supplements'),
+    );
+    await expect(SupplementsList()).rejects.toThrow(
+      'Failed to fetch supplements',
+    );
   });
 });

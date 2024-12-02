@@ -1,6 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { NewGoal } from '../NewGoal';
+import {render, screen, fireEvent} from '@testing-library/react';
+import {NewGoal} from '../NewGoal';
 
 jest.mock('@/components/forms/GoalForm', () => ({
   GoalForm: () => <div data-testid="goal-form" />,
@@ -37,7 +37,7 @@ describe('NewGoal Component', () => {
     render(<NewGoal />);
     const addButton = screen.getByText('Add Goal');
     fireEvent.click(addButton);
-    
+
     let sheetHeader = screen.getByText('New Goal');
     expect(sheetHeader).toBeInTheDocument();
 
