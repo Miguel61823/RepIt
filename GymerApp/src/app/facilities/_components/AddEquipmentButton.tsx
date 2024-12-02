@@ -136,7 +136,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
     <div className="bg-[#1a1f2e]">
       <Button
         type="button"
-        className="font-medium text-lg w-full bg-purple-600 hover:bg-purple-700 text-white"
+        className="font-medium text-lg w-full bg-violet-600 hover:bg-violet-700 text-white"
         onClick={() => setOpen(true)}
       >
         Add Equipment
@@ -145,7 +145,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetContent className="w-[400px] sm:w-[540px] bg-[#1a1f2e] border-slate-800 overflow-y-auto no-scrollbar">
           <SheetHeader>
-            <SheetTitle className="text-purple-400">
+            <SheetTitle className="text-violet-400">
               Add Equipment - {facilityName}
             </SheetTitle>
             <SheetDescription className="text-slate-400">
@@ -270,7 +270,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             <SheetFooter>
               <Button
                 type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                className="w-full bg-violet-600 hover:bg-violet-700 text-white"
                 disabled={loading}
               >
                 {loading ? 'Adding...' : 'Add Equipment'}

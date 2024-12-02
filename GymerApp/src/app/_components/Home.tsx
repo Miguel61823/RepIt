@@ -65,7 +65,7 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-xl p-12 shadow-md mt-16">
+      <section className="bg-violet-600 rounded-xl p-12 shadow-md mt-16">
         <div className="text-center mb-12">
           <h3 className="text-3xl font-bold mb-4 text-white">
             Why Choose RepIt?

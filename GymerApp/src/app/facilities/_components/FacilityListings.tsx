@@ -137,7 +137,7 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
               onClick={handleDBSearch}
               className="
                 flex items-center justify-center space-x-2
-                bg-purple-600 hover:bg-purple-700
+                bg-violet-600 hover:bg-violet-700
                 text-white
                 transition-all duration-300
                 ease-in-out
@@ -170,9 +170,10 @@ const FacilityListings = ({search}: {search: string | undefined}) => {
         variant="outline"
         className="
           flex items-center justify-center space-x-2
-          border-2 border-purple-500
-          text-purple-500
-          hover:bg-blue-50
+          border-2 border-violet-500
+          text-violet-500
+          bg-gray-900
+          hover:bg-violet-600
           transition-all duration-300
           ease-in-out
           transform hover:-translate-y-0.5

@@ -16,7 +16,7 @@ import {Dumbbell, Calendar, AlertCircle, Trash2} from 'lucide-react';
 const getConditionColor = (condition: string) => {
   switch (condition.toLowerCase()) {
     case 'new':
-      return 'bg-purple-900 text-purple-200';
+      return 'bg-violet-900 text-violet-200';
     case 'excellent':
       return 'bg-green-900 text-green-200';
     case 'good':
@@ -103,7 +103,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
     <div className="bg-[#1a1f2e]">
       <Button
         type="button"
-        className="font-medium text-lg w-full bg-purple-600 hover:bg-purple-700 text-white"
+        className="font-medium text-lg w-full bg-violet-600 hover:bg-violet-700 text-white"
         onClick={fetchEquipment}
         disabled={loading}
       >
@@ -124,7 +124,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
           className="h-[80vh] bg-[#1a1f2e] border-slate-800"
         >
           <SheetHeader>
-            <SheetTitle className="text-purple-400">
+            <SheetTitle className="text-violet-400">
               Equipment Inventory
             </SheetTitle>
             <SheetDescription className="text-slate-400">
@@ -167,7 +167,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
                       {item.description || 'No description'}
                     </div>
                     <div className="text-slate-300 flex items-center">
-                      <Calendar className="mr-2 h-4 w-4 text-purple-400" />
+                      <Calendar className="mr-2 h-4 w-4 text-violet-400" />
                       {item.maintenance_date
                         ? new Date(item.maintenance_date).toLocaleDateString()
                         : 'N/A'}
