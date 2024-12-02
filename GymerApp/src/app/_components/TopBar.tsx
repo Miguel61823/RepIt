@@ -44,9 +44,6 @@ const Topbar = () => {
         case 'facilities':
           router.push('/facilities');
           break;
-        case 'workouts':
-          router.push('/workouts');
-          break;
         case 'sessions':
           router.push('/sessions');
           break;
@@ -110,7 +107,7 @@ const Topbar = () => {
                   className="font-sans bg-neutral-100 dark:bg-gray-800 dark:text-white text-black"
                 >
                   <DropdownMenuGroup>
-                    {[...links, 'workouts'].map(link => (
+                    {[...links].map(link => (
                       <DropdownMenuItem key={link} className="">
                         <Button
                           variant="link"
