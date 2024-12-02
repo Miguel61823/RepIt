@@ -2,16 +2,38 @@
   "extends": [
     "next/core-web-vitals",
     "next/typescript",
-    "./node_modules/gts/"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "google",
+    "./node_modules/gts/",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": [
+    "@typescript-eslint"
   ],
   "overrides": [
     {
       "files": ["**/*.ts", "**/*.tsx"],
-      "parser": "@typescript-eslint/parser",
-      "extends": ["plugin:@typescript-eslint/recommended"],
       "rules": {
-        "@typescript-eslint/no-floating-promises": "warn"
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "require-jsdoc": "off",
+        "valid-jsdoc": "off"
       }
     }
+  ],
+  "settings": {
+    "next": {
+      "rootDir": ["./"]
+    }
+  },
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/",
+    "out/",
+    "build/",
+    "dist/"
   ]
 }
