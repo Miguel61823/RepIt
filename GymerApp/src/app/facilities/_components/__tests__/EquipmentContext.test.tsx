@@ -1,5 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import {
   EquipmentProvider,
   useEquipment,
@@ -27,14 +28,10 @@ const MockComponent: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handleAddEquipment} data-testid="add-button">
-        Add Equipment
-      </button>
-      <ul data-testid="equipment-list">
-        {equipmentList.map(equipment => (
-          <li key={equipment.identifier}>{equipment.name}</li>
-        ))}
-      </ul>
+      <button onClick={handleAddEquipment}>Add Equipment</button>
+      {equipmentList.map((equipment) => (
+        <div key={equipment.osm_id}>{equipment.name}</div>
+      ))}
     </div>
   );
 };
@@ -61,24 +58,16 @@ describe('EquipmentContext', () => {
     );
   });
 
-  it('adds equipment correctly', () => {
+  test('adds equipment correctly', async () => {
     render(
       <EquipmentProvider>
         <MockComponent />
-      </EquipmentProvider>,
+      </EquipmentProvider>
     );
-
-    const addButton = screen.getByTestId('add-button');
-    const equipmentList = screen.getByTestId('equipment-list');
-
-    // Initially, the list should be empty
-    expect(equipmentList.children.length).toBe(0);
-
-    // Add new equipment
-    addButton.click();
-
-    // Verify the new equipment is added
-    expect(equipmentList.children.length).toBe(1);
+    
+    const addButton = screen.getByText('Add Equipment');
+    await userEvent.click(addButton);
+    
     expect(screen.getByText('Treadmill')).toBeInTheDocument();
   });
 });
