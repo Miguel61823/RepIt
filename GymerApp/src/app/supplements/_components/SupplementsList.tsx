@@ -4,32 +4,42 @@ import {SupplementCard} from './SupplementCard';
 
 export const SupplementsList = async () => {
   const supplements = await getSupplements();
-
+  
   const activeSupplements = supplements.filter(
     supplement => supplement.isActive,
   );
+  
   const inactiveSupplements = supplements.filter(
     supplement => !supplement.isActive,
   );
-  return (
-    <div>
-      <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">
-        Active Supplements
-      </h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-        {activeSupplements.map(supplement => (
-          <SupplementCard key={supplement.id} {...supplement} />
-        ))}
-      </div>
 
-      <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">
-        Inactive Supplements
-      </h2>
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {inactiveSupplements.map(supplement => (
-          <SupplementCard key={supplement.id} {...supplement} />
-        ))}
-      </div>
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3" data-testid="supplements-grid">
+      {activeSupplements.length > 0 && (
+        <>
+          <h2 className="col-span-full text-xl font-bold">Active Supplements</h2>
+          {activeSupplements.map((supplement) => (
+            <SupplementCard
+              key={supplement.id}
+              {...supplement}
+              data-testid="supplement-card"
+            />
+          ))}
+        </>
+      )}
+      
+      {inactiveSupplements.length > 0 && (
+        <>
+          <h2 className="col-span-full text-xl font-bold mt-6">Inactive Supplements</h2>
+          {inactiveSupplements.map((supplement) => (
+            <SupplementCard
+              key={supplement.id}
+              {...supplement}
+              data-testid="supplement-card"
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 };
