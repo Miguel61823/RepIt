@@ -1,5 +1,10 @@
 import React from 'react';
-import {render, screen, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
+import {
+  render,
+  screen,
+  fireEvent,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import {NewGoal} from '../NewGoal';
 
 jest.mock('@/components/forms/GoalForm', () => ({
@@ -35,14 +40,14 @@ describe('NewGoal Component', () => {
 
   test('closes sheet when closeGoalSheet event is fired', async () => {
     render(<NewGoal />);
-    
+
     // Open the sheet first
     fireEvent.click(screen.getByText('+ Add Goal'));
     expect(screen.getByText('New Goal')).toBeInTheDocument();
-    
+
     // Dispatch the close event
     window.dispatchEvent(new Event('closeGoalSheet'));
-    
+
     // Use waitForElementToBeRemoved or add a small delay
     await waitForElementToBeRemoved(() => screen.queryByText('New Goal'));
   });

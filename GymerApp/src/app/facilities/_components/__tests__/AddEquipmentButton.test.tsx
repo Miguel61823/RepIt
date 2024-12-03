@@ -86,13 +86,16 @@ describe('AddEquipmentButton', () => {
 
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
     fireEvent.click(screen.getByTestId('open-equipment-form'));
-    
+
     fireEvent.change(screen.getByPlaceholderText('Enter equipment name'), {
       target: {value: 'Treadmill'},
     });
-    fireEvent.change(screen.getByPlaceholderText('Enter equipment description'), {
-      target: {value: 'High-quality treadmill for cardio workouts'},
-    });
+    fireEvent.change(
+      screen.getByPlaceholderText('Enter equipment description'),
+      {
+        target: {value: 'High-quality treadmill for cardio workouts'},
+      },
+    );
     fireEvent.change(screen.getByPlaceholderText('Enter quantity'), {
       target: {value: '2'},
     });
@@ -118,7 +121,7 @@ describe('AddEquipmentButton', () => {
 
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
     fireEvent.click(screen.getByTestId('open-equipment-form'));
-    
+
     fireEvent.change(screen.getByPlaceholderText('Enter equipment name'), {
       target: {value: 'Bike'},
     });

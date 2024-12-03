@@ -101,15 +101,16 @@ const customJestConfig: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.(ts|tsx|js|jsx|mjs)$': ['ts-jest', {
-      useESM: true,
-    }],
+    '^.+\\.(ts|tsx|js|jsx|mjs)$': [
+      'ts-jest',
+      {
+        useESM: true,
+      },
+    ],
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: [
-    '/node_modules/(?!(@clerk|@emotion|@mantine)/)',
-  ],
+  transformIgnorePatterns: ['/node_modules/(?!(@clerk|@emotion|@mantine)/)'],
 };
 
 const backendJestConfig: Config = {

@@ -11,8 +11,8 @@ jest.mock('@/server/api/goals', () => ({
 
 jest.mock('@/lib/utils', () => ({
   cn: (...inputs: any[]) => inputs.join(' '),
-  formatDate: jest.fn()
-}))
+  formatDate: jest.fn(),
+}));
 
 jest.mock('../EditGoal', () => ({
   EditGoal: () => <div data-testid="edit-goal" />,
