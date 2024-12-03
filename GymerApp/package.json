@@ -24,6 +24,10 @@
     "test:watch": "jest --watch --selectProjects frontend backend",
     "test:frontend": "jest --selectProjects frontend",
     "test:backend": "jest --selectProjects backend",
+    "test:facilities": "jest --selectProjects facilities",
+    "test:goals": "jest --selectProjects goals",
+    "test:sessions": "jest --selectProjects sessions",
+    "test:supplements": "jest --selectProjects supplements",
     "test:coverage": "jest --coverage"
   },
   "dependencies": {

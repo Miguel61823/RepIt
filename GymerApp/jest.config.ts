@@ -148,6 +148,38 @@ const jestConfig = async (): Promise<Config> => {
         ...backendConfig,
         displayName: 'backend',
       },
+      {
+        ...frontendConfig,
+        testMatch: [
+          '<rootDir>/src/app/facilities/**/__tests__/**/*.[jt]s?(x)',
+          '<rootDir>/src/app/facilities/**/?(*.)+(spec|test).[tj]s?(x)',
+        ],
+        displayName: 'facilities',
+      },
+      {
+        ...frontendConfig,
+        testMatch: [
+          '<rootDir>/src/app/goals/**/__tests__/**/*.[jt]s?(x)',
+          '<rootDir>/src/app/goals/**/?(*.)+(spec|test).[tj]s?(x)',
+        ],
+        displayName: 'goals',
+      },
+      {
+        ...frontendConfig,
+        testMatch: [
+          '<rootDir>/src/app/sessions/**/__tests__/**/*.[jt]s?(x)',
+          '<rootDir>/src/app/sessions/**/?(*.)+(spec|test).[tj]s?(x)',
+        ],
+        displayName: 'sessions',
+      },
+      {
+        ...frontendConfig,
+        testMatch: [
+          '<rootDir>/src/app/supplements/**/__tests__/**/*.[jt]s?(x)',
+          '<rootDir>/src/app/supplements/**/?(*.)+(spec|test).[tj]s?(x)',
+        ],
+        displayName: 'supplements',
+      },
     ],
   };
 };
