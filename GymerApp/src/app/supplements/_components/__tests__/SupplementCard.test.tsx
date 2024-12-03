@@ -9,8 +9,8 @@ jest.mock('@/server/api/supplements', () => ({
 }));
 
 jest.mock('@/lib/utils', () => ({
-  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
   formatDate: jest.fn(),
+  cn: jest.fn((...classes) => classes.filter(Boolean).join(' ')),
 }));
 
 jest.mock('../EditSupplement', () => ({
@@ -40,13 +40,16 @@ describe('SupplementCard Component', () => {
     expect(screen.getByText('1000 IU')).toBeInTheDocument();
     expect(screen.getByText('Daily')).toBeInTheDocument();
     expect(screen.getByText('Take with food')).toBeInTheDocument();
-    expect(screen.getByText('January 1, 2024')).toBeInTheDocument();
+    expect(screen.getByText(/January 1, 2024/)).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes('January 1, 2024'))).toBeInTheDocument();
   });
 
   test('calls deleteSupplement when delete button is clicked', async () => {
     render(<SupplementCard {...mockSupplement} />);
     const deleteButton = screen.getByText('Delete');
     fireEvent.click(deleteButton);
+    const confirmButton = screen.getByText('Yes, I am sure');
+    fireEvent.click(confirmButton);
     expect(deleteSupplement).toHaveBeenCalledWith('1');
   });
 
