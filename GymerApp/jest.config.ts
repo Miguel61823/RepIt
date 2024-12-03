@@ -154,7 +154,14 @@ const jestConfig = async (): Promise<Config> => {
           '<rootDir>/src/app/facilities/**/__tests__/**/*.[jt]s?(x)',
           '<rootDir>/src/app/facilities/**/?(*.)+(spec|test).[tj]s?(x)',
         ],
-        displayName: 'facilities',
+        displayName: 'facilities_frontend',
+      },
+      {
+        ...backendConfig,
+        testMatch: [
+          '<rootDir>/src/server/**/facilities.(spec|test).[jt]s?(x)',
+        ],
+        displayName: 'facilities_backend',
       },
       {
         ...frontendConfig,
@@ -162,7 +169,14 @@ const jestConfig = async (): Promise<Config> => {
           '<rootDir>/src/app/goals/**/__tests__/**/*.[jt]s?(x)',
           '<rootDir>/src/app/goals/**/?(*.)+(spec|test).[tj]s?(x)',
         ],
-        displayName: 'goals',
+        displayName: 'goals_frontend',
+      },
+      {
+        ...backendConfig,
+        testMatch: [
+          '<rootDir>/src/server/**/goals.(spec|test).[jt]s?(x)',
+        ],
+        displayName: 'goals_backend',
       },
       {
         ...frontendConfig,
@@ -170,7 +184,14 @@ const jestConfig = async (): Promise<Config> => {
           '<rootDir>/src/app/sessions/**/__tests__/**/*.[jt]s?(x)',
           '<rootDir>/src/app/sessions/**/?(*.)+(spec|test).[tj]s?(x)',
         ],
-        displayName: 'sessions',
+        displayName: 'sessions_frontend',
+      },
+      {
+        ...backendConfig,
+        testMatch: [
+          '<rootDir>/src/server/**/sessions.(spec|test).[jt]s?(x)',
+        ],
+        displayName: 'sessions_backend',
       },
       {
         ...frontendConfig,
@@ -178,7 +199,14 @@ const jestConfig = async (): Promise<Config> => {
           '<rootDir>/src/app/supplements/**/__tests__/**/*.[jt]s?(x)',
           '<rootDir>/src/app/supplements/**/?(*.)+(spec|test).[tj]s?(x)',
         ],
-        displayName: 'supplements',
+        displayName: 'supplements_frontend',
+      },
+      {
+        ...backendConfig,
+        testMatch: [
+          '<rootDir>/src/server/**/supplements.(spec|test).[jt]s?(x)',
+        ],
+        displayName: 'supplements_backend',
       },
     ],
   };
