@@ -72,7 +72,7 @@ const customJestConfig: Config = {
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy', // Handle CSS imports (with CSS modules)
+    '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
   },
 
   // A preset that is used as a base for Jest's configuration
@@ -101,14 +101,14 @@ const customJestConfig: Config = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+.tsx?$': ['ts-jest', {}],
+    '^.+\\.(ts|tsx|js|jsx|mjs)$': ['ts-jest', {
+      useESM: true,
+    }],
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   transformIgnorePatterns: [
-    '/node_modules/',
-    '/node_modules/(?!my-package)(.*)',
-    '^.+\\.module\\.(css|sass|scss)$',
+    '/node_modules/(?!(@clerk|@emotion|@mantine)/)',
   ],
 };
 

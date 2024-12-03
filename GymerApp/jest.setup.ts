@@ -19,3 +19,25 @@ Object.defineProperty(window, 'matchMedia', {
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
+
+// Mock database connection
+jest.mock('@/drizzle/db', () => ({
+  db: {
+    query: jest.fn(),
+    select: jest.fn(),
+    insert: jest.fn(),
+    delete: jest.fn(),
+    update: jest.fn()
+  }
+}));
+
+jest.mock('@clerk/nextjs', () => ({
+  auth: () => new Promise((resolve) => resolve({ userId: 'test-user-id' })),
+  clerkClient: {
+    users: {
+      getUser: jest.fn()
+    }
+  },
+  currentUser: jest.fn(),
+  redirectToSignIn: jest.fn()
+}));
