@@ -1,9 +1,9 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent, waitForElementToBeRemoved} from '@testing-library/react';
 import {NewGoal} from '../NewGoal';
 
 jest.mock('@/components/forms/GoalForm', () => ({
-  GoalForm: () => <div data-testid="goal-form" />,
+  GoalForm: () => <div data-testid="goal-form">Mock Goal Form</div>,
 }));
 
 describe('NewGoal Component', () => {
@@ -33,17 +33,17 @@ describe('NewGoal Component', () => {
     expect(goalForm).toBeInTheDocument();
   });
 
-  test('closes sheet when closeGoalSheet event is fired', () => {
+  test('closes sheet when closeGoalSheet event is fired', async () => {
     render(<NewGoal />);
-    const addButton = screen.getByText('+ Add Goal');
-    fireEvent.click(addButton);
-
-    let sheetHeader = screen.getByText('New Goal');
-    expect(sheetHeader).toBeInTheDocument();
-
+    
+    // Open the sheet first
+    fireEvent.click(screen.getByText('+ Add Goal'));
+    expect(screen.getByText('New Goal')).toBeInTheDocument();
+    
+    // Dispatch the close event
     window.dispatchEvent(new Event('closeGoalSheet'));
-
-    sheetHeader = screen.queryByText('New Goal')!;
-    expect(sheetHeader).not.toBeInTheDocument();
+    
+    // Use waitForElementToBeRemoved or add a small delay
+    await waitForElementToBeRemoved(() => screen.queryByText('New Goal'));
   });
 });

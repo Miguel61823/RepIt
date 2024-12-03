@@ -58,26 +58,19 @@ describe('AddEquipmentButton', () => {
 
   it('renders the button and opens the form on click', () => {
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
-
-    const button = screen.getByText('Add Equipment');
+    const button = screen.getByTestId('open-equipment-form');
     expect(button).toBeInTheDocument();
-
     fireEvent.click(button);
-
     const formTitle = screen.getByText(`Add Equipment - ${facilityName}`);
     expect(formTitle).toBeInTheDocument();
   });
 
   it('displays an error message if user is not authenticated', async () => {
     (useSession as jest.Mock).mockReturnValue({session: null});
-
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
-
-    fireEvent.click(screen.getByText('Add Equipment'));
-
-    const submitButton = screen.getByText('Add Equipment');
+    fireEvent.click(screen.getByTestId('open-equipment-form'));
+    const submitButton = screen.getByTestId('submit-equipment-form');
     fireEvent.click(submitButton);
-
     await waitFor(() =>
       expect(screen.getByText('User not authenticated')).toBeInTheDocument(),
     );
@@ -92,25 +85,19 @@ describe('AddEquipmentButton', () => {
     ) as jest.Mock;
 
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
-
-    fireEvent.click(screen.getByText('Add Equipment'));
-
+    fireEvent.click(screen.getByTestId('open-equipment-form'));
+    
     fireEvent.change(screen.getByPlaceholderText('Enter equipment name'), {
       target: {value: 'Treadmill'},
     });
-
-    fireEvent.change(
-      screen.getByPlaceholderText('Enter equipment description'),
-      {
-        target: {value: 'High-quality treadmill for cardio workouts'},
-      },
-    );
-
+    fireEvent.change(screen.getByPlaceholderText('Enter equipment description'), {
+      target: {value: 'High-quality treadmill for cardio workouts'},
+    });
     fireEvent.change(screen.getByPlaceholderText('Enter quantity'), {
       target: {value: '2'},
     });
 
-    const submitButton = screen.getByText('Add Equipment');
+    const submitButton = screen.getByTestId('submit-equipment-form');
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -130,14 +117,13 @@ describe('AddEquipmentButton', () => {
     ) as jest.Mock;
 
     render(<AddEquipmentButton osm_id={osm_id} facilityName={facilityName} />);
-
-    fireEvent.click(screen.getByText('Add Equipment'));
-
+    fireEvent.click(screen.getByTestId('open-equipment-form'));
+    
     fireEvent.change(screen.getByPlaceholderText('Enter equipment name'), {
       target: {value: 'Bike'},
     });
 
-    const submitButton = screen.getByText('Add Equipment');
+    const submitButton = screen.getByTestId('submit-equipment-form');
     fireEvent.click(submitButton);
 
     await waitFor(() =>

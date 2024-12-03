@@ -3,9 +3,20 @@ import {render, screen, fireEvent} from '@testing-library/react';
 import FacilityCard from '../FacilityCard';
 import {Facility} from '@/server/api/facilities';
 import {EquipmentData} from '@/drizzle/api/equipment';
+import { ClerkProvider } from '@clerk/clerk-react';
 
-// Mock fetch to simulate API responses
-global.fetch = jest.fn();
+// Mock Clerk
+jest.mock('@clerk/nextjs', () => ({
+  useSession: () => ({
+    session: {
+      user: {
+        id: 'test-user-id',
+      },
+    },
+    isSignedIn: true,
+    isLoaded: true,
+  }),
+}));
 
 const mockFacility: Facility = {
   osm_id: 'facility123',
@@ -34,12 +45,20 @@ const mockEquipment: EquipmentData[] = [
 ];
 
 describe('FacilityCard Component', () => {
+  const renderWithClerk = (component: React.ReactNode) => {
+    return render(
+      <ClerkProvider publishableKey="mock_key">
+        {component}
+      </ClerkProvider>
+    );
+  };
+
   beforeEach(() => {
     (fetch as jest.Mock).mockReset();
   });
 
   it('renders facility information correctly', () => {
-    render(<FacilityCard facility={mockFacility} />);
+    renderWithClerk(<FacilityCard facility={mockFacility} />);
 
     expect(screen.getByText('Test Facility')).toBeInTheDocument();
     expect(screen.getByText('123 Test Street')).toBeInTheDocument();

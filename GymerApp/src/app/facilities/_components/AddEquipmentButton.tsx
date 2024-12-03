@@ -135,7 +135,8 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
   return (
     <div className="bg-[#1a1f2e]">
       <Button
-        type="button"
+        type="button" 
+        data-testid="open-equipment-form"
         className="font-medium text-lg w-full bg-violet-600 hover:bg-violet-700 text-white"
         onClick={() => setOpen(true)}
       >
@@ -270,6 +271,7 @@ export const AddEquipmentButton: React.FC<AddEquipmentButtonProps> = ({
             <SheetFooter>
               <Button
                 type="submit"
+                data-testid="submit-equipment-form"
                 className="w-full bg-violet-600 hover:bg-violet-700 text-white"
                 disabled={loading}
               >
