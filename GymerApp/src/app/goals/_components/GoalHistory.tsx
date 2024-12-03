@@ -47,7 +47,7 @@ const GoalHistoryPage = async () => {
                   <GoalCard key={goal.goal_id} {...goal} />
                 ))
               ) : (
-                <p className="text-gray-500">No past due goals</p>
+                <div key="no-past-due">No past due goals</div>
               )}
             </div>
 
@@ -55,27 +55,39 @@ const GoalHistoryPage = async () => {
               Due This Week
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-              {dueThisWeekGoals.map(goal => (
-                <GoalCard key={goal.goal_id} {...goal} />
-              ))}
+              {dueThisWeekGoals.length > 0 ? (
+                dueThisWeekGoals.map(goal => (
+                  <GoalCard key={goal.goal_id} {...goal} />
+                ))
+              ) : (
+                <div key="no-due-this-week">No goals due this week</div>
+              )}
             </div>
 
             <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">
               Upcoming Goals
             </h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-              {upcomingGoals.map(goal => (
-                <GoalCard key={goal.goal_id} {...goal} />
-              ))}
+              {upcomingGoals.length > 0 ? (
+                upcomingGoals.map(goal => (
+                  <GoalCard key={goal.goal_id} {...goal} />
+                ))
+              ) : (
+                <div key="no-upcoming">No upcoming goals</div>
+              )}
             </div>
 
             <h2 className="text-2xl font-semibold text-black dark:text-white mb-4">
               Completed Goals
             </h2>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {completedGoals.map(goal => (
-                <GoalCard key={goal.goal_id} {...goal} />
-              ))}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
+              {completedGoals.length > 0 ? (
+                completedGoals.map(goal => (
+                  <GoalCard key={goal.goal_id} {...goal} />
+                ))
+              ) : (
+                <div key="no-completed">No completed goals</div>
+              )}
             </div>
           </div>
         </div>
