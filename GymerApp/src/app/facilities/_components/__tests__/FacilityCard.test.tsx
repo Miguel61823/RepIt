@@ -1,9 +1,19 @@
 import React from 'react';
-import {render, screen, fireEvent} from '@testing-library/react';
+import {render, screen, fireEvent, waitFor} from '@testing-library/react';
 import FacilityCard from '../FacilityCard';
 import {Facility} from '@/server/api/facilities';
 import {EquipmentData} from '@/drizzle/api/equipment';
 import { ClerkProvider } from '@clerk/clerk-react';
+
+
+// Mock Clerk and its validation
+jest.mock('@clerk/clerk-react', () => {
+  const originalModule = jest.requireActual('@clerk/clerk-react');
+  return {
+    ...originalModule,
+    ClerkProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+  };
+});
 
 // Mock Clerk
 jest.mock('@clerk/nextjs', () => ({
@@ -45,6 +55,12 @@ const mockEquipment: EquipmentData[] = [
 ];
 
 describe('FacilityCard Component', () => {
+    global.fetch = jest.fn();
+
+    beforeEach(() => {
+      jest.resetAllMocks();
+    });
+
   const renderWithClerk = (component: React.ReactNode) => {
     return render(
       <ClerkProvider publishableKey="mock_key">
@@ -53,13 +69,8 @@ describe('FacilityCard Component', () => {
     );
   };
 
-  beforeEach(() => {
-    (fetch as jest.Mock).mockReset();
-  });
-
   it('renders facility information correctly', () => {
     renderWithClerk(<FacilityCard facility={mockFacility} />);
-
     expect(screen.getByText('Test Facility')).toBeInTheDocument();
     expect(screen.getByText('123 Test Street')).toBeInTheDocument();
     expect(screen.getByText('123-456-7890')).toBeInTheDocument();
@@ -84,35 +95,39 @@ describe('FacilityCard Component', () => {
     );
   });
 
+
   it('fetches equipment when AddEquipmentButton triggers callback', async () => {
-    (fetch as jest.Mock).mockResolvedValueOnce({
-      json: jest.fn().mockResolvedValue({data: mockEquipment}),
+    (global.fetch as jest.Mock).mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({ data: mockEquipment }),
     });
 
     render(<FacilityCard facility={mockFacility} />);
+    
+    const addEquipmentButton = screen.getByTestId('open-equipment-form');
+    await fireEvent.click(addEquipmentButton);
 
-    // Simulate adding equipment
-    const addEquipmentButton = screen.getByText(/Add Equipment/i);
-    fireEvent.click(addEquipmentButton);
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith('/api/equipment?osm_id=facility123');
+    }, { timeout: 3000 });
 
-    // Wait for fetch to resolve and component to update
-    expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=facility123');
-    expect(await screen.findByText('Treadmill')).toBeInTheDocument();
+    const treadmillElement = await screen.findByText('Treadmill');
+    expect(treadmillElement).toBeInTheDocument();
   });
 
   it('handles fetch errors gracefully', async () => {
-    (fetch as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
-
+    // Setup the global fetch mock
+    (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('API Error'));
+  
     render(<FacilityCard facility={mockFacility} />);
-
-    // Simulate adding equipment
-    const addEquipmentButton = screen.getByText(/Add Equipment/i);
-    fireEvent.click(addEquipmentButton);
-
-    // Wait for fetch to fail
-    expect(fetch).toHaveBeenCalledWith('/api/equipment?osm_id=facility123');
-    expect(
-      screen.queryByText('Treadmill'), // Ensure no equipment is displayed
-    ).not.toBeInTheDocument();
+  
+    const addEquipmentButton = screen.getByTestId('open-equipment-form');
+    await fireEvent.click(addEquipmentButton);
+  
+    await waitFor(() => {
+      expect(global.fetch).toHaveBeenCalledWith('/api/equipment?osm_id=facility123');
+    });
+  
+    expect(screen.queryByText('Treadmill')).not.toBeInTheDocument();
   });
 });

@@ -25,6 +25,12 @@ const mockGeolocation = {
 };
 
 beforeAll(() => {
+  global.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn()
+  }));
+
   // Store the original geolocation
   const originalGeolocation = global.navigator.geolocation;
 
@@ -42,6 +48,7 @@ beforeAll(() => {
     });
   };
 });
+
 describe('FacilityListings', () => {
   beforeEach(() => {
     jest.clearAllMocks();
