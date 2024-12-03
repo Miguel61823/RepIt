@@ -29,7 +29,7 @@ const MockComponent: React.FC = () => {
   return (
     <div>
       <button onClick={handleAddEquipment}>Add Equipment</button>
-      {equipmentList.map((equipment) => (
+      {equipmentList.map(equipment => (
         <div key={equipment.osm_id}>{equipment.name}</div>
       ))}
     </div>
@@ -62,12 +62,12 @@ describe('EquipmentContext', () => {
     render(
       <EquipmentProvider>
         <MockComponent />
-      </EquipmentProvider>
+      </EquipmentProvider>,
     );
-    
+
     const addButton = screen.getByText('Add Equipment');
     await userEvent.click(addButton);
-    
+
     expect(screen.getByText('Treadmill')).toBeInTheDocument();
   });
 });

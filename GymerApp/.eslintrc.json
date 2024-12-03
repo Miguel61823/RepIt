@@ -4,7 +4,6 @@
     "next/typescript",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "google",
     "./node_modules/gts/",
     "plugin:prettier/recommended"
   ],

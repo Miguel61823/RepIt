@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {createContext, useContext, useState, ReactNode} from 'react';
 
 export interface EquipmentData {
   osm_id: string;
@@ -25,15 +25,17 @@ interface EquipmentProviderProps {
 
 const EquipmentContext = createContext<EquipmentContextType | null>(null);
 
-export const EquipmentProvider: React.FC<EquipmentProviderProps> = ({ children }) => {
+export const EquipmentProvider: React.FC<EquipmentProviderProps> = ({
+  children,
+}) => {
   const [equipmentList, setEquipmentList] = useState<EquipmentData[]>([]);
 
   const addEquipment = (equipment: EquipmentData) => {
-    setEquipmentList((prev) => [...prev, equipment]);
+    setEquipmentList(prev => [...prev, equipment]);
   };
 
   return (
-    <EquipmentContext.Provider value={{ equipmentList, addEquipment }}>
+    <EquipmentContext.Provider value={{equipmentList, addEquipment}}>
       {children}
     </EquipmentContext.Provider>
   );

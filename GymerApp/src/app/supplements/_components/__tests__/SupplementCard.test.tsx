@@ -41,7 +41,9 @@ describe('SupplementCard Component', () => {
     expect(screen.getByText('Daily')).toBeInTheDocument();
     expect(screen.getByText('Take with food')).toBeInTheDocument();
     expect(screen.getByText(/January 1, 2024/)).toBeInTheDocument();
-    expect(screen.getByText((content) => content.includes('January 1, 2024'))).toBeInTheDocument();
+    expect(
+      screen.getByText(content => content.includes('January 1, 2024')),
+    ).toBeInTheDocument();
   });
 
   test('calls deleteSupplement when delete button is clicked', async () => {

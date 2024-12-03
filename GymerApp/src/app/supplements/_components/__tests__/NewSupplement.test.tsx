@@ -4,16 +4,24 @@ import {NewSupplement} from '../NewSupplement';
 
 // Mock the SupplementForm component
 jest.mock('@/components/forms/SupplementForm', () => ({
-  SupplementForm: () => <div data-testid="supplement-form">Mocked Form</div>
+  SupplementForm: () => <div data-testid="supplement-form">Mocked Form</div>,
 }));
 
 // Mock the Sheet components
 jest.mock('@/components/ui/sheet', () => ({
-  Sheet: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetContent: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetHeader: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTitle: ({ children }: { children: React.ReactNode }) => <div>{children}</div>,
-  SheetTrigger: ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+  Sheet: ({children}: {children: React.ReactNode}) => <div>{children}</div>,
+  SheetContent: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetHeader: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTitle: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
+  SheetTrigger: ({children}: {children: React.ReactNode}) => (
+    <div>{children}</div>
+  ),
 }));
 
 describe('NewSupplement Component', () => {

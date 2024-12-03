@@ -72,7 +72,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
 
     // Optimistically remove the item from the UI
     setEquipment(prevEquipment =>
-      prevEquipment.filter(equipItem => equipItem.identifier !== identifier)
+      prevEquipment.filter(equipItem => equipItem.identifier !== identifier),
     );
 
     try {
@@ -91,7 +91,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
       }
     } catch (error) {
       console.error('Error deleting equipment:', error);
-      
+
       // Rollback the equipment list
       setEquipment(originalEquipment);
     }
@@ -145,7 +145,7 @@ export const ViewEquipmentsButton: React.FC<ViewEquipmentsButtonProps> = ({
             {/* Table rows */}
             <div className="divide-y divide-slate-700">
               {equipment && equipment.length > 0 ? (
-                equipment.map((item) => (
+                equipment.map(item => (
                   <div
                     key={item.identifier}
                     className="grid grid-cols-7 gap-4 px-4 py-3 hover:bg-slate-800/50"
