@@ -12,7 +12,7 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <div className="container max-w-6xl mx-auto px-4 py-8">
         {/* AI Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
             Ask RepIt
           </h2>
@@ -20,7 +20,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Sessions Section*/}
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
             Sessions
           </h2>
@@ -30,7 +30,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Supplements Section*/}
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
             Supplements
           </h2>
@@ -40,7 +40,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Goals Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
+        <div className="bg-white dark:bg-gray-900 rounded-xl p-6 mb-8 shadow-lg border border-gray-100 dark:border-gray-700">
           <h2 className="text-2xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent">
             Goals
           </h2>
