@@ -40,9 +40,18 @@ jest.mock('@clerk/clerk-react', () => ({
 }));
 
 jest.mock('next/link', () => {
-  return ({children, href}: {children: React.ReactNode; href: string}) => {
+  const MockLink = ({
+    children,
+    href,
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) => {
     return <a href={href}>{children}</a>;
   };
+
+  MockLink.displayName = 'MockLink';
+  return MockLink;
 });
 
 jest.mock('@/app/_components/Features', () => {

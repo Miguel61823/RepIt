@@ -4,9 +4,7 @@ import {EditSupplement} from '../EditSupplement';
 import {Supplement} from '@/server/api/supplements';
 
 jest.mock('@/components/forms/EditSupplementForm', () => ({
-  EditSupplementForm: (props: Supplement) => (
-    <div data-testid="edit-supplement-form" />
-  ),
+  EditSupplementForm: () => <div data-testid="edit-supplement-form" />,
 }));
 
 jest.mock('@/components/ui/sheet', () => ({

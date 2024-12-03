@@ -71,8 +71,8 @@ const Home = () => {
             Why Choose RepIt?
           </h3>
           <p className="text-xl text-gray-200 max-w-3xl mx-auto">
-            We've designed RepIt to make fitness tracking simple, insightful,
-            and motivating.
+            We&apos;ve designed RepIt to make fitness tracking simple,
+            insightful, and motivating.
           </p>
         </div>
         <Features />

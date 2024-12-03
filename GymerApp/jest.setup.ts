@@ -32,12 +32,16 @@ jest.mock('@/drizzle/db', () => ({
 }));
 
 jest.mock('@clerk/nextjs', () => ({
-  auth: () => new Promise(resolve => resolve({userId: 'test-user-id'})),
+  auth: jest.fn(() => ({userId: 'test-user-id'})),
   clerkClient: {
     users: {
       getUser: jest.fn(),
     },
   },
-  currentUser: jest.fn(),
+  currentUser: jest.fn(() => ({
+    id: 'test-user-id',
+    firstName: 'Test',
+    lastName: 'User',
+  })),
   redirectToSignIn: jest.fn(),
 }));

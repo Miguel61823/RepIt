@@ -4,7 +4,7 @@ import {EditGoal} from '../EditGoal';
 import {Goal} from '@/server/api/goals';
 
 jest.mock('@/components/forms/EditGoalForm', () => ({
-  EditGoalForm: (props: Goal) => <div data-testid="edit-goal-form" />,
+  EditGoalForm: () => <div data-testid="edit-goal-form" />,
 }));
 
 jest.mock('@/components/ui/sheet', () => ({

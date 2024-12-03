@@ -158,9 +158,7 @@ const jestConfig = async (): Promise<Config> => {
       },
       {
         ...backendConfig,
-        testMatch: [
-          '<rootDir>/src/server/**/facilities.(spec|test).[jt]s?(x)',
-        ],
+        testMatch: ['<rootDir>/src/server/**/facilities.(spec|test).[jt]s?(x)'],
         displayName: 'facilities_backend',
       },
       {
@@ -173,9 +171,7 @@ const jestConfig = async (): Promise<Config> => {
       },
       {
         ...backendConfig,
-        testMatch: [
-          '<rootDir>/src/server/**/goals.(spec|test).[jt]s?(x)',
-        ],
+        testMatch: ['<rootDir>/src/server/**/goals.(spec|test).[jt]s?(x)'],
         displayName: 'goals_backend',
       },
       {
@@ -188,9 +184,7 @@ const jestConfig = async (): Promise<Config> => {
       },
       {
         ...backendConfig,
-        testMatch: [
-          '<rootDir>/src/server/**/sessions.(spec|test).[jt]s?(x)',
-        ],
+        testMatch: ['<rootDir>/src/server/**/sessions.(spec|test).[jt]s?(x)'],
         displayName: 'sessions_backend',
       },
       {
