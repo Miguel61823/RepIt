@@ -44,7 +44,6 @@ export function SessionForm() {
     defaultValues: {
       name: '',
       type: '',
-      date: new Date(),
       session_data: '',
     },
   });
@@ -72,7 +71,6 @@ export function SessionForm() {
 
   // Handles form submission, calling the API to create a new session
   async function onSubmit(values: z.infer<typeof sessionFormSchema>) {
-    console.log(values.date)
     window.dispatchEvent(new Event('closeSessionSheet'));
     const data = await createSession(values);
     if (data?.error) {

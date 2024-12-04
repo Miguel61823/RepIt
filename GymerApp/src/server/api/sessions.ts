@@ -86,6 +86,7 @@ export async function createSession(
 
   const sessionId = uuidv4();
   const {type, name, date, session_data} = data;
+  console.log(date)
 
   // Parse session_data using Claude Haiku
   const message = await anthropic.messages.create({
