@@ -178,6 +178,7 @@ const jestConfig = async (): Promise<Config> => {
         ...frontendConfig,
         testMatch: [
           '<rootDir>/src/app/sessions/**/__tests__/**/*.[jt]s?(x)',
+          '<rootDir>/src/components/forms/**/__tests__/**/*.[jt]s?(x)',
           '<rootDir>/src/app/sessions/**/?(*.)+(spec|test).[tj]s?(x)',
         ],
         displayName: 'sessions_frontend',
