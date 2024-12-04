@@ -297,7 +297,7 @@ export async function getAISessions(
   sessions = await db.query.SessionsTable.findMany({
     where: (
       {name, type, parsed_data, user_id, date},
-      {and, or, like, eq, gte, lte},
+      {and, or, like, eq, gte, lte, sql},
     ) => {
       const conditions: SQL<unknown>[] = [eq(user_id, userId)];
 
@@ -306,7 +306,8 @@ export async function getAISessions(
         const keywordConditions = AIparams.keywords.flatMap(keyword => [
           like(name, `%${keyword}%`),
           like(type, `%${keyword}%`),
-          like(parsed_data, `%${keyword}%`),
+          // Cast JSONB to text before using LIKE
+          sql`CAST(${parsed_data} AS TEXT) LIKE ${`%${keyword}%`}`,
         ]);
 
         if (keywordConditions.length > 0) {
@@ -360,13 +361,14 @@ export async function getAIParameters(
       {
         role: 'user',
         content: `Keep in mind that today's date is ${currentDate}.
-                  You are an expert at analyzing session data. You have access to
-                  this function:
+                  You are an expert at analyzing session data. Your response is 
+                  going to be fed directly into this function, make sure to include 
+                  the parameters in your response:
                   
                   getAISessions()
                   parameters: 
-                    keywords (optional): set of keywords, string[]
-                    dateRange (optional): {
+                    keywords : set of keywords, string[]
+                    dateRange : {
                       startDate: string in the form "2024-10-30",
                       endDate: string in the form "2024-10-30"
                     }
@@ -386,8 +388,8 @@ export async function getAIParameters(
                   2. Request specific data using the available function
                   3. Analyze the data and provide a clear response
   
-                  Format your response as JSON object with a 'parameters' key.                
-                  Respond with just the function call in a JSON array.
+                  Format your response as JSON object with a 'parameters' key
+                  and nothing else. Nothing before or after the JSON.                
 
                   This is the question: ${query}
                     `,
@@ -502,7 +504,8 @@ export async function answerQuestion(query: string): Promise<string> {
              Be sure to include linebreaks and indentations in the analysis 
              response to create good looking answers.
              
-             Format your answers as JSON.
+             Always structure the resonse in a JSON object and include nothing else.
+             Make sure to pay close attention to dates.
              Your analysis should be denoted by 'analysis:', and any visual 
              data should be denoted by 'visualData:'.
 
@@ -526,7 +529,7 @@ export async function answerQuestion(query: string): Promise<string> {
       },
     ],
   });
-
+  console.log("answer")
   console.log(answer);
 
   return answer.content[0].type === 'text'
@@ -598,7 +601,7 @@ export async function answerQuestionSplit(query: string): Promise<string> {
                 ]
               }
 
-              Examples of valid responses:
+              Examples of valid responses, any other format is invalid:
 
               1. For a valid question with visualization:
               {
@@ -628,6 +631,7 @@ export async function answerQuestionSplit(query: string): Promise<string> {
               3. Never leave analysis empty or undefined
               4. Set visualData to null if no visualization is needed
               5. For invalid/unrelated questions, use the exact error message shown in example 3
+              6. NEVER respond with text outside of "analysis".
 
                 `,
     messages: [
