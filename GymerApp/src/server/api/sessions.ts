@@ -386,6 +386,7 @@ export async function getAIParameters(
                      each question.
                   2. Request specific data using the available function
                   3. Analyze the data and provide a clear response
+                  4. Do not include dates or date related words in the keywords
   
                   Format your response as JSON object with a 'parameters' key
                   and nothing else. Nothing before or after the JSON.                
