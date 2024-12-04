@@ -130,5 +130,74 @@ export default function EditPage() {
 ```
 
 #### References:
+
 - `src/app/goals/_components/editGoal.tsx`
 
+### SupplementForm
+
+This form enables users to create new supplement entries with detailed information about dosage, frequency, and scheduling.
+
+#### Features
+
+- Input fields for supplement name, dosage, and frequency
+- Date selection for start and optional end dates
+- Instructions field for detailed usage notes
+- Active status toggle
+- Form validation using Zod schema
+
+#### Example
+
+```
+import { SupplementForm } from '@/components/SupplementForm';
+
+export default function Dashboard() {
+  return (
+    <div>
+      <h1>Add New Supplement</h1>
+      <SupplementForm />
+    </div>
+  );
+}
+```
+
+#### References:
+
+- `src/app/supplements/_components/newSupplement.tsx`
+
+### EditSupplementForm
+
+This form component handles the editing of existing supplement entries, pre-populating the form with current supplement data.
+
+#### Features
+
+- Pre-fills all fields with existing supplement data
+- Provides the same validation and input fields as SupplementForm
+- Updates supplement records while maintaining data integrity
+- Includes active/inactive status management
+
+#### Example
+
+```
+import { EditSupplementForm } from '@/components/EditSupplementForm';
+
+export default function EditPage() {
+  const supplement = {
+    id: "123",
+    name: "Vitamin D",
+    dosage: "1000 IU",
+    frequency: "Daily",
+    instructions: "Take with food",
+    startDate: new Date('2024-01-01'),
+    endDate: new Date('2024-12-31'),
+    isActive: true
+  };
+
+  return (
+    <EditSupplementForm supplement={supplement} />
+  );
+}
+```
+
+#### References:
+
+- `src/app/supplements/_components/editSupplement.tsx`
