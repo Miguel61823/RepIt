@@ -120,3 +120,122 @@ function EquipmentManager() {
 #### References
 
 - `GymerApp/src/app/facilities/_components/ViewEquipmentsButton.tsx`
+
+### AddEquipmentButton
+
+This component provides a form interface for adding new equipment to a facility.
+
+#### Features
+- Form for equipment details input
+- Equipment type categorization
+- Condition status selection
+- Maintenance date tracking
+- Quantity management
+
+#### Example
+
+```
+import { AddEquipmentButton } from './AddEquipmentButton';
+
+function FacilityPage() {
+  return (
+    <AddEquipmentButton
+      osm_id="12345"
+      facilityName="Gold's Gym"
+      onEquipmentAdded={() => console.log('Equipment added')}
+    />
+  );
+}
+```
+
+#### References
+
+- `GymerApp/src/app/facilities/_components/AddEquipmentButton.tsx`
+  
+### EquipmentContext
+
+This component provides global state management for equipment data across the application.
+
+#### Features
+- Global equipment list state
+- Equipment addition functionality
+- Context provider wrapper
+
+#### Example
+
+```
+import { EquipmentProvider, useEquipment } from './EquipmentContext';
+
+function App() {
+  return (
+    <EquipmentProvider>
+      <FacilityManager />
+    </EquipmentProvider>
+  );
+}
+```
+
+#### References
+
+- `GymerApp/src/app/facilities/_components/EquipmentContext.tsx`
+
+### ViewEquipmentsButton
+
+This component displays a comprehensive list of equipment for a facility.
+
+#### Features
+
+- Equipment inventory display
+- Deletion capability
+- Condition status indicators
+- Maintenance date tracking
+- Low quantity alerts
+- Loading state management
+
+#### Example
+
+```
+import { ViewEquipmentsButton } from './ViewEquipmentsButton';
+
+function EquipmentManager() {
+  return (
+    <ViewEquipmentsButton
+      osmId="12345"
+      equipment={equipmentList}
+      setEquipment={setEquipmentList}
+    />
+  );
+}
+```
+
+### AddFacilityButton
+
+This component handles the addition of new facilities to the system.
+
+#### Features
+
+- Facility creation interface
+- Integration with facility API
+- Success/error state handling
+  
+#### Example
+
+```
+import { AddFacilityButton } from './AddFacilityButton';
+
+function FacilitiesPage() {
+  return (
+    <AddFacilityButton
+      facility={{
+        name: "New Gym",
+        osm_id: "12345",
+        leisure: "fitness_centre"
+      }}
+    />
+  );
+}
+```
+
+#### References
+
+- `GymerApp/src/app/facilities/_components/AddFacilityButton.tsx`
