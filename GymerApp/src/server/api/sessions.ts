@@ -274,7 +274,6 @@ export async function getAISessionsbyKeyword(
 
   return sessions;
 }
-
 /**
  * Retrieves AI-enhanced sessions using date and/or keyword filters.
  * @param {Object} filters - Filters to apply.
@@ -321,8 +320,8 @@ export async function getAISessions(
       // Add date range conditions if provided
       if (AIparams.dateRange) {
         conditions.push(
-          gte(date, new Date(AIparams.dateRange.startDate)),
-          lte(date, new Date(AIparams.dateRange.endDate)),
+          sql`${date} >= ${new Date(AIparams.dateRange.startDate).toISOString().split('T')[0]}`,
+          sql`${date} < ${new Date(AIparams.dateRange.endDate).toISOString().split('T')[0]}::date + interval '1 day'`
         );
       }
 
@@ -543,6 +542,10 @@ export async function answerQuestion(query: string): Promise<string> {
  * @returns {Promise<string>} AI-generated answer to the question.
  */
 export async function answerQuestionSplit(query: string): Promise<string> {
+  // Get current date
+  const currentDate = new Date().toDateString();
+  console.log(currentDate);
+
   //get session params
   const params = await getAIParameters(query);
   console.log('Params');
@@ -566,10 +569,13 @@ export async function answerQuestionSplit(query: string): Promise<string> {
     max_tokens: 1024,
     temperature: 0,
     system: `You are an expert in this session history ${JSON.stringify(sessions)}. 
+              The date is ${currentDate}.
               
               Each session has a name, a date, a type and a parsed_data section. 
-              The first 3 are straight forward, the parsed_data is a JSON version of everything
-              a user wanted to store for that session. 
+
+              The date is in the form YYYY-MM-DD HH:MM:SS
+              The parsed_data is a JSON version of everything a user wanted to 
+              store for that session. 
 
               The prompt you are given is a question from a user about their data history.
 
@@ -632,6 +638,9 @@ export async function answerQuestionSplit(query: string): Promise<string> {
               4. Set visualData to null if no visualization is needed
               5. For invalid/unrelated questions, use the exact error message shown in example 3
               6. NEVER respond with text outside of "analysis".
+              7. Make sure to pay close attention to dates.
+              8. If there is insufficient data, still try to respond with something and also note
+                 that there is minimal data.
 
                 `,
     messages: [
