@@ -1,5 +1,5 @@
 import React from 'react';
-import {AIQuestionContainer} from './components/AIQuestionContainer';
+import {AIQuestionContainer} from './_components/AIQuestionContainer';
 import {Suspense} from 'react';
 import {SessionsList} from '../sessions/_components/SessionsList';
 import {SupplementsList} from '../supplements/_components/SupplementsList';
