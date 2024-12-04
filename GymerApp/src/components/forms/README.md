@@ -4,6 +4,35 @@ This directory contains the form components used in the application.
 
 ## Forms
 
+### SessionForm
+
+This form allows users to create a new session by providing necessary details.
+
+#### Features
+
+- Provides fields for session name, date, time, and additional attributes.
+- Validates user input before form submission.
+- Includes a clear form option to reset fields.
+
+#### Example
+
+```
+import { SessionForm } from '@/components/SessionForm';
+
+export default function Dashboard() {
+  return (
+    <div>
+      <h1>Create a New Session</h1>
+      <SessionForm />
+    </div>
+  );
+}
+```
+
+#### References:
+
+  - `src/app/sessions/_components/newSession.tsx`
+
 ### EditSessionForm
 
 This form allows users to edit the details of an existing session, preloads data for the selected session, and provides input fields to modify it
@@ -37,26 +66,28 @@ export default function EditPage() {
 
   - `src/app/sessions/_components/editSession.tsx`
 
-### SessionForm
+### GoalForm
 
-This form allows users to create a new session by providing necessary details.
+This form enables users to create new goals with title, description, due date, and completion status.
 
 #### Features
 
-- Provides fields for session name, date, time, and additional attributes.
-- Validates user input before form submission.
-- Includes a clear form option to reset fields.
+- Input fields for goal title and description
+- Calendar-based due date selection
+- Completion status toggle
+- Form validation using Zod schema
+- Real-time error feedback
 
 #### Example
 
 ```
-import { SessionForm } from '@/components/SessionForm';
+import { GoalForm } from '@/components/GoalForm';
 
 export default function Dashboard() {
   return (
     <div>
-      <h1>Create a New Session</h1>
-      <SessionForm />
+      <h1>Create New Goal</h1>
+      <GoalForm />
     </div>
   );
 }
@@ -64,6 +95,40 @@ export default function Dashboard() {
 
 #### References:
 
-  - `src/app/sessions/_components/newSession.tsx`
+- `src/app/goals/_components/newGoal.tsx`
 
-### (doc todo: goal, equipment, supplement,)
+### EditGoalForm
+
+This form component handles the editing of existing goals, pre-populating the form with current goal data.
+
+#### Features
+
+- Pre-fills all fields with existing goal data
+- Calendar picker for due date modification
+- Completion status management
+- Same validation and input fields as GoalForm
+- Updates goal records while maintaining data integrity
+
+#### Example
+
+```
+import { EditGoalForm } from '@/components/EditGoalForm';
+
+export default function EditPage() {
+  const goal = {
+    goal_id: "123",
+    title: "Complete Project",
+    description: "Finish the documentation",
+    dueDate: new Date('2024-12-31'),
+    completed: false
+  };
+
+  return (
+    <EditGoalForm {...goal} />
+  );
+}
+```
+
+#### References:
+- `src/app/goals/_components/editGoal.tsx`
+
